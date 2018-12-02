@@ -181,8 +181,8 @@
 					
 					
 					$username   = Params::has('username') ? $post->username : '';
-					$email   = Params::has('email') ? $post->email : '';
-					$password   = Params::has('password') ? $post->password : '';
+					$email      = Params::has('email') ? $post->email : '';
+					$password   = Params::has('password') ? Hashing::instance()->hashIt($post->password) : '';
 					$first_name = Params::has('first_name') ? $post->first_name : '';
 					$last_name  = Params::has('last_name') ? $post->last_name : '';
 					
@@ -208,7 +208,7 @@
 							$message = "You have successfully update you profile";
 							Session::set('MESSAGE', $message);
 							
-							redirect('/admin/users');
+							redirect('/admin/updateuser/'.$sess->user_id);
 							
 							return true;
 							
