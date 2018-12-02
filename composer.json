@@ -1,0 +1,20 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Controllers\\" : "includes/controllers",
+            "Classes\\" : "includes/classes"
+        }
+    },
+
+    "require": {
+        "itsjavi/bootstrap-colorpicker": "^2.5",
+        "philo/laravel-blade": "^3.1",
+        "altorouter/altorouter": "^1.2",
+        "phpmailer/phpmailer": "^6.0",
+        "awps/font-awesome-php": "^4.7"
+    },
+
+    "config":{
+        "optimize-autoloader":true
+    }
+}

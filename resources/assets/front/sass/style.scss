@@ -1,0 +1,235 @@
+/*!
+ * Start Bootstrap - Blog Home HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+@import "../../font-awesome/scss/font-awesome";
+@import "../../bower/bower_components/foundation-sites/assets/foundation";
+@import "../../bower/bower_components/motion-ui/motion-ui";
+
+
+/* Front end Styles  */
+#contact {
+  position:relative;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #f8e1b6;
+
+
+  .contact-arrow {
+    position:absolute;
+    top:40%;
+    border:solid #555 3px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    background-color: turquoise;
+
+    i.fa-arrow-right {
+      font-size:70px;
+      padding:21px;
+      color:#fff;
+
+    }
+  }
+
+  .outta-cont-notification{
+    position:relative;
+    clear:both;
+    height:30px;
+
+
+    .cont-notification {
+      display:none;
+      padding: 7px 3px;
+      border: 1px #ccc solid;
+      border-radius: 3px;
+      box-shadow: 1px 1px 3px;
+      position: absolute;
+    }
+
+  }
+
+  .indiv-row {
+    width: 100%;
+    padding: 7px 0;
+    position: relative;
+
+    input {
+      width:100%;
+      line-height: 27px;
+      padding: 3px 7px;
+      background-color: rgba(255, 239, 213, 0.66);
+      -webkit-box-shadow:  1px 1px 2px #555;
+      -moz-box-shadow:  1px 1px 2px #555;
+      box-shadow:  1px 1px 2px #555;
+
+      &:focus {
+        -webkit-box-shadow: inset 1px 1px 2px #555;
+        -moz-box-shadow: inset 1px 1px 2px #555;
+        box-shadow: inset 1px 1px 2px #555;
+      }
+    }
+    textarea {
+      width:100%;
+      line-height: 23px;
+      padding: 3px 7px;
+      background-color: rgba(255, 239, 213, 0.66);
+      -webkit-box-shadow:  1px 1px 2px #555;
+      -moz-box-shadow:  1px 1px 2px #555;
+      box-shadow:  1px 1px 2px #555;
+
+      &:focus {
+        -webkit-box-shadow: inset 1px 1px 2px #555;
+        -moz-box-shadow: inset 1px 1px 2px #555;
+        box-shadow: inset 1px 1px 2px #555;
+      }
+    }
+
+    button {
+      line-height: 23px;
+      padding: 3px 7px;
+      -webkit-box-shadow:  1px 1px 2px #555;
+      -moz-box-shadow:  1px 1px 2px #555;
+      box-shadow:  1px 1px 2px #555;
+
+      &:hover {
+        -webkit-box-shadow: inset 1px 1px 2px #555;
+        -moz-box-shadow: inset 1px 1px 2px #555;
+        box-shadow: inset 1px 1px 2px #555;
+      }
+    }
+  }
+
+}
+
+
+#text-slider {
+  position:relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.featured {
+  position:relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  /*.inner-featured {
+    padding-left:7px;
+    padding-right:7px;
+  }*/
+}
+
+#feature-slider {
+  position:relative;
+  background-color: turquoise;
+
+  .featured-img {
+   /* height:600px;*/
+    width:1200px;
+
+
+  }
+}
+
+#info-1 {
+  position:relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  .card-image i {
+    padding-top:21px;
+  }
+}
+
+
+#info-top {
+  margin-top:50px;
+
+  .showcase-panel {
+    list-style-type: none;
+
+    li {
+      display:inline;
+    }
+  }
+}
+
+
+#threaded-info {
+  position:relative;
+  overflow:hidden;
+
+
+  .thread-tab-left {
+    position:relative;
+
+    .card {
+      width:46%;
+      text-align: right;
+      border: 7px #ccc solid;
+      box-shadow: 2px -2px 4px teal;
+
+      .thread-pin {
+        position:absolute;
+        left:47.5%;
+        top:0;
+        z-index:999;
+        border: 3px #ccc solid;
+        padding: 14px;
+        border-radius: 50%;
+        background-color: #00bfff;
+      }
+    }
+  }
+
+  .thread-tab-center {
+    border-left: 6px solid rgba(74, 65, 75, 0.33);
+    height: 5500px;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 0;
+    z-index:1;
+  }
+
+  .thread-tab-right {
+    position:relative;
+    overflow: hidden;
+
+
+    .card {
+
+      width:46%;
+      float:right;
+      border: 7px solid #ccc;
+      box-shadow: -2px 2px 4px tomato;
+
+      .thread-pin {
+        position:absolute;
+        right:47.5%;
+        top:0;
+        z-index:999;
+        border: 3px #ccc solid;
+        padding: 14px;
+        border-radius: 50%;
+        background-color: #00bfff;
+      }
+    }
+  }
+
+}
+
+#showcase-comments {
+  position:relative;
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+}
+
+
+footer {
+    margin: 50px 0;
+
+}
