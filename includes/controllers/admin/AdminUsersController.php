@@ -185,6 +185,7 @@
 					$password   = Params::has('password') ? Hashing::instance()->hashIt($post->password) : '';
 					$first_name = Params::has('first_name') ? $post->first_name : '';
 					$last_name  = Params::has('last_name') ? $post->last_name : '';
+					$privilege  = Params::has('privilege') ? $post->privilege : '';
 					
 					
 					if ( $sess->is_signed_in() ) {
@@ -196,6 +197,7 @@
 						$user->email      = $email;
 						$user->password   = $password;
 						$user->first_name = $first_name;
+						$user->privilege  = $privilege;
 						$user->last_name  = $last_name;
 						$user->updated_at = date("Y-m-d H:i:s");
 						

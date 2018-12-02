@@ -71,6 +71,27 @@
                                     <label for="last_name">Last Name</label>
                                     <input type="text" class="form-control" id="last_name" name="last_name" value="<?php echo e($userData->last_name); ?>" placeholder="Enter a last name">
 
+                                    <fieldset>
+                                        <legend>Administration Privilege</legend>
+
+                                        <div class="switch">
+                                            <input class="switch-input" id="privilege1" type="radio" value="0" <?php echo ((int)$userData->privilege === 0) ? 'checked' : ''; ?>  name="privilege">
+                                            <label class="switch-paddle" for="privilege1">
+                                                <span class="show-for-sr">Non-privileged</span>
+                                                <span class="switch-active" aria-hidden="true">Normal</span>
+                                                <span class="switch-inactive" aria-hidden="true"></span>
+                                            </label>
+                                        </div>
+                                        <div class="switch">
+                                            <input class="switch-input" id="privilege2" type="radio" value="1"  <?php echo ((int)$userData->privilege === 1) ? 'checked' : ''; ?>  name="privilege">
+                                            <label class="switch-paddle" for="privilege2">
+                                                <span class="show-for-sr">Privileged</span>
+                                                <span class="switch-active" aria-hidden="true">Privileged</span>
+                                                <span class="switch-inactive" aria-hidden="true"></span>
+                                            </label>
+                                        </div>
+                                    </fieldset>
+
                                     <a type="submit" href="/admin/delete_user/<?php echo $sess->user_id; ?>" class="button warning float-left">Delete User</a>
                                     <button type="submit" name="update" value="true" class="button success float-right">Submit Update</button>
                                 </div>
