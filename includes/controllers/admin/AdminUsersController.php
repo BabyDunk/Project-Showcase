@@ -179,10 +179,11 @@
 				
 				if ( Params::has('update')) {
 					
-					
+			
 					$username   = Params::has('username') ? $post->username : '';
 					$email      = Params::has('email') ? $post->email : '';
-					$password   = Params::has('password') ? Hashing::instance()->hashIt($post->password) : '';
+					$password   = Params::has('password') ?
+						(Hashing::instance()->verify_hash($post->username,$post->password) ? $post->password : Hashing::instance()->hashIt($post->password)): '';
 					$first_name = Params::has('first_name') ? $post->first_name : '';
 					$last_name  = Params::has('last_name') ? $post->last_name : '';
 					$privilege  = Params::has('privilege') ? $post->privilege : '';

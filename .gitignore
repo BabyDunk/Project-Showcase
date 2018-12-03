@@ -3,5 +3,5 @@
 /backupFront
 /vendor
 /node_modules
-/display/admin/cache
-/display/front/cache
+/display/admin/cache/*
+/display/front/cache/*

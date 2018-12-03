@@ -5,7 +5,7 @@
 	 * Date: 28/05/2018
 	 * Time: 13:36
 	 */
-
+var_dump(\Classes\Core\Session::get('checkHash'));
 	if(isset($id['id'])){
         $userData   =   \Classes\Core\User::find_by_id($id['id']);
     }

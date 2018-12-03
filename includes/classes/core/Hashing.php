@@ -88,6 +88,33 @@
 			
 		} // End of Verify_user Method
 		
+		
+		// Verify Hash
+		public function verify_hash($username, $password){
+			
+			if(empty($username)){
+				return false;
+			}
+			
+			if(empty($password)){
+				return  false;
+			}
+			
+			$user = User::find_by_username($username);
+
+			if(empty($user)){
+				return false;
+			}
+
+			if($password === $user->password) {
+				
+				return true;
+			}
+			
+			return false;
+			
+		} // End of Verify Hash
+		
 		public function show_id(  )
 		{
 			return 'ID_'.$this->uniqidReal(64).'_'.time();
