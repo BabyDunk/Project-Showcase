@@ -21,7 +21,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="#contact" data-smooth-scroll>Contact</a></li>
-            <li><a href="/admin/login">Admin</a></li>
+            <li><a href="/admin/login">Login</a></li>
         </ul>
     </div>
 </div>

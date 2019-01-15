@@ -7959,7 +7959,7 @@ a.thumbnail {
       width: 46%;
       text-align: right;
       border: 7px #ccc solid;
-      box-shadow: 2px -2px 4px teal; }
+      box-shadow: 2px -2px 4px #92d9d2; }
       #threaded-info .thread-tab-left .card .thread-pin {
         position: absolute;
         left: 47.5%;
@@ -7984,7 +7984,7 @@ a.thumbnail {
       width: 46%;
       float: right;
       border: 7px solid #ccc;
-      box-shadow: -2px 2px 4px tomato; }
+      box-shadow: -2px 2px 4px rgba(185, 180, 255, 0.79); }
       #threaded-info .thread-tab-right .card .thread-pin {
         position: absolute;
         right: 47.5%;

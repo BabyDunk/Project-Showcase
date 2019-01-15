@@ -58,8 +58,6 @@
 				redirect('/admin');
 			} else {
 				adminView('login', ['message' => 'something went wrong']);
-				
-				
 			}
 	
 		}

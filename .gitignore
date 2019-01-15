@@ -1,7 +1,7 @@
-/.idea
-/backupAdmin
-/backupFront
-/vendor
-/node_modules
-/display/admin/cache/*
-/display/front/cache/*
+.idea
+backupAdmin/
+backupFront/
+vendor/
+node_modules/
+display/admin/cache/*
+display/front/cache/*
