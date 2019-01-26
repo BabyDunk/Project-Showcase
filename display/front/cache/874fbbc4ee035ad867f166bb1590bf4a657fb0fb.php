@@ -83,8 +83,8 @@ echo "</pre>";exit;*/
 
                             <?php if($isLogin === $showcase->user_id): ?>
                                 <ul class="showcase-panel">
-                                    <li><span><a href="/admin/uploads/<?php echo e($id); ?>">Edit</a></span></li> |
-                                    <li><span><a href="/admin/showcase/<?php echo e($id); ?>">Delete</a></span></li>
+                                    <li><span><a href="/sc-panel/uploads/<?php echo e($id); ?>">Edit</a></span></li> |
+                                    <li><span><a href="/sc-panel/showcase/<?php echo e($id); ?>">Delete</a></span></li>
                                 </ul>
                             <?php endif; ?>
                         </div>

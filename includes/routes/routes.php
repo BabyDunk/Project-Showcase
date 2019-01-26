@@ -28,5 +28,5 @@
 	$router->map( 'POST', '/showcase/comment',  'Controllers\IndexCommentController@store', 'store_comment');
 
 
-	require_once(__DIR__ . '/admin-routes.php');
+	require_once(__DIR__ . '/sc-panel-routes.php');
 	

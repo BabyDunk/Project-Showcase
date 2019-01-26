@@ -51,18 +51,21 @@ class Showcase extends Db_object {
 		return self::$instance;
 	}
 	
-	// Get single user data in a named array
-	public static function find_by_user_id($id, $limit=0, $order=0 ){
+	/*
+	 * Get single user data in a named array
+	 *
+	 * */
+	public static function find_by_user_id($id, $limit=0, $order='desc'){
 		global $db;
 		
 		$limit = !empty($limit) ? " LIMIT $limit " : "";
 		
 		$isOrder = "";
-		if($order === 1){
+		if($order === 'desc'){
 			$isOrder = " ORDER BY id DESC ";
-		}elseif($order === 2){
+		}elseif($order === 'asc'){
 			$isOrder = " ORDER BY id ASC ";
-		}elseif($order === 3){
+		}elseif($order === 'rand'){
 			$isOrder = " ORDER BY RAND() ";
 		}
 		

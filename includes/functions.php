@@ -73,8 +73,8 @@ function view($path, array $data=[]){
 // Admin View
 function adminView($path, array $data=[]){
 	// Laravel-Blade
-	$views = SITE_ROOT . 'display/admin/view';
-	$cache = SITE_ROOT . 'display/admin/cache';
+	$views = SITE_ROOT . 'display/sc-panel/view';
+	$cache = SITE_ROOT . 'display/sc-panel/cache';
 	
 	$restricted = ['statistics', 'general_settings', 'email_settings', 'social_settings', 'users'];
 	

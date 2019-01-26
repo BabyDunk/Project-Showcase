@@ -32,7 +32,7 @@
 
             $.ajax({
                 type: 'post',
-                url : '/admin/pins',
+                url : '/sc-panel/pins',
                 data: {pinSubmit: pinSubmit, pinShowcaseId: pinShowcaseId, pinTitle: pinTitle, pinBody: pinBody},
 
                 success: function (data) {
@@ -74,7 +74,7 @@
 
             $.ajax({
                 type: 'post',
-                url : '/admin/pins/delete',
+                url : '/sc-panel/pins/delete',
                 data: {
                     CSRFToken: CSRFToken,
                     pinId: pinId,
@@ -122,7 +122,7 @@
 
             $.ajax({
                 type: 'post',
-                url : '/admin/pins/edit',
+                url : '/sc-panel/pins/edit',
                 data: {
                     CSRFToken: CSRFToken,
                     pinId: pinId,

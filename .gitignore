@@ -3,5 +3,5 @@ backupAdmin/
 backupFront/
 vendor/
 node_modules/
-display/admin/cache/*
-display/front/cache/*
+display/sc-panel/cache/*.php
+display/front/cache/*.php

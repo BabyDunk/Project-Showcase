@@ -333,8 +333,27 @@ class User extends Db_object {
 		return false;
 		
 	} // End of the delete_user Method
-
-
+	
+	
+	public static function isAdmin()
+	{
+		$user = 0;
+		if (Session::instance()->user_id){
+			$user = self::find_by_id(Session::instance()->user_id);
+		}
+		
+		if(empty($user)){
+			redirect('/');
+			Session::set('MESSAGE', 'Sorry you need account to see that page');
+			return;
+		}
+		
+		if(!$user->privilege){
+			redirect('/sc-panel');
+			Session::set('MESSAGE', 'Redirected due to insignificant privilege');
+			return;
+		}
+	}
 
 
 
