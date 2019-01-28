@@ -55,7 +55,7 @@ class Comment extends Db_object
 	
 	
 	/**
-	 * Find Comment
+	 * Find Comment by showcase
 	 *
 	 * @param $show_id
 	 *
