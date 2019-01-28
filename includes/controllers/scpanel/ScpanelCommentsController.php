@@ -25,7 +25,6 @@
 		
 		public function remove($id)
 		{
-			//var_dump($id);exit;
 			if(!empty($id)){
 				$comment = new Comment();
 				$comment->id = $id['id'];

@@ -103,7 +103,6 @@ class Session {
 			
 		}
 		
-		
 	}
 
 	public function message($msg = ""){

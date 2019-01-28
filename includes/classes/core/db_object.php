@@ -10,7 +10,7 @@
 
 class Db_object {
 	
-	
+	public static $prefix = 'sc_';
 	
 
 	// Error handling for file uploads
@@ -371,7 +371,11 @@ class Db_object {
 	} // End of Delete Method
 	
 	
-	// Count All
+	/**
+	 * Count all rows in a given table
+	 *
+	 * @return mixed
+	 */
 	public static function count_all() {
 		global $db;
 		
@@ -382,11 +386,45 @@ class Db_object {
 		$row =  mysqli_fetch_array($result_set);
 		
 		return array_shift($row);
-		
-		
 	}
 	
-	// Get last users insert
+	/**
+	 * Count all row by condition in a given table
+	 *
+	 * @param array $conditions
+	 *
+	 * @return mixed
+	 */
+	public static function count_by_condition($conditions=[]) {
+		global $db;
+		
+		$loadCond = '';
+		if(!empty($conditions)){
+			$arrCount = count($conditions);
+			$loopCount = 0;
+			$loadCond = ' WHERE ';
+			foreach ( $conditions as $key => $condition ) {
+				$loadCond .= $key . " = '" . $condition ."'";
+				$loopCount++;
+				if($loopCount < $arrCount){
+					$loadCond .= ' AND ';
+				}
+			}
+		}
+		$sql    =   "SELECT COUNT(*) FROM " . static::$db_table . $loadCond;
+		
+		$result_set =   $db->query($sql);
+		
+		$row =  mysqli_fetch_array($result_set);
+		
+		return array_shift($row);
+	}
+	
+	/**
+	 * Get last users insert
+	 *
+	 * @return mixed
+	 */
 	public function get_last_insert() {
 		global $db;
 		

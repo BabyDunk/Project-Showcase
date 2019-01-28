@@ -67,6 +67,7 @@
 		
 		public function showEmail(  )
 		{
+			\Classes\Core\User::isAdmin();
 			
 			adminView('email-settings', ['userid'=>Session::instance()->user_id]);
 			Session::clear('MESSAGE');
@@ -74,6 +75,7 @@
 		
 		public function storeEmail(  )
 		{
+			\Classes\Core\User::isAdmin();
 			$post = Params::get('post');
 			
 			if(Params::has('submit')){
@@ -96,6 +98,7 @@
 		
 		public function showSocial(  )
 		{
+			\Classes\Core\User::isAdmin();
 			
 			adminView('social-settings', ['userid'=>Session::instance()->user_id]);
 			Session::clear('MESSAGE');
@@ -103,6 +106,8 @@
 		
 		public function storeSocial(  )
 		{
+			\Classes\Core\User::isAdmin();
+			
 			$post = Params::get('post');
 
 		

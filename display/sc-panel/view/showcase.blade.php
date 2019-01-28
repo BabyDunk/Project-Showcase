@@ -6,9 +6,13 @@
 	 * Time: 01:51
 	 */
 
-$showcases =  \Classes\Core\Showcase::find_by_user_id(\Classes\Core\Session::instance()->user_id);
+$showcases = null;
+if ( \Classes\Core\User::hasPrivilege() ) {
+	$showcases = \Classes\Core\Showcase::find_all();
+} else {
+	$showcases = \Classes\Core\Showcase::find_by_user_id( \Classes\Core\Session::instance()->user_id );
+}
 
-//var_dump($showcases); exit;
 
 
 ?>

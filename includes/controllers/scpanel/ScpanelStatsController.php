@@ -10,6 +10,7 @@
 	
 	
 	use Classes\Core\Session;
+	use Classes\Core\User;
 	
 	class ScpanelStatsController
 	{
@@ -18,6 +19,8 @@
 		
 		public function show(  )
 		{
+			
+			User::isAdmin();
 			
 			adminView('statistics', ['userid'=> Session::instance()->user_id]);
 			

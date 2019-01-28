@@ -12,7 +12,7 @@
 	class Preference extends  Db_object
 	{
 		private     static  $instance;
-		protected   static  $db_table = "preference";
+		protected   static  $db_table = DB_PREFIX."preference";
 		protected   static  $db_pref_section = "pref_section";
 		protected   static  $db_pref_key = "pref_key";
 		protected   static  $db_table_fields = array('pref_section', 'pref_key', 'pref_value', 'pref_type');

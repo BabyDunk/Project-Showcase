@@ -11,7 +11,7 @@
 class User extends Db_object {
 	
 	private     static  $instance;
-	protected   static  $db_table = "users";
+	protected   static  $db_table = DB_PREFIX."users";
 	protected   static  $db_table_fields = array('username', 'password', 'first_name', 'last_name', 'email', 'filename', 'privilege', 'updated_at', 'created_at');
 
 	public              $id;
@@ -354,7 +354,14 @@ class User extends Db_object {
 			return;
 		}
 	}
-
+	
+	public static function hasPrivilege(  )
+	{
+		$user = self::find_by_id(Session::instance()->user_id);
+		
+		return ($user->privilege) ? true : false;
+		
+	}
 
 
 } // End of User class

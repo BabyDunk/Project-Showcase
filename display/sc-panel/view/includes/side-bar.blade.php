@@ -14,7 +14,7 @@
 <!-- Sidebar -->
 <div class="off-canvas position-left reveal-for-large nav" id="offCanvas" data-off-canvas>
 
-    <h3> Welcome Admin </h3>
+    <h3> Welcome {{($user->privilege) ? 'Admin' : 'Dev'}} </h3>
 
     <div class="image-holder text-center">
         <img src="{{$user->image_path_placeholder()}}" alt="{{$user->first_name}}" title="Admin" >

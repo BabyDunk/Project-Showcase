@@ -12,7 +12,7 @@ class Showcase extends Db_object {
 	
 	private     static  $instance;
 
-	protected static    $db_table = "showcases";
+	protected static    $db_table = DB_PREFIX."showcases";
 	protected static    $db_table_fields = array('id', 'show_id', 'user_id', 'title', 'subtitle', 'description1', 'showcasePayment', 'three_notice_block', 'bg_colorselector', 'fg_colorselector', 'job_deposit', 'job_duration', 'filename', 'front_demo_link', 'back_demo_user', 'back_demo_pass', 'back_demo_link', 'updated_at', 'created_at');
 
 	public              $id;

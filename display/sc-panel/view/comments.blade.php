@@ -6,9 +6,12 @@
  * Time: 02:03
  */
 
-
-	$showcases = \Classes\Core\Showcase::find_by_user_id(\Classes\Core\Session::instance()->user_id);
-
+    $showcases = null;
+	if (\Classes\Core\User::hasPrivilege()){
+	    $showcases = \Classes\Core\Showcase::find_all();
+    }else{
+		$showcases = \Classes\Core\Showcase::find_by_user_id(\Classes\Core\Session::instance()->user_id);
+    }
 
 	$comments = [];
 	if ( ! empty( $showcases ) ) {
@@ -42,7 +45,7 @@
             <div class="col-lg-12">
                 <h1 class="page-header">
                     Comments
-                    <small>All User Comments</small>
+                    <small>{{\Classes\Core\User::hasPrivilege() ? 'All User' : 'Your'}} Comments</small>
                 </h1>
                 <div class="col-md-12">
                     <table class="hover unstriped stack">

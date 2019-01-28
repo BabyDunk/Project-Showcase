@@ -11,6 +11,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'showcase');
 define('DB_PASS', 'Casey2010@');
 define('DB_NAME', 'showcase');
+define('DB_PREFIX', 'sc_');
 
 
 // Do Not Alter This Key Or Else You Will Break All Passwords In DataBase.

@@ -12,7 +12,7 @@
 	class ShowcasePins extends Db_object
 	{
 		private     static  $instance;
-		protected   static  $db_table = "showcase_text";
+		protected   static  $db_table = DB_PREFIX."showcase_text";
 		protected   static  $db_table_fields = array('show_id', 'show_title', 'show_body', 'updated_at', 'created_at');
 		
 		public              $id;

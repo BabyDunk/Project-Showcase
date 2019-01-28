@@ -9,11 +9,15 @@
 	namespace Controllers;
 	
 	
+	use Classes\Core\Visitors;
+	
 	class IndexShowcaseController
 	{
 		
 		public function show( $id )
 		{
+			
+			Visitors::instance()->set($id);
 			view('showcase', $id);
 		}
 		

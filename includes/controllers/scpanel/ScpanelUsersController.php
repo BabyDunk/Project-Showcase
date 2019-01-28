@@ -23,6 +23,8 @@
 		
 		public function show(  )
 		{
+			\Classes\Core\User::isAdmin();
+			
 			adminView('users', ['userid'=> Session::instance()->user_id]);
 			
 			Session::clear('MESSAGE');
@@ -31,6 +33,8 @@
 		
 		public function showadduser()
 		{
+			\Classes\Core\User::isAdmin();
+			
 			$sess = new Session();
 			
 			if($sess->is_signed_in()){
@@ -47,6 +51,7 @@
 		
 		public function insertadduser()
 		{
+			\Classes\Core\User::isAdmin();
 			
 			$sess = new Session();
 			
@@ -142,6 +147,8 @@
 		
 		public function showupdateuser($id)
 		{
+			\Classes\Core\User::isAdmin();
+			
 			$sess       =   new Session();
 			if(!empty($id)){
 				adminView('updateuser', ['id'=>$id, 'userid'=>$sess->user_id]);
@@ -154,6 +161,9 @@
 		
 		public function editupdateuser()
 		{
+			
+			\Classes\Core\User::isAdmin();
+			
 			if(!CSRFToken::_CheckToken()){
 				
 				redirect('/sc-panel/users');
@@ -245,6 +255,8 @@
 		
 		public function remove( $id )
 		{
+			\Classes\Core\User::isAdmin();
+			
 			$sess       =   new Session();
 			if ( empty( $id ) ) {
 				

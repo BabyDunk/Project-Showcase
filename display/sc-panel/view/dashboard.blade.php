@@ -6,7 +6,7 @@
 	 * Time: 13:13
 	 */
 
-$sess = new \Classes\Core\Session();
+
 
 	?>
 
@@ -25,7 +25,7 @@ $sess = new \Classes\Core\Session();
         <div class="grid-x expanded">
             <div class="large-12 cell">
                 <h1 class="page-header">
-                    Admin
+                    {{\Classes\Core\User::hasPrivilege() ? 'Admin' : 'User'}}
                     <small>Dashboard</small>
                 </h1>
 
@@ -38,7 +38,7 @@ $sess = new \Classes\Core\Session();
                                             <i class="fa fa-5x fa-bar-chart-o"></i>
                                         </div>
                                         <div class="small-9 cell text-right">
-                                            <div class="stat"><?php echo $sess->count; ?></div>
+                                            <div class="stat">{{$sessCount}}</div>
                                             <div>New Views</div>
                                         </div>
                                     </div>
@@ -63,7 +63,7 @@ $sess = new \Classes\Core\Session();
                                             <i class="fa fa-table fa-5x"></i>
                                         </div>
                                         <div class="small-9 cell text-right">
-                                            <div class="stat"><?php  echo \Classes\Core\Showcase::count_all(); ?></div>
+                                            <div class="stat">{{$ShowcaseCount}}</div>
                                             <div>Showcases</div>
                                         </div>
                                     </div>
@@ -80,6 +80,7 @@ $sess = new \Classes\Core\Session();
                             </div>
                         </div>
 
+                        @if(\Classes\Core\User::hasPrivilege())
                         <div class="large-3 medium-6 cell success">
                             <div class="callout alert">
                                 <div class="card">
@@ -88,7 +89,7 @@ $sess = new \Classes\Core\Session();
                                             <i class="fa fa-user fa-5x"></i>
                                         </div>
                                         <div class="small-9 cell text-right">
-                                            <div class="stat"><?php echo \Classes\Core\User::count_all(); ?></div>
+                                            <div class="stat">{{$UserCount}}</div>
                                             <div>Users</div>
                                         </div>
                                     </div>
@@ -104,6 +105,7 @@ $sess = new \Classes\Core\Session();
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <div class="large-3 medium-6 cell success">
                             <div class="callout primary">
@@ -113,7 +115,7 @@ $sess = new \Classes\Core\Session();
                                             <i class="fa fa-comments-o fa-5x"></i>
                                         </div>
                                         <div class="small-9 cell text-right">
-                                            <div class="stat"><?php echo \Classes\Core\Comment::count_all(); ?></div>
+                                            <div class="stat">{{$CommentCount}}</div>
                                             <div>Comments</div>
                                         </div>
                                     </div>
