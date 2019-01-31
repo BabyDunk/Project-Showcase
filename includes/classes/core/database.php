@@ -36,7 +36,7 @@ class Database {
 
 		}
 		
-		if (!$this->connection->set_charset('utf8')) {
+		if (!$this->connection->set_charset(DB_CHARSET)) {
 			printf("Error loading character set utf8: %s\n", $this->connection->error);
 			exit;
 		}
@@ -53,6 +53,8 @@ class Database {
 		return $result;
 
 	}
+	
+	
 
 	private function confirm_query( $result ){
 
@@ -85,7 +87,6 @@ class Database {
 
 } //  End of Database class
 
-$db = new Database();
 
 
 

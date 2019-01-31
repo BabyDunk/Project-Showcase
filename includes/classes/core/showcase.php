@@ -8,7 +8,7 @@
 	
 	namespace Classes\Core;
 
-class Showcase extends Db_object {
+class Showcase extends PdoObject {
 	
 	private     static  $instance;
 
@@ -56,7 +56,7 @@ class Showcase extends Db_object {
 	 *
 	 * */
 	public static function find_by_user_id($id, $limit=0, $order='desc'){
-		global $db;
+		global $pdo;
 		
 		$limit = !empty($limit) ? " LIMIT $limit " : "";
 		
@@ -69,9 +69,12 @@ class Showcase extends Db_object {
 			$isOrder = " ORDER BY RAND() ";
 		}
 		
-		$id =   $db->escape_string( $id );
+		$params = [];
+		$params[] = [':holderid', $id, 'int'];
 		
-		$item_array   =   static::find_by_query( "SELECT * FROM `" . static::$db_table . "` WHERE user_id = " . $id  .  $isOrder . $limit);
+		$sql = "SELECT * FROM `" . static::$db_table . "` WHERE user_id = :holderid " . $isOrder . $limit;
+		
+		$item_array   =   static::find_by_query($sql, $params );
 		
 		
 		return (!empty($item_array)) ? $item_array : false;
@@ -105,7 +108,7 @@ class Showcase extends Db_object {
 	
 	// file saving
 	public function save_withImage() {
-		global $db;
+		global $pdo;
 		
 		
 		// TODO: make method more efficient, remove image when new images is uploaded, allow image with the same filename to replace already loaded image
@@ -199,7 +202,7 @@ class Showcase extends Db_object {
 				if(file_exists($target_path)) {
 					
 					$this->errors[] =   "The file {$this->filename} already exists";
-					$this->id = $db->the_insert_id();
+					$this->id = $pdo->lastInsertedId();
 					$this->delete();
 					return false;
 					
@@ -301,13 +304,15 @@ class Showcase extends Db_object {
 	} // End of save method
 	
 	public function deleteAllOfUser($id){
-		global $db;
+		global $pdo;
 		
-		$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE user_id = " . $db->escape_string($id);
+		$params = [];
+		$params[] = [':user_id', $id, 'int'];
+		$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE user_id = :user_id";
 		
-		$db->query($sql);
+		$result = $pdo->query($sql,$params);
 		
-		return (mysqli_affected_rows($db->connection) >= 1 ) ? true : false;
+		return ($result->rowCount() >= 1 ) ? true : false;
 		
 	} // End of Delete Method
 

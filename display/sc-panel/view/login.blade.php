@@ -22,8 +22,8 @@
             <div class="grid-padding-x grid-x">
                 <div class="medium-6 medium-offset-3 large-6 large-offset-3 cell">
                     <div class="callout loginpanel secondary clearfix">
-                        <div class="text-right">
-                            <a href="/sc-panel/adduser"><h3>Register Here</h3></a>
+                        <div class="text-center">
+                            <h3>Contact Admin To Create Account</h3>
                         </div>
                         <div class="callout clearfix primary">
                                 @if(isset($message))

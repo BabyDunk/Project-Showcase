@@ -37,7 +37,7 @@
 			
 			$sess = new Session();
 			
-			if($sess->is_signed_in()){
+			if(!$sess->is_signed_in()){
 				
 				redirect('/sc-panel');
 				
@@ -55,7 +55,7 @@
 			
 			$sess = new Session();
 			
-			if($sess->is_signed_in()){
+			if(!$sess->is_signed_in()){
 				
 				redirect('/sc-panel');
 				return false;
@@ -179,7 +179,7 @@
 				Session::set('MESSAGE', 'Something went wrong');
 				redirect('/sc-panel/users');
 				
-			}elseif($post->userId !== $sess->user_id){
+			}elseif(!User::hasPrivilege()){
 				
 				Session::set('MESSAGE', 'You are not authorised to complete this process');
 				redirect('/sc-panel/users');
@@ -202,8 +202,15 @@
 					if ( $sess->is_signed_in() ) {
 						
 						$user = new User();
-						
-						$user->id         = $sess->user_id;
+						if ( User::hasPrivilege() )
+						{
+							$userHolder = $post->userId;
+						}
+						else
+						{
+							$userHolder = $sess->user_id;
+						}
+						$user->id         = $userHolder;
 						$user->username   = $username;
 						$user->email      = $email;
 						$user->password   = $password;
@@ -221,7 +228,7 @@
 							$message = "You have successfully update you profile";
 							Session::set('MESSAGE', $message);
 							
-							redirect('/sc-panel/updateuser/'.$sess->user_id);
+							redirect('/sc-panel/updateuser/'.$userHolder);
 							
 							return true;
 							

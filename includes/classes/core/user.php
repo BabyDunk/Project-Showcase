@@ -8,7 +8,7 @@
 	
 	namespace Classes\Core;
 
-class User extends Db_object {
+class User extends PdoObject {
 	
 	private     static  $instance;
 	protected   static  $db_table = DB_PREFIX."users";
@@ -48,11 +48,14 @@ class User extends Db_object {
 	
 	// Get single user data in a named array
 	public static function find_by_username( $username ){
-		global $db;
+		global $pdo;
 		
-		$username =   $db->escape_string( $username );
+		$params = [];
+		$params[] = [':username', $username, 'str'];
 		
-		$item_array   =   static::find_by_query( "SELECT * FROM `" . static::$db_table . "` WHERE `username` = '" . $username . "' LIMIT 1" );
+		$sql = "SELECT * FROM `" . static::$db_table . "` WHERE `username` = :username LIMIT 1" ;
+		
+		$item_array   =   static::find_by_query( $sql, $params);
 		
 		
 		return (!empty($item_array)) ? array_shift($item_array) : false;
@@ -95,7 +98,7 @@ class User extends Db_object {
 
 	// file saving
 	public function save_user_image() {
-		global $db;
+		global $pdo;
 
 		
 		// TODO: make method more efficient, remove image when new images is uploaded, allow image with the same filename to replace already loaded image
@@ -189,7 +192,7 @@ class User extends Db_object {
 				if(file_exists($target_path)) {
 
 					$this->errors[] =   "The file {$this->filename} already exists";
-					$this->id = $db->the_insert_id();
+					$this->id = $pdo->lastInsertedId();
 					$this->delete();
 					return false;
 

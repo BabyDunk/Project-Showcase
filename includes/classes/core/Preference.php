@@ -9,7 +9,7 @@
 	namespace Classes\Core;
 	
 	
-	class Preference extends  Db_object
+	class Preference extends  PdoObject
 	{
 		private     static  $instance;
 		protected   static  $db_table = DB_PREFIX."preference";
@@ -19,7 +19,6 @@
 		protected   static  $db_Enum_Types = array('STRING', 'INTEGER', 'BOOLEAN');
 		
 		
-		public              $id;
 		public              $pref_section;
 		public              $pref_key;
 		public              $pref_value;

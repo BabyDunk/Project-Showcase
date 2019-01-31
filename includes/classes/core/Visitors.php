@@ -14,28 +14,43 @@
 	 *
 	 * @package Classes\Core
 	 */
-	class Visitors extends Db_object
+	class Visitors extends PdoObject
 	{
-		private     static  $instance;
-		protected static    $db_table = DB_PREFIX."visitors";
-		protected static    $db_table_fields = array('visitors_ip', 'visitors_host', 'visitors_agent', 'visited_page_id', 'visited_page_title', 'visited_page_author', 'visitors_sess', 'created_at');
 		
-		public              $id;
-		public              $visitors_ip;
-		public              $visitors_host;
-		public              $visitors_agent;
-		public              $visited_page_id;
-		public              $visited_page_title;
-		public              $visited_page_author;
-		public              $visitors_sess;
-		public              $created_at;
+		
+		
+		private static $instance;
+		protected static $db_table = DB_PREFIX . "visitors";
+		protected static $db_table_fields = array(
+			'visitors_ip' ,
+			'visitors_host' ,
+			'visitors_agent' ,
+			'visited_page_id' ,
+			'visited_page_title' ,
+			'visited_page_author' ,
+			'visitors_sess' ,
+			'created_at'
+		);
+		
+		public $id;
+		public $visitors_ip;
+		public $visitors_host;
+		public $visitors_agent;
+		public $visited_page_id;
+		public $visited_page_title;
+		public $visited_page_author;
+		public $visitors_sess;
+		public $created_at;
 		
 		
 		public static function instance()
 		{
-			if(!self::$instance instanceof self){
+			
+			if ( ! self::$instance instanceof self )
+			{
 				self::$instance = new self;
 			}
+			
 			return self::$instance;
 		}
 		
@@ -56,6 +71,12 @@
 			
 			$showcase = Showcase::find_by_id( $page_id );
 			
+			if ( empty( $showcase ) )
+			{
+				$this->errors[] = "Page no long exists";
+				redirect( '/' );
+			}
+			
 			$this->visitors_ip         = ip2long( $_SERVER[ 'REMOTE_ADDR' ] );
 			$this->visitors_host       = isset( $_SERVER[ 'REMOTE_HOST' ] ) ? $_SERVER[ 'REMOTE_HOST' ] : gethostbyaddr( $_SERVER[ 'REMOTE_ADDR' ] );
 			$this->visitors_agent      = $_SERVER[ 'HTTP_USER_AGENT' ];
@@ -64,19 +85,25 @@
 			$this->visited_page_author = ( empty( $page_id ) ) ? '' : $showcase->user_id;
 			$this->visitors_sess       = session_id() . '_' . ip2long( $_SERVER[ 'REMOTE_ADDR' ] );
 			$this->created_at          = date( "Y-m-d H:i:s" );
-
-			if ( ! Session::has( 'DATACOLLECT' ) ) {
+			
+			if ( ! Session::has( 'DATACOLLECT' ) )
+			{
 				Session::set( 'DATACOLLECT' , $this->visitors_sess );
 				
 				$this->save();
-			} else {
+			}
+			else
+			{
 				
-				if ( Session::has( 'DATACOLLECT' ) ) {
-					if ( Session::get( 'DATACOLLECT' ) === $this->visitors_sess ) {
+				if ( Session::has( 'DATACOLLECT' ) )
+				{
+					if ( Session::get( 'DATACOLLECT' ) === $this->visitors_sess )
+					{
 						
 						$seenPage = self::find_by_visitor_sess( $this->visitors_sess );
 						
-						if ( empty( $seenPage ) ) {
+						if ( empty( $seenPage ) )
+						{
 							$this->save();
 							
 							return;
@@ -84,36 +111,37 @@
 						
 						$hasSeen  = 0;
 						$arrCount = 0;
-						foreach ( $seenPage as $val ) {
+						foreach ( $seenPage as $val )
+						{
 							$arrCount ++;
 							
-							if ( $val->visited_page_id !== $page_id ) {
+							if ( $val->visited_page_id !== $page_id )
+							{
 								
 								$hasSeen ++;
 							}
 						}
 						
-						if ( $hasSeen === $arrCount ) {
+						if ( $hasSeen === $arrCount )
+						{
 							$this->save();
 						}
 						
-					} else {
+					}
+					else
+					{
 						Session::set( 'DATACOLLECT' , $this->visitors_sess );
 						$this->save();
 					}
 				}
 			}
 		}
-			
-			
-			
+		
+		
 		// TODO: finish setting the stats for collection
 		
 		
-			
-		
-		
-		public function check(  )
+		public function check()
 		{
 		
 		
@@ -127,19 +155,22 @@
 		 *
 		 * @return array|bool|void
 		 */
-		public static function find_by_visitor_sess( $sess ){
+		public static function find_by_visitor_sess( $sess )
+		{
+			
 			global $db;
 			
-			if(empty($sess)){
+			if ( empty( $sess ) )
+			{
 				return;
 			}
-		
-			$sess =   $db->escape_string( $sess );
 			
-			$item_array   =   static::find_by_query( "SELECT * FROM `" . static::$db_table . "` WHERE visitors_sess = '" . $sess . "' " );
+			$sess = $db->escape_string( $sess );
+			
+			$item_array = static::find_by_query( "SELECT * FROM `" . static::$db_table . "` WHERE visitors_sess = '" . $sess . "' " );
 			
 			
-			return (!empty($item_array)) ? $item_array : false;
+			return ( ! empty( $item_array ) ) ? $item_array : false;
 			
 		} // End of the find_by_visitor_sess Method
 		
@@ -150,15 +181,21 @@
 		 *
 		 * @return mixed|void
 		 */
-		public static function count_by_visitor_sess( $sess ){
-			global $db;
+		public static function count_by_visitor_sess( $sess )
+		{
 			
-			if(empty($sess)) return;
-			if(!is_string($sess)) return;
 			
-			$sess =   $db->escape_string($sess);
+			if ( empty( $sess ) )
+			{
+				return;
+			}
+			if ( ! is_string( $sess ) )
+			{
+				return;
+			}
 			
-			$result = self::count_by_condition(['visitors_sess'=>$sess]);
+			
+			$result = self::count_by_condition( [ 'visitors_sess' => $sess ] );
 			
 			return $result;
 			
@@ -171,13 +208,19 @@
 		 *
 		 * @return mixed|void
 		 */
-		public static function count_by_visitor_by_author( $author ){
-			global $db;
+		public static function count_by_visitor_by_author( $author )
+		{
 			
-			if(empty($author)) return;
-			if (!is_integer($author)) $author = intval($author);
+			if ( empty( $author ) )
+			{
+				return;
+			}
+			if ( ! is_integer( $author ) )
+			{
+				$author = intval( $author );
+			}
 			
-			$result = self::count_by_condition(['visited_page_author'=>$author]);
+			$result = self::count_by_condition( [ 'visited_page_author' => $author ] );
 			
 			return $result;
 			

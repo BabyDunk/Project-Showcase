@@ -9,7 +9,7 @@
 	namespace Classes\Core;
 
 
-class Contact extends Db_object
+class Contact extends PdoObject
 {
 	
 	private     static  $instance;

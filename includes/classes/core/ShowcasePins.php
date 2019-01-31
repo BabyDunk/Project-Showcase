@@ -9,7 +9,7 @@
 	namespace Classes\Core;
 	
 	
-	class ShowcasePins extends Db_object
+	class ShowcasePins extends PdoObject
 	{
 		private     static  $instance;
 		protected   static  $db_table = DB_PREFIX."showcase_text";
@@ -36,13 +36,16 @@
 		
 		
 		public function deletePin($id){
-			global $db;
+			global $pdo;
 			
-			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE show_id = " . $db->escape_string($id);
 			
-			$db->query($sql);
+			$params = [];
+			$params[] = [':showid', $id, 'int'];
+			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE show_id = :showid" ;
 			
-			return (mysqli_affected_rows($db->connection) >= 1 ) ? true : false;
+			$result = $pdo->query($sql, $params);
+			
+			return ($result->rowCount() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		

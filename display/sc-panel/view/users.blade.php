@@ -8,6 +8,7 @@
 
 $users =  \Classes\Core\User::find_all();
 
+
 ?>
 
 @extends('extends.admin-base')

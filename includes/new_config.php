@@ -11,6 +11,7 @@ define('DB_HOST', 'localhost');
 define('DB_USER', 'showcase');
 define('DB_PASS', 'Casey2010@');
 define('DB_NAME', 'showcase');
+define('DB_CHARSET', 'utf8mb4');
 define('DB_PREFIX', 'sc_');
 
 
