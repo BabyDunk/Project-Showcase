@@ -6,6 +6,20 @@
 	 * Time: 13:20
 	 */
 	$user = \Classes\Core\User::find_by_id($userid);
+	$showcases = \Classes\Core\Showcase::find_by_user_id($userid);
+	$comments = [];
+
+	if ( ! empty( $showcases ) )
+	{
+		foreach ( $showcases as $item )
+		{
+			$comments = array_merge( $comments , (array) \Classes\Core\Comment::find_by_show_id( $item->id ) );
+		}
+	}
+	/*echo "<pre>";
+	print_r($comments);
+	echo "</pre>";*/
+
 	?>
 
 <div class="top-bar"
@@ -13,7 +27,7 @@
     <div class="top-bar-left">
         <ul class="menu" >
             <li><button class="menu-icon hide-for-large" type="button" data-open="offCanvas"></button></li>
-            <li class="menu-text"><a href="/"> Visit - {{sca_get_preference('showcase', 'sca_sitename')}}</a></li>
+            <li class="menu-text"><a href="{{sca_get_preference('showcase', 'sca_siteurl')}}"> Visit - {{sca_get_preference('showcase', 'sca_sitename')}}</a></li>
         </ul>
     </div>
     <div class="top-bar-right">
@@ -21,6 +35,7 @@
             <li>
                 <a href="#"><i class="fa fa-envelope"></i></a>
                 <ul class="menu vertical">
+                    @foreach($comments as $comment)
                     <li class="message-preview">
                         <a href="#">
                             <div class="media">
@@ -29,46 +44,19 @@
                                     </span>
                                 <div class="media-body">
                                     <h5 class="media-heading">
-                                        <strong>John Smith</strong>
+                                        <strong>{{$comment->author}}</strong>
                                     </h5>
-                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
+                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> @php
+
+                                            $createdDate = new DateTime($comment->created_at);
+
+                                            date_format($createdDate, 'm ([ .\t-])* dd [,.stndrh\t ]+ y') @endphp </p>
+                                    <p>{{$comment->body}}</p>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    <li class="message-preview">
-                        <a href="#">
-                            <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                <div class="media-body">
-                                    <h5 class="media-heading">
-                                        <strong>John Smith</strong>
-                                    </h5>
-                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="message-preview">
-                        <a href="#">
-                            <div class="media">
-                                    <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                    </span>
-                                <div class="media-body">
-                                    <h5 class="media-heading">
-                                        <strong>John Smith</strong>
-                                    </h5>
-                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
+                    @endforeach
                     <li class="message-footer">
                         <a href="#">Read All New Messages</a>
                     </li>

@@ -32,7 +32,7 @@
                             <label for="body">Leave a Comment</label>
                             <textarea class="form-control" cols="30" rows="7" id="commentBody"  placeholder="Write a comment" ></textarea>
 
-                            <button type="submit" name="submit" id="commentSubmit" value="true" data-show_id="{{$id}}" data-csrftoken="{{\Classes\Core\CSRFToken::_SetToken()}}" class="button success">Submit</button>
+                            <button type="submit" name="submit" id="commentSubmit" value="true" data-show_id="{{$id['id']}}" data-csrftoken="{{\Classes\Core\CSRFToken::_SetToken()}}" class="button success">Submit</button>
                         </form>
                     </div>
                 </div>

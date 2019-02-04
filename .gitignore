@@ -1,6 +1,4 @@
 .idea
-backupAdmin/
-backupFront/
 vendor/
 node_modules/
 display/sc-panel/cache/*.php
