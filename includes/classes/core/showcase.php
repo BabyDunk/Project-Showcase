@@ -56,7 +56,6 @@ class Showcase extends PdoObject {
 	 *
 	 * */
 	public static function find_by_user_id($id, $limit=0, $order='desc'){
-		global $pdo;
 		
 		$limit = !empty($limit) ? " LIMIT $limit " : "";
 		
@@ -75,6 +74,31 @@ class Showcase extends PdoObject {
 		$sql = "SELECT * FROM `" . static::$db_table . "` WHERE user_id = :holderid " . $isOrder . $limit;
 		
 		$item_array   =   static::find_by_query($sql, $params );
+		
+		
+		return (!empty($item_array)) ? $item_array : false;
+		
+	} // End of the Find_user_by_id Method
+	
+	public static function find_all_for_feature($limit=0, $order='desc'){
+
+		
+		$limit = !empty($limit) ? " LIMIT $limit " : "";
+		
+		$isOrder = "";
+		if($order === 'desc'){
+			$isOrder = " ORDER BY id DESC ";
+		}elseif($order === 'asc'){
+			$isOrder = " ORDER BY id ASC ";
+		}elseif($order === 'rand'){
+			$isOrder = " ORDER BY RAND() ";
+		}
+		
+		
+		$sql = "SELECT * FROM `" . static::$db_table . "` WHERE `filename` IS NOT NULL AND `title` IS NOT NULL ".
+		       "AND `description1` IS NOT NULL AND `fg_colorselector` IS NOT NULL AND `bg_colorselector` IS NOT NULL " . $isOrder . $limit;
+		
+		$item_array   =   static::find_by_query($sql);
 		
 		
 		return (!empty($item_array)) ? $item_array : false;
@@ -286,20 +310,22 @@ class Showcase extends PdoObject {
 	 */
 	public function save(  )
 	{
+		
 		if($this->filename){
 			
 			if($this->save_withImage()){
 				return true;
 			}
-			return false;
+			
 			
 		}else{
 			
 			if($this->save_withoutImage()){
 				return true;
 			}
-			return false;
+			
 		}
+		return false;
 		
 	} // End of save method
 	
@@ -310,9 +336,9 @@ class Showcase extends PdoObject {
 		$params[] = [':user_id', $id, 'int'];
 		$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE user_id = :user_id";
 		
-		$result = $pdo->query($sql,$params);
+		$pdo->query($sql,$params);
 		
-		return ($result->rowCount() >= 1 ) ? true : false;
+		return ($pdo->rowsEffected() >= 1 ) ? true : false;
 		
 	} // End of Delete Method
 

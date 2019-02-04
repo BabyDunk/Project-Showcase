@@ -6,7 +6,7 @@
 	 * Time: 13:19
 	 */
 
-	$theeBlockNotice = (object)unserialize(\Classes\Core\Showcase::find_by_id($id)->three_notice_block);
+	$theeBlockNotice = (object)unserialize(\Classes\Core\Showcase::find_by_id($id['id'])->three_notice_block);
 
 	//var_dump($theeBlockNotice);
 
@@ -19,7 +19,7 @@
         <div class="grid-container">
             <div class="grid-x grid-padding-x">
                 <div class="grid-x grid-margin-x text-center" data-equalizer data-equalize-on="medium" id="test-eq">
-                    <div class="cell medium-4">
+                    <div class="cell medium-4 large-4">
                         <div class="card" data-equalizer-watch>
                             <div class="card-divider">
                                 <h4 class="h4">{{$theeBlockNotice->blocknoticetitle1}}</h4>
@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cell medium-4">
+                    <div class="cell medium-4  large-4">
                         <div class="card" data-equalizer-watch>
                             <div class="card-divider">
                                 <h4 class="h4">{{$theeBlockNotice->blocknoticetitle2}}</h4>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cell medium-4">
+                    <div class="cell medium-4  large-4">
                         <div class="card" data-equalizer-watch>
                             <div class="card-divider">
                                 <h4 class="h4">{{$theeBlockNotice->blocknoticetitle3}}</h4>

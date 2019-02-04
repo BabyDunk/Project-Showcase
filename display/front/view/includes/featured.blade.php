@@ -7,7 +7,7 @@
 	 */
 
 
-	$showcases = \Classes\Core\Showcase::find_all(sca_get_preference('showcase', 'sca_howmanyfrontfeatured'), sca_get_preference('showcase', 'sca_whichorderfeatured'));
+	$showcases = \Classes\Core\Showcase::find_all_for_feature(sca_get_preference('showcase', 'sca_howmanyfrontfeatured'), 'desc');
 
 
 $i = 0;

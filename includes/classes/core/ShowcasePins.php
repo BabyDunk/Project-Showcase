@@ -43,9 +43,9 @@
 			$params[] = [':showid', $id, 'int'];
 			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE show_id = :showid" ;
 			
-			$result = $pdo->query($sql, $params);
+			$pdo->query($sql, $params);
 			
-			return ($result->rowCount() >= 1 ) ? true : false;
+			return ($pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		

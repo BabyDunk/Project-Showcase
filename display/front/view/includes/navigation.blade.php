@@ -20,8 +20,8 @@
         <ul class="dropdown menu" data-dropdown-menu>
             <li><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
-            <li><a href="#contact" data-smooth-scroll>Contact</a></li>
-            <li><a href="/sc-panel/login">Login</a></li>
+            <li><a href="{{sca_get_preference('showcase', 'sca_siteurl')}}#contact" {{--data-smooth-scroll--}}>Contact</a></li>
+            <li>@php echo ($user_id) ? '<a href="/sc-panel">User Panel</a>' : '<a href="/sc-panel/login">Login</a>' ; @endphp</li>
         </ul>
     </div>
 </div>

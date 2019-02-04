@@ -48,7 +48,6 @@
 		
 		public function query($sql,$params=[])
 		{
-			
 			try{
 				$this->lastquery = $this->pdo->prepare($sql);
 				
@@ -56,17 +55,23 @@
 				{
 					foreach ( $params as $param )
 					{
-						$this->lastquery->bindParam( $param[ 0 ] , $param[ 1 ] );
+						if(!empty($param[1]))
+						{
+							
+							$this->lastquery->bindParam( $param[ 0 ] , $param[ 1 ] );
+						}
 					}
 				}
 				
+				
+			
 				$this->lastquery->execute();
 				
 				return $this->lastquery;
 				
 				
 			}catch (\PDOException $e){
-				throw new \PDOException("PDO ERROR: " . $e->getMessage(), $e->getCode());
+				throw new \PDOException("PDO ERROR: " . $e->getMessage()/*, $e->getCode()*/);
 			}
 			
 			
@@ -155,6 +160,12 @@
 		{
 			
 			return $this->pdo->lastInsertId();
+		}
+		
+		public function rowsEffected(  )
+		{
+			return $this->lastquery->rowCount();
+			
 		}
 		
 		

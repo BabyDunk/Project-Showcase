@@ -61,21 +61,21 @@
 			
 		}
 		
-		public static function find_all( $limit = 0 , $order = 0 )
+		public static function find_all( $limit = 0 , $order = 'rand' )
 		{
 			
 			$limit = ! empty( $limit ) ? " LIMIT $limit " : "";
 			
 			$isOrder = "";
-			if ( $order === 1 )
+			if ( $order === 'desc' )
 			{
 				$isOrder = " ORDER BY id DESC ";
 			}
-			elseif ( $order === 2 )
+			elseif ( $order === 'asc' )
 			{
 				$isOrder = " ORDER BY id ASC ";
 			}
-			elseif ( $order === 3 )
+			elseif ( $order === 'rand' )
 			{
 				$isOrder = " ORDER BY RAND() ";
 			}
@@ -141,7 +141,7 @@
 			}
 			
 			$item_array = static::find_by_query( $sql , $params );
-			
+		
 			return ( ! empty( $item_array ) ) ? array_shift( $item_array ) : false;
 			
 		} // End of the Find preference by pref id
@@ -211,7 +211,7 @@
 					$property[ $db_table_field ] = $this->$db_table_field;
 				}
 			}
-			
+		
 			return $property;
 		}
 		
@@ -275,12 +275,14 @@
 			
 			$properties_pairs = array();
 			$params           = [];
-			$params[]         = [ ':holderid' , $this->id , '' ];
 			foreach ( $properties as $property => $value )
 			{
-				if ( ! empty( $value ) )
+				if ( ! empty( $value ))
 				{
-					$properties_pairs[] = "`{$property}` = :holder{$property}";
+					if ($property !== 'id')
+					{
+						$properties_pairs[] = "`{$property}` = :holder{$property}";
+					}
 					$params[]           = [ ':holder' . $property , $value , '' ];
 				}
 			}
@@ -288,11 +290,11 @@
 			$sql = "UPDATE `" . static::$db_table . "` SET ";
 			$sql .= implode( ", " , $properties_pairs ) . " ";
 			$sql .= "WHERE `id` = :holderid LIMIT 1";
+	
+			$pdo->query( $sql , $params );
 			
-			$result = $pdo->query( $sql , $params );
 			
-			
-			return ( $result->rowCount() == 1 ) ? true : false;
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		}
 		
@@ -300,31 +302,40 @@
 			global $pdo;
 			
 			$properties =   $this->get_property();
+			
 			$properties_pairs   =   array();
 			$params = [];
+		
 			foreach ( $properties as $property => $value ) {
-				$properties_pairs[] =   "`{$property}` = :holder{$property}";
-				
+				if($property !== 'pref_section' && $property !== 'pref_key')
+				{
+					$properties_pairs[] = "`{$property}` = :holder{$property}";
+				}
 				$params[] = [':holder'.$property, $value, ''];
+			
 			}
 			
-			$theArray =[];
+			$theClause =[];
 			foreach ($arrayOfColAndString as $key => $value){
-				$theArray[] = "`{$key}` = :holder{$key}";
-				$params[] = [':holder'.$key, $value, ''];
+				$theClause[] = "`{$key}` = :holder{$key}";
 			}
 			
 			
 			$sql        =   "UPDATE `" . static::$db_table . "` SET ";
 			$sql        .=  implode(", ", $properties_pairs ) . " ";
 			$sql        .=  "WHERE ";
-			$sql        .=  implode(' AND ', $theArray);
+			$sql        .=  implode(' AND ', $theClause);
 			$sql        .=  " LIMIT 1";
 			
-			$result = $pdo->query($sql,$params);
+			
+//			echo "<pre>";
+//			print_r($sql);
+//			print_r($params);
+//			echo "</pre>";
+			$pdo->query($sql,$params);
 			
 			
-			return ( $result->rowCount() >= 1 ) ? true : false;
+			return ( $pdo->rowsEffected()>= 1 ) ? true : false;
 			
 		} // End of Update Method
 		
@@ -347,10 +358,10 @@
 			$sql        .=  implode(", ", $properties_pairs ) . " ";
 			$sql        .=  "WHERE `:holdercolumn` = :holderstring LIMIT 1";
 			
-			$result = $pdo->query($sql, $params);
+			$pdo->query($sql, $params);
 			
 			
-			return ($result->rowCount() >= 1 ) ? true : false;
+			return ($pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Update Method
 		
@@ -364,9 +375,9 @@
 			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE id = :holderid LIMIT 1";
 		
 			
-			$result = $pdo->query($sql,$params);
+			$pdo->query($sql,$params);
 			
-			return ($result->rowCount() >= 1 ) ? true : false;
+			return ($pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		
@@ -384,9 +395,9 @@
 			$sql    .=   implode(' AND ', $theArray);
 			$sql    .=  " LIMIT 1";
 			
-			$result = $pdo->query($sql);
+			$pdo->query($sql);
 			
-			return ($result->rowCount() >= 1 ) ? true : false;
+			return ($pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		

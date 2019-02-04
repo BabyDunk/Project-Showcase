@@ -23,7 +23,9 @@
 		{
 			Session::instance()->visitor_count();
 
-			view('home');
+			$theUser = isset(Session::instance()->user_id) ? Session::instance()->user_id : '';
+			
+			view('home', ['user_id' => $theUser]);
 			
 		}
 		

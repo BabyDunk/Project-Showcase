@@ -73,13 +73,15 @@
 		public static function find_comments( $show_id )
 		{
 			
-			global $db;
+		
+			$params = [];
+			$params[] = [':show_id', $show_id, 'int'];
 			
 			$sql = "SELECT * FROM " . self::$db_table;
-			$sql .= " WHERE show_id  = " . $db->escape_string( $show_id );
+			$sql .= " WHERE show_id  = :show_id";
 			$sql .= " ORDER BY created_at DESC";
 			
-			return self::find_by_query( $sql );
+			return self::find_by_query( $sql, $params );
 			
 		} // End of Find_comments Method
 		

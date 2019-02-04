@@ -9,6 +9,7 @@
 	namespace Controllers;
 	
 	
+	use Classes\Core\Session;
 	use Classes\Core\Visitors;
 	
 	class IndexShowcaseController
@@ -18,7 +19,11 @@
 		{
 			
 			Visitors::instance()->set($id);
-			view('showcase', $id);
+			
+			
+			$theUser = isset(Session::instance()->user_id) ? Session::instance()->user_id : '';
+			
+			view('showcase', ['id' => $id, 'user_id' => $theUser]);
 		}
 		
 		

@@ -27,7 +27,8 @@
 			if ( isset( $id ) )
 			{
 				adminView( 'uploads' , [ 'id' => $id , 'userid' => Session::instance()->user_id ] );
-			} else
+			}
+			else
 			{
 				adminView( 'uploads' , [ 'userid' => Session::instance()->user_id ] );
 			}
@@ -98,66 +99,30 @@
 				if ( Params::has( 'showcaseId' ) )
 				{
 					$showcase->updated_at = date( "Y-m-d H:i:s" );
-				} else
+				}
+				else
 				{
 					$showcase->created_at = date( "Y-m-d H:i:s" );
 				}
 				
 				
+				
 				if ( ! empty( Params::get( 'file' )->upload_file->name ) )
 				{
-					$showcase->set_file( Params::all( true )[ 'file' ][ 'upload_file' ] );
+					$imageSize = getimagesize(Params::get( 'file' )->upload_file->tmp_name);
+			
+					if($imageSize[0] === 1200 && $imageSize[1] === 600){
+						$showcase->set_file( Params::all( true )[ 'file' ][ 'upload_file' ] );
+					}else{
+						
+						Session::set('MESSAGE', 'Image dimension must be 1200X600');
+						redirect('/sc-panel/uploads');
+					}
+					
 				}
 				
 				if ( $showcase->save() )
 				{
-					global $db;
-					
-					$justInserted = ! empty( $showcase::find_by_id( $db->the_insert_id() ) ) ? $showcase::find_by_id( $db->the_insert_id() ) : '';
-					
-					if ( $justInserted )
-					{
-						
-						// TODO: create database query to call all pins by show_id
-						$hasPinText = ! empty( ShowcasePins::find_by_show_id( $justInserted->show_id ) ) ? ShowcasePins::find_by_show_id( $justInserted->show_id ) : '';
-						
-						if ( $hasPinText )
-						{
-							
-							foreach ( $hasPinText as $item )
-							{
-								
-								$exploded = explode( '_' , $item->show_id );
-								
-								if ( $exploded[ 0 ] == 'tmpID' )
-								{
-									$exploded[ 0 ] = 'permID';
-								}
-								
-								$imploded = implode( '_' , $exploded );
-								
-								// TODO: change all corresponding show_id from tmp to perm
-								$hasPinText->id      = $item->id;
-								$hasPinText->show_id = $imploded;
-								$hasPinText->update();
-								
-							}
-							
-						}
-						
-						$exploded = explode( '_' , $justInserted->show_id );
-						
-						if ( $exploded[ 0 ] == 'tmpID' )
-						{
-							$exploded[ 0 ] = 'permID';
-						}
-						
-						$imploded = implode( '_' , $exploded );
-						
-						$justInserted->id      = $db->the_insert_id();
-						$justInserted->show_id = $imploded;
-						$justInserted->update();
-					}
 					
 					$message = "Showcase uploaded Successfully!";
 					
@@ -165,7 +130,8 @@
 					
 					redirect( '/sc-panel/showcase' );
 					
-				} else
+				}
+				else
 				{
 					
 					$errors = $showcase->errors;
@@ -175,7 +141,8 @@
 				}
 				
 				
-			} else
+			}
+			else
 			{
 				
 				adminView( 'uploads' , [
@@ -220,7 +187,8 @@
 						'pins'    => $thePins
 					] );
 					
-				} else
+				}
+				else
 				{
 					
 					echo json_encode( [
@@ -231,7 +199,8 @@
 					
 				}
 				
-			} else
+			}
+			else
 			{
 				
 				echo json_encode( [
@@ -277,7 +246,8 @@
 					] );
 					
 					
-				} else
+				}
+				else
 				{
 					echo json_encode( [
 						'status'  => 'FAILED' ,
@@ -330,7 +300,8 @@
 					] );
 					
 					
-				} else
+				}
+				else
 				{
 					echo json_encode( [
 						'status'  => 'FAILED' ,
