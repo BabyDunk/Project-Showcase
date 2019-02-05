@@ -271,6 +271,8 @@
             // Admin
             case 'dashboard':
 
+                // Load avatars
+                SHOWCASE.admin.commentNameAvatar();
                 // Google 3D Chart Initializer
                 google.charts.load("current", {packages:["corechart"]});
                 google.charts.setOnLoadCallback(drawChart);
@@ -395,5 +397,38 @@
 
         }
     });
+
+})();
+
+
+(function (){
+
+    'use strict';
+
+    SHOWCASE.admin.commentNameAvatar = function () {
+        
+        var needAvatar = document.querySelectorAll('.comment-media-object');
+    
+        var colours = [
+            "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+            "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
+        ];
+        
+        
+        
+        for (let x=0; x<needAvatar.length;x++){
+            
+            var firstChar = needAvatar[x].dataset.author.charAt(0).toUpperCase();
+            var randomColor = colours[Math.floor(Math.random()*colours.length)];
+       
+            
+            needAvatar[x].innerHTML = '<div id="avatarBox-"'+x+' style="background-color: '+randomColor+';width:50px;height: 50px;display:flex;justify-content: center;align-items: center;font-size:1.2em;color:#141414"><span>'+firstChar+'</span></div>';
+            console.log(needAvatar[x])
+        }
+        
+       
+       
+       
+    }
 
 })();

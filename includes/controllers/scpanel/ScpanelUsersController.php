@@ -147,12 +147,15 @@
 		
 		public function showupdateuser($id)
 		{
-			\Classes\Core\User::isAdmin();
 			
 			$sess       =   new Session();
-			if(!empty($id)){
+			
+			if( !empty($id['id']) && User::hasPrivilege() || !empty($id['id']) && (int)$id['id'] === $sess->user_id){
+				
 				adminView('updateuser', ['id'=>$id, 'userid'=>$sess->user_id]);
-			} else {
+				
+				
+			}else {
 				redirect('/sc-panel/users');
 			}
 			

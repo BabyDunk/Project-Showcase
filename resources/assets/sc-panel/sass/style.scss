@@ -110,3 +110,29 @@ html,body
     font-family: FontAwesome;
   }
 }
+
+
+.media-card {
+  display:grid;
+  grid-template-columns: 1fr;
+
+
+
+  .media-body-title{
+    display:flex;
+    .media-card-title{
+      align-self: center;
+      justify-self: center;
+
+      h5{
+        text-align:center;
+      }
+    }
+  }
+  .media-card-body{
+
+  }
+
+
+
+}

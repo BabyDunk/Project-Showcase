@@ -101,11 +101,25 @@
 			
 		} // End of the Find_user_by_id Method
 		
-		public static function find_by_show_id( $id )
+		public static function find_by_show_id( $id , $limit = 0 , $order = 'desc')
 		{
+			$limit = ! empty( $limit ) ? " LIMIT $limit " : "";
 			
+			$isOrder = "";
+			if ( $order === 'desc' )
+			{
+				$isOrder = " ORDER BY id DESC ";
+			}
+			elseif ( $order === 'asc' )
+			{
+				$isOrder = " ORDER BY id ASC ";
+			}
+			elseif ( $order === 'rand' )
+			{
+				$isOrder = " ORDER BY RAND() ";
+			}
 			
-			$sql      = "SELECT * FROM `" . static::$db_table . "` WHERE `show_id` = :showid ";
+			$sql      = "SELECT * FROM `" . static::$db_table . "` WHERE `show_id` = :showid " . $isOrder . $limit;
 			$params   = [];
 			$params[] = [ ':showid' , $id , 'int' ];
 			

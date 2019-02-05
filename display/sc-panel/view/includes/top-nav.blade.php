@@ -8,12 +8,19 @@
 	$user = \Classes\Core\User::find_by_id($userid);
 	$showcases = \Classes\Core\Showcase::find_by_user_id($userid);
 	$comments = [];
+	$commentCounter = 0;
 
 	if ( ! empty( $showcases ) )
 	{
 		foreach ( $showcases as $item )
 		{
-			$comments = array_merge( $comments , (array) \Classes\Core\Comment::find_by_show_id( $item->id ) );
+
+			$comment = (array)\Classes\Core\Comment::find_by_show_id( $item->id);
+
+			if(!empty($comment[0]) && $commentCounter <= 5){
+				$commentCounter++;
+			    $comments = array_merge( $comments , $comment );
+			}
 		}
 	}
 	/*echo "<pre>";
@@ -38,27 +45,38 @@
                     @foreach($comments as $comment)
                     <li class="message-preview">
                         <a href="#">
-                            <div class="media">
+                            <small class="small text-muted"><i class="fa fa-clock-o"></i> @php
+                                    $date = new DateTime($comment->created_at);
+                                    echo $date->format('l jS \of F Y h:i:s A');
+                                @endphp </small>
+                            <div class="media-card">
+                                <div class="media-body-title">
                                     <span class="pull-left">
-                                        <img class="media-object" src="http://placehold.it/50x50" alt="">
+                                        <div class="comment-media-object"  data-author="{{$comment->author}}"></div>
                                     </span>
-                                <div class="media-body">
-                                    <h5 class="media-heading">
-                                        <strong>{{$comment->author}}</strong>
-                                    </h5>
-                                    <p class="small text-muted"><i class="fa fa-clock-o"></i> @php
+                                    <div class="media-card-title">
+                                        <h5>
+                                            <strong>{{$comment->author}}</strong>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="media-card-body">
+                                    <p>@if(strlen($comment->body) > 100)
 
-                                            $createdDate = new DateTime($comment->created_at);
+                                           {{substr($comment->body, 0, 100)}}...
 
-                                            date_format($createdDate, 'm ([ .\t-])* dd [,.stndrh\t ]+ y') @endphp </p>
-                                    <p>{{$comment->body}}</p>
+                                           @else
+
+                                           {{$comment->body}}
+
+                                    @endif</p>
                                 </div>
                             </div>
                         </a>
                     </li>
                     @endforeach
                     <li class="message-footer">
-                        <a href="#">Read All New Messages</a>
+                        <a href="/sc-panel/comments">Read All Comments</a>
                     </li>
                 </ul>
             </li>
@@ -94,7 +112,7 @@
                 <ul class="menu vertical">
                     <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
                     <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
+                    <li><a href="/sc-panel/updateuser/{{\Classes\Core\Session::instance()->user_id}}"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
                     <li><a href="/sc-panel/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
                 </ul>
             </li>

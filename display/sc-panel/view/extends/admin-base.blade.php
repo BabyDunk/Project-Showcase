@@ -91,10 +91,10 @@ if(!\Classes\Core\Session::instance()->is_signed_in()) { redirect('/sc-panel/log
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['Stats', 'Complete daily stats'],
-            ['Views',     <?php echo $sess->count; ?>],
-            ['Showcases',      <?php echo \Classes\Core\Showcase::count_all(); ?>],
-            ['Users',  <?php echo \Classes\Core\User::count_all(); ?>],
-            ['Comments', <?php echo \Classes\Core\Comment::count_all(); ?>]
+            ['Views',     <?php echo (\Classes\Core\User::hasPrivilege()) ? \Classes\Core\Visitors::count_all() : \Classes\Core\Visitors::count_by_visitor_by_author(\Classes\Core\Session::instance()->user_id); ?>],
+            ['Showcases',      <?php echo (\Classes\Core\User::hasPrivilege()) ? \Classes\Core\Showcase::count_all() : \Classes\Core\Showcase::count_by_condition(['user_id' => \Classes\Core\Session::instance()->user_id]); ?>],
+            ['Users',  <?php echo (\Classes\Core\User::hasPrivilege()) ?  \Classes\Core\User::count_all() : 0; ?>],
+            ['Comments', <?php echo (\Classes\Core\User::hasPrivilege()) ?  \Classes\Core\Comment::count_all() : \Classes\Core\Comment::count_comments_by_showcase_author(\Classes\Core\Session::instance()->user_id); ?>]
         ]);
 
         var options = {
