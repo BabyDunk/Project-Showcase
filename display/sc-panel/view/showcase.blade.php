@@ -37,16 +37,7 @@ if ( \Classes\Core\User::hasPrivilege() ) {
                     Showcases
                     <small><a href="/sc-panel/uploads" >Upload New Showcase</a></small>
                 </h1>
-                @if(isset($message))
-                    <h2 class="bg-info">
-                        {{$message}}
-                    </h2>
-                @endif
-                @if(\Classes\Core\Session::has('MESSAGE'))
-                    <h2 class="bg-info">
-                        {{\Classes\Core\Session::get('MESSAGE')}}
-                    </h2>
-                @endif
+                @include('includes.messages')
                 <div class="col-md-12">
                     <table class="hover unstriped stack">
                         <thead>

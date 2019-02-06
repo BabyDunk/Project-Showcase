@@ -9,7 +9,7 @@
 	namespace Controllers\Scpanel;
 	
 	
-	
+	use Classes\Core\Comment;
 	use Classes\Core\Session;
 	use Classes\Core\Showcase;
 	
@@ -18,54 +18,67 @@
 		
 		
 		
-		public function show(  )
+		public function show()
 		{
 			
-			adminView('showcase', ['userid'=>Session::instance()->user_id]);
+			adminView( 'showcase' , [ 'userid' => Session::instance()->user_id ] );
 			
-			Session::clear('MESSAGE');
+			Session::clear( 'MESSAGE' );
 			
 		}
 		
 		public function remove( $id )
 		{
-
-			if(empty($id)){
+			
+			if ( empty( $id ) )
+			{
 				
 				$message = "no identity supplied";
 				
-				adminView('showcase', ['message' => $message]);
+				adminView( 'showcase' , [ 'message' => $message ] );
 				
-			} else {
+			}
+			else
+			{
 				
-				$showcase = Showcase::find_by_id( $id['id'] );
-				$sess = new Session();
+				$showcase = Showcase::find_by_id( $id[ 'id' ] );
+				$sess     = new Session();
 				
-				if ( $showcase ) {
+				if ( $showcase )
+				{
 					
+					if ( Comment::find_by_show_id( $id[ 'id' ] ) )
+					{
+						Comment::deleteAllByCond( [ 'show_id' => $id[ 'id' ] ] );
+					}
 					
-					if($showcase->delete_showcase()){
+					if ( $showcase->delete_showcase() )
+					{
 						
 						$message = "Showcase removed successfully";
 						
-						adminView('showcase', ['message' => $message, 'userid'=>$sess->user_id]);
+						adminView( 'showcase' , [ 'message' => $message , 'userid' => $sess->user_id ] );
 						
 						return true;
 						
-					}else{
+					}
+					else
+					{
 						
 						$message = "Could not remove showcase";
 						
-						adminView('showcase', ['message' => $message, 'userid'=>$sess->user_id]);
+						adminView( 'showcase' , [ 'message' => $message , 'userid' => $sess->user_id ] );
 						
 					}
 					
 					
-				} else {
+				}
+				else
+				{
 					
 					$message = "Could not identify selected showcase";
 					
-					adminView('showcase', ['message' => $message, 'userid'=>$sess->user_id]);
+					adminView( 'showcase' , [ 'message' => $message , 'userid' => $sess->user_id ] );
 					
 				}
 			}

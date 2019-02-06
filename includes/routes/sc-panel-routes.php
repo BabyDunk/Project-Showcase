@@ -28,7 +28,7 @@
 	
 	
 	// Map Admin Delete User
-	$router->map( 'GET', '/sc-panel/users/[i:id]',  'Controllers\Scpanel\ScpanelUsersController@remove', 'admin_delete_user');
+	$router->map( 'GET', '/sc-panel/users/[i:id]',  'Controllers\Scpanel\ScpanelUsersController@remove', 'delete_user');
 	
 	// Map Admin User List
 	$router->map( 'GET', '/sc-panel/users',  'Controllers\Scpanel\ScpanelUsersController@show', 'admin_users');

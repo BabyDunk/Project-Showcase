@@ -28,16 +28,7 @@ $users =  \Classes\Core\User::find_all();
                     Statistics
                     <small>Site performance</small>
                 </h1>
-                @if(isset($message))
-                    <h2 class="bg-info">
-                        {{$message}}
-                    </h2>
-                @endif
-                @if(\Classes\Core\Session::has('MESSAGE'))
-                    <h2 class="bg-info">
-                        {{\Classes\Core\Session::get('MESSAGE')}}
-                    </h2>
-                @endif
+                @include('includes.messages')
                 <div class="col-md-12">
                     <table class="hover unstriped stack">
                         <thead>

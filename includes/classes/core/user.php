@@ -12,7 +12,7 @@ class User extends PdoObject {
 	
 	private     static  $instance;
 	protected   static  $db_table = DB_PREFIX."users";
-	protected   static  $db_table_fields = array('username', 'password', 'first_name', 'last_name', 'email', 'filename', 'privilege', 'updated_at', 'created_at');
+	protected   static  $db_table_fields = array('id', 'username', 'password', 'first_name', 'last_name', 'email', 'filename', 'privilege', 'updated_at', 'created_at');
 
 	public              $id;
 	public              $username;
@@ -226,7 +226,7 @@ class User extends PdoObject {
 	public function save_user()
 	{
 		$this->filename = '';
-		
+	;
 		if($this->id) {
 			
 			if(!empty($this->errors)){
@@ -236,7 +236,9 @@ class User extends PdoObject {
 			} else {
 				
 				$this->filename = self::find_by_id($this->id)->filename;
-				
+				echo "<pre>";
+				print_r($this);
+				echo "</pre>";
 				if($this->update()) {
 					
 					return true;
@@ -282,10 +284,6 @@ class User extends PdoObject {
 			
 		} else {
 			
-			if(isset($this->id)) {
-				$this->filename = User::find_by_id( $this->id )->filename;
-			}
-			
 			return ($this->save_user()) ? true : false;
 			
 		}
@@ -318,8 +316,41 @@ class User extends PdoObject {
 			rmdir( $this->upload_path . $this->get_last_insert(). DS. $this->upload_directory );
 		}
 		
+		
+		
+		$showcases = Showcase::find_by_user_id($this->id);
+		
+		if($showcases){
+			foreach ($showcases as $showcase){
+				Comment::deleteAllByCond(['show_id'=> $showcase->id]);
+				ShowcasePins::deleteAllByCond(['show_id'=>$showcase->show_id]);
+				
+				
+				$files = glob( $this->upload_path . $this->get_last_insert(). DS. $showcase->upload_directory . DS. $showcase->id . DS. '*' );
+				if(!empty($files)) {
+					foreach ( $files as $file ) {
+						unlink( $file );
+					}
+				}
+				
+				$showcaseDirs = glob( $this->upload_path . $this->get_last_insert() . DS. $showcase->upload_directory . DS. '*' );
+				if(!empty($showcaseDirs)) {
+					foreach ( $showcaseDirs as $dir ) {
+						if(is_dir($dir)){
+							rmdir($dir);
+						}
+					}
+				}
+				
+				if(is_dir($this->upload_path . $this->get_last_insert(). DS. $showcase->upload_directory)) {
+					rmdir( $this->upload_path . $this->get_last_insert(). DS. $showcase->upload_directory );
+				}
+			}
+		}
+		
+		
 		if ( is_dir( $this->upload_path.$this->get_last_insert(). DS ) ) {
-			 rmdir( $this->upload_path.$this->get_last_insert(). DS );
+			rmdir( $this->upload_path.$this->get_last_insert(). DS );
 		}
 		
 		$showcase = new Showcase();
@@ -328,7 +359,6 @@ class User extends PdoObject {
 			return false;
 		}
 
-		//var_dump($this->delete()); exit;
 		if ( $this->delete() ) {
 			return true;
 		}

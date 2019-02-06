@@ -47,6 +47,7 @@
                     Comments
                     <small>{{\Classes\Core\User::hasPrivilege() ? 'All User' : 'Your'}} Comments</small>
                 </h1>
+                @include('includes.messages')
                 <div class="col-md-12">
                     <table class="hover unstriped stack">
                         <thead>

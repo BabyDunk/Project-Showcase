@@ -28,17 +28,7 @@
                     {{\Classes\Core\User::hasPrivilege() ? 'Admin' : 'User'}}
                     <small>Dashboard</small>
                 </h1>
-                @if(isset($message))
-                    <h2 class="bg-info">
-                        {{$message}}
-                    </h2>
-                @endif
-                @if(\Classes\Core\Session::has('MESSAGE'))
-                    <h2 class="bg-info">
-                        {{\Classes\Core\Session::get('MESSAGE')}}
-                    </h2>
-                    @php \Classes\Core\Session::clear('MESSAGE') @endphp
-                @endif
+                @include('includes.messages')
                 <div class="grid-x grid-padding-x">
                         <div class="large-3 medium-6 cell success">
                             <div class="callout success">

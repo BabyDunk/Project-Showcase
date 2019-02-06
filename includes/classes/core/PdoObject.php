@@ -299,6 +299,7 @@
 					}
 					$params[]           = [ ':holder' . $property , $value , '' ];
 				}
+				
 			}
 			
 			$sql = "UPDATE `" . static::$db_table . "` SET ";
@@ -387,6 +388,38 @@
 			$params[] = [':holderid', $this->id, 'int'];
 			
 			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE id = :holderid LIMIT 1";
+		
+			
+			$pdo->query($sql,$params);
+			
+			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			
+		} // End of Delete Method
+		
+		public static function deleteAllByCond($conditions=[]){
+			global $pdo;
+			
+			$loadCond = '';
+			$params = [];
+			
+			if ( ! empty( $conditions ) )
+			{
+				$arrCount  = count( $conditions );
+				$loopCount = 0;
+				$loadCond  = ' WHERE ';
+				foreach ( $conditions as $key => $condition )
+				{
+					$loadCond .= $key . " = :holder{$key}";
+					$loopCount ++;
+					if ( $loopCount < $arrCount )
+					{
+						$loadCond .= ' AND ';
+					}
+					$params[] = [':holder'.$key, $condition, ''];
+				}
+			}
+			
+			$sql    =   "DELETE FROM `" . static::$db_table . "`".$loadCond;
 		
 			
 			$pdo->query($sql,$params);

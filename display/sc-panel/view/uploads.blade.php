@@ -50,23 +50,7 @@
                         Upload
                         <small>Share A Showcase</small>
                     </h1>
-                    @if(isset($message))
-                        <h2 class="bg-info">
-                            {{$message}}
-                        </h2>
-                    @endif
-                    @if(\Classes\Core\Session::has('MESSAGE'))
-                        <h2 class="bg-info">
-                            {{\Classes\Core\Session::get('MESSAGE')}}
-                        </h2>
-                    @endif
-                    <h2 class="bg-warning">
-                        @if(isset($error))
-                            @foreach ( $error as $err)
-                                {{$err}}<br>;
-                            @endforeach
-                        @endif
-                    </h2>
+                    @include('includes.messages')
 
                     <form method="POST" action="/sc-panel/uploads" enctype="multipart/form-data">
                         <input type="hidden" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>

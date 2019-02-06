@@ -37,14 +37,7 @@
                     </div>
 
                     <div class="large-5 medium-5 cell">
-                        <h2 class="bg-info">@if(!empty($message)){{$message}}@endif</h2>
-                        <h2 class="bg-warning">
-                            @if(isset($error))
-                                @foreach ( $error as $err)
-                                    {{$err}}<br>;
-                                @endforeach
-                            @endif
-                        </h2>
+                        @include('includes.messages')
                         <a  class="pull-right" href="/sc-panel/users"><small>Return to user list</small></a>
                         <form method="post" action="/sc-panel/updateuser" enctype="multipart/form-data">
                             <input type="hidden" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>
@@ -92,7 +85,7 @@
                                         </div>
                                     </fieldset>
 
-                                    <a type="submit" href="/sc-panel/delete_user/<?php echo $sess->user_id; ?>" class="button warning float-left">Delete User</a>
+                                    <a type="submit" href="/sc-panel/users/{{$id['id']}}" class="button warning float-left">Delete User</a>
                                     <button type="submit" name="update" value="true" class="button success float-right">Submit Update</button>
                                 </div>
                             </div>

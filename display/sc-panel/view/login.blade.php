@@ -26,24 +26,7 @@
                             <h3>Contact Admin To Create Account</h3>
                         </div>
                         <div class="callout clearfix primary">
-                                @if(isset($message))
-                                    <h2 class="bg-info">
-                                        {{$message}}
-                                    </h2>
-                                @endif
-                                @if(\Classes\Core\Session::has('MESSAGE'))
-                                    <h2 class="bg-info">
-                                        {{\Classes\Core\Session::get('MESSAGE')}}
-                                    </h2>
-                                @endif
-
-                            <h2 class="bg-warning">
-                                @if(isset($error))
-                                    @foreach ( $error as $err)
-                                        {{$err}}<br>;
-                                    @endforeach
-                                @endif
-                            </h2>
+                            @include('includes.messages')
 
                             <form id="login-id" action="" method="post">
                                 <input type="hidden" name="CSRFToken" value="{{\Classes\Core\CSRFToken::_SetToken()}}"/>

@@ -22,6 +22,7 @@
 		private static $instance;
 		protected static $db_table = DB_PREFIX . "visitors";
 		protected static $db_table_fields = array(
+			'id' ,
 			'visitors_ip' ,
 			'visitors_host' ,
 			'visitors_agent' ,

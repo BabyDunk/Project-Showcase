@@ -165,8 +165,6 @@
 		public function editupdateuser()
 		{
 			
-			\Classes\Core\User::isAdmin();
-			
 			if(!CSRFToken::_CheckToken()){
 				
 				redirect('/sc-panel/users');
@@ -174,115 +172,144 @@
 				return false;
 			}
 			
-			$sess = new Session();
-			$post = Params::get('post');
-			
 			if(!Params::has('userId')){
 				
 				Session::set('MESSAGE', 'Something went wrong');
 				redirect('/sc-panel/users');
 				
-			}elseif(!User::hasPrivilege()){
+			}elseif (Params::get('post')->userId === Session::instance()->user_id){
+				if($this->updateUser()){
+					return true;
+				}
 				
-				Session::set('MESSAGE', 'You are not authorised to complete this process');
-				redirect('/sc-panel/users');
-				
+			}elseif(User::hasPrivilege()){
+				User::isAdmin();
+				if($this->updateUser()){
+					return true;
+				}
 				
 			} else {
 				
-				if ( Params::has('update')) {
-					
-			
-					$username   = Params::has('username') ? $post->username : '';
-					$email      = Params::has('email') ? $post->email : '';
-					$password   = Params::has('password') ?
-						(Hashing::instance()->verify_hash($post->username,$post->password) ? $post->password : Hashing::instance()->hashIt($post->password)): '';
-					$first_name = Params::has('first_name') ? $post->first_name : '';
-					$last_name  = Params::has('last_name') ? $post->last_name : '';
-					$privilege  = Params::has('privilege') ? $post->privilege : '';
-					
-					
-					if ( $sess->is_signed_in() ) {
-						
-						$user = new User();
-						if ( User::hasPrivilege() )
-						{
-							$userHolder = $post->userId;
-						}
-						else
-						{
-							$userHolder = $sess->user_id;
-						}
-						$user->id         = $userHolder;
-						$user->username   = $username;
-						$user->email      = $email;
-						$user->password   = $password;
-						$user->first_name = $first_name;
-						$user->privilege  = $privilege;
-						$user->last_name  = $last_name;
-						$user->updated_at = date("Y-m-d H:i:s");
-						
-						if(!empty(Params::get('file')->user_image->name)) {
-							$user->set_file( Params::all(true)['file']['user_image']);
-						}
-						
-						if($user->insert_user()){
-							
-							$message = "You have successfully update you profile";
-							Session::set('MESSAGE', $message);
-							
-							redirect('/sc-panel/updateuser/'.$userHolder);
-							
-							return true;
-							
-						} else {
-							
-							$message = "Something went wrong Error: ". join('<br/', $user->errors);
-							
-							adminView('updateuser', ['message' => $message, 'id' => $sess->user_id]);
-							
-						}
-						
-						
-					} else {
-						
-						$message = "You need to login to update data";
-						Session::set('MESSAGE', $message);
-						redirect('/sc-panel/login');
-					}
-					
-				} else {
-					
-					$message           = "Please make sure to fill in all fields";
-					
-					adminView('updateuser', ['message' => $message, 'id' => $sess->user_id]);
-					
-				}
+				Session::set('MESSAGE', 'You are not authorised to complete this process');
+				redirect('/sc-panel/users');
 			}
 			
 			return false;
 		}
 		
-		public function remove( $id )
+		public function updateUser(  )
 		{
-			\Classes\Core\User::isAdmin();
 			
-			$sess       =   new Session();
-			if ( empty( $id ) ) {
-				
-				$message = "Can not identify the user";
-				adminView('users', ['message' => $message, 'userid'=>$sess->user_id]);
-				return false;
-			}
+			$post = Params::get('post');
+			$sess = new Session();
 			
-			if ( $id['id'] !== $sess->user_id ) {
+			if ( Params::has('update')) {
 				
-				$message = "You are not authorised to make these changes";
-				adminView('users', ['message' => $message, 'userid'=>$sess->user_id]);
+				
+				$username   = Params::has('username') ? $post->username : '';
+				$email      = Params::has('email') ? $post->email : '';
+				$password   = Params::has('password') ?
+					(Hashing::instance()->verify_hash($post->username,$post->password) ? $post->password : Hashing::instance()->hashIt($post->password)): '';
+				$first_name = Params::has('first_name') ? $post->first_name : '';
+				$last_name  = Params::has('last_name') ? $post->last_name : '';
+				$privilege  = Params::has('privilege') ? (int)$post->privilege : 0;
+				
+				
+				if ( $sess->is_signed_in() ) {
+					$userHolder = (User::hasPrivilege()) ? (int)$post->userId : $sess->user_id;
+					$user = new User();
+					$user->id         = $userHolder;
+					$user->username   = $username;
+					$user->email      = $email;
+					$user->password   = $password;
+					$user->first_name = $first_name;
+					$user->privilege  = $privilege;
+					$user->last_name  = $last_name;
+					$user->updated_at = date("Y-m-d H:i:s");
+				
+					if(!empty(Params::get('file')->user_image->name)) {
+						$user->set_file( Params::all(true)['file']['user_image']);
+					}
+					
+					if($user->insert_user()){
+						
+						$message = "You have successfully update you profile";
+						Session::set('MESSAGE', $message);
+						
+						redirect('/sc-panel/updateuser/'.$userHolder);
+						
+						return true;
+						
+					} else {
+						
+						$message = "Something went wrong Error: ". join('<br/', $user->errors);
+						
+						adminView('updateuser', ['message' => $message, 'id' => $sess->user_id]);
+						
+					}
+					
+					
+				} else {
+					
+					$message = "You need to login to update data";
+					Session::set('MESSAGE', $message);
+					redirect('/sc-panel/login');
+				}
 				
 			} else {
 				
-				$user = User::find_by_id($id['id'] );
+				$message           = "Please make sure to fill in all fields";
+				
+				adminView('updateuser', ['message' => $message, 'id' => $sess->user_id]);
+				
+			}
+			
+			return false;
+			
+		}
+		
+		public function remove( $id )
+		{
+			$id = (int)$id['id'];
+			
+			$sess       =   new Session();
+			
+			if(User::hasPrivilege()){
+				
+				\Classes\Core\User::isAdmin();
+				
+				if ( empty( $id ) ) {
+					
+					$message = "Can not identify the user";
+					adminView('users', ['message' => $message, 'userid'=>$sess->user_id]);
+					return false;
+				}
+				
+				$user = User::find_by_id($id);
+				
+				if ( $user->delete_user()) {
+					
+					redirect( '/sc-panel/users' );
+					
+					return true;
+					
+				} else {
+					
+					$message = "Sorry Couldn't finalise changes, please try again ";
+					
+					adminView('users', ['message' => $message, 'userid'=>$sess->user_id]);
+					
+				}
+			}else if ( $id === $sess->user_id ) {
+				
+				if ( empty( $id ) ) {
+					
+					$message = "Can not identify the user";
+					adminView('updateuser/'.$id, ['message' => $message, 'userid'=>$sess->user_id]);
+					return false;
+				}
+				
+				$user = User::find_by_id($id );
 				
 				if ( $user->delete_user()) {
 					
@@ -295,10 +322,17 @@
 					
 					$message = "Sorry Couldn't finalise changes, please try again ";
 					
-					adminView('users', ['message' => $message, 'userid'=>$sess->user_id]);
+					adminView('updateuser/'.$id, ['message' => $message, 'userid'=>$sess->user_id]);
 					
 				}
+				
+			} else {
+				
+				$message = "You are not authorised to make these changes";
+				adminView('dashboard', ['message' => $message, 'userid'=>$sess->user_id]);
+				
 			}
+			
 			return false;
 		}
 		

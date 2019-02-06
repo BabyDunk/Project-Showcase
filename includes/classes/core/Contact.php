@@ -14,7 +14,7 @@ class Contact extends PdoObject
 	
 	private     static  $instance;
 	protected static    $db_table = DB_PREFIX."contacted";
-	protected static    $db_table_fields = array( 'name', 'email', 'phone', 'message', 'date_est', 'created_at');
+	protected static    $db_table_fields = array('id', 'name', 'email', 'phone', 'message', 'date_est', 'created_at');
 
 	public              $id;
 	public              $name;

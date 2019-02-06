@@ -32,6 +32,7 @@
                     Showcase Comment
                     <small><a href="/sc-panel/showcase" > Return to Showcases</a></small>
                 </h1>
+                @include('includes.messages')
                 <div class="col-md-12">
                     <table class="table table-responsive table-hover">
                         <thead>

@@ -28,14 +28,7 @@
 
                     <div class="callout clearfix">
                         <h2>Register new uploader account</h2>
-                        <h2 class="bg-info">@if(isset($message)){{$message}}@endif</h2>
-                        <h2 class="bg-warning">
-                            @if(isset($error))
-                                @foreach ( $error as $err)
-                                     {{$err}}<br>;
-                                @endforeach
-                           @endif
-							</h2>
+                        @include('includes.messages')
                         <form method="post" action="" enctype="multipart/form-data">
                             <input type="hidden" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>
 
