@@ -36,7 +36,7 @@ echo "</pre>";exit;*/
                 <div class="medium-8">
                     <div class="card " data-equalizer-watch>
 
-                        <img class="thumbnail" src="{{$showcase->get_picture()}}" />
+                        <img class="thumbnail" src="{{$showcase->get_picture()}}" alt="{{$showcase->title}}"/>
 
                         <div class="card-section">
 

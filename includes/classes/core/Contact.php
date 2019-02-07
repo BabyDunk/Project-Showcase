@@ -55,19 +55,7 @@ class Contact extends PdoObject
 		}
 
 	} // End of create_comment Method
-
-
-	// Find Comment
-	public static function find_comments($id=0) {
-		global $db;
-
-		$sql    =   "SELECT * FROM " . self::$db_table;
-		$sql    .=  " WHERE id  = " . $db->escape_string($id);
-		$sql    .=  " ORDER BY upload_date DESC";
-
-		return self::find_by_query($sql);
-		
-	} // End of Find_comments Method
+	
 	
 	public static function echo_form()
 	{
@@ -84,19 +72,19 @@ class Contact extends PdoObject
 					<input type="hidden" name="CSRFToken" id="CSRFToken" value="'.CSRFToken::_SetToken().'" />
 
 						<label for="name">Your Name Please</label>
-				    	<input type="text" name="name" id="name" value="" placeholder="Your Name" />
+				    	<input type="text" name="name" id="name" value="" required placeholder="Your Name" />
 
 				    	<label for="email">Your Email Address please</label>
-				    	<input type="email" name="email" id="email" value="" placeholder="Your Email" />
+				    	<input type="email" name="email" id="email" value="" required placeholder="Your Email" />
 
 				    	<label for="phone">Your Phone Number please</label>
 				    	<input type="text" name="phone" id="phone" value="" placeholder="Your Phone" />
 			
 				    	<label for="message">Descripption Of Job Request</label>
-				    	<textarea name="message" id="message" rows="3" placeholder="Describe with as much detail the job you would like us to perform" ></textarea>
+				    	<textarea name="message" id="message" rows="3" required placeholder="Describe with as much detail the job you would like us to perform" ></textarea>
 
 				    	<label for="date_est">Deadline For Job Completion</label>
-				    	<input type="text" name="date_est" id="date_est" value="" placeholder="Select a date for completion" />
+				    	<input type="text" name="date_est" id="date_est" value="" required placeholder="Select a date for completion" />
 	
 				    	<button type="submit" name="submit" id="submit" value="true" class="button success float-right" >Submit!</button>';
 
