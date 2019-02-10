@@ -302,18 +302,6 @@ class Showcase extends PdoObject {
 		
 	} // End of save method
 	
-	public function deleteAllOfUser($id){
-		global $pdo;
-		
-		$params = [];
-		$params[] = [':user_id', $id, 'int'];
-		$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE user_id = :user_id";
-		
-		$pdo->query($sql,$params);
-		
-		return ($pdo->rowsEffected() >= 1 ) ? true : false;
-		
-	} // End of Delete Method
 
 	// Delete Showcase
 	public function delete_showcase(){

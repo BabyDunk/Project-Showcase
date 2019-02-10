@@ -63,13 +63,13 @@
 							'message'   =>  'Your request has been submitted successfully. We will get back you your ASAP'
 						]);
 						
-						Email::instance()->send([$post->userEmail => $post->userName]);
+						//Email::instance()->send([$post->userEmail => $post->userName]);
 						
 						return true;
 					} else {
 						echo json_encode([
 							'status'    =>  'FAILED',
-							'message'   =>  'We couldn\'t registered your request: '.$contact->errors
+							'message'   =>  'We couldn\'t register your request: '.$contact->errors
 						]);
 						
 						return false;

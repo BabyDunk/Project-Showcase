@@ -67,7 +67,7 @@
 			
 				$this->lastquery->execute();
 				
-				return $this->lastquery;
+				return ($this->lastquery) ? $this->lastquery : false;
 				
 				
 			}catch (\PDOException $e){

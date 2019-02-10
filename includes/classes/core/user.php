@@ -353,6 +353,12 @@ class User extends PdoObject {
 			rmdir( $this->upload_path.$this->get_last_insert(). DS );
 		}
 		
+		$contacts = new Contact();
+		if(!$contacts->deleteAllOfUser($this->id)){
+			$this->errors[] = "Could not delete contacts for this user";
+			return false;
+		}
+
 		$showcase = new Showcase();
 		if(!$showcase->deleteAllOfUser($this->id)){
 			$this->errors[] = "Could not delete showcase for this user";
