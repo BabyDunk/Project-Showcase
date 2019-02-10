@@ -99,7 +99,7 @@ if ( \Classes\Core\User::hasPrivilege() ) {
                             <td class="col-md-1"><p>{{(!empty($showcase->showcasePayment)) ? implode(', ', unserialize($showcase->showcasePayment)) : 'No payment method selected'}}</p></td>
                             <td class="col-md-1"><p><?php echo (!empty($showcase->job_deposit)) ? '&pound;'.$showcase->job_deposit : 'No deposit set'; ?></p></td>
                             <td class="col-md-1"><p>{{$showcase->id}}</p></td>
-                            <td class="col-md-1 comment-list">
+                            <td class="col-md-1 contact-list">
                                 <ul>
                                     <li>{{$count}}</li>
                                     <li>@php echo $comment_link; @endphp</li>

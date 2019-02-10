@@ -14,13 +14,13 @@
     <div class="grid-x grid-padding-x">
         <!-- Comments Form -->
         <div class="small-6 cell left"  data-sticky-container>
-            <div id="comment-form" class="sticky" data-sticky data-anchor="comment-ended" >
+            <div id="contact-form" class="sticky" data-sticky data-anchor="contact-ended" >
                 <div class="card">
                     <div class="card-divider">
                         <h4>Leave a Comment:</h4>
                     </div>
                     <div class="card-section">
-                        <div id="comment-notification"></div>
+                        <div id="contact-notification"></div>
 
                         <form>
                             <label for="author">Authors Name</label>
@@ -30,7 +30,7 @@
                             <input class="form-control" type="email"  id="commentEmail" value="" placeholder="Please enter your email" />
 
                             <label for="body">Leave a Comment</label>
-                            <textarea class="form-control" cols="30" rows="7" id="commentBody"  placeholder="Write a comment" ></textarea>
+                            <textarea class="form-control" cols="30" rows="7" id="commentBody"  placeholder="Write a contact" ></textarea>
 
                             <button type="submit" name="submit" id="commentSubmit" value="true" data-show_id="{{$id['id']}}" data-csrftoken="{{\Classes\Core\CSRFToken::_SetToken()}}" class="button success">Submit</button>
                         </form>
@@ -42,8 +42,8 @@
         <!-- Posted Comments -->
 
         <!-- Comment -->
-        <div class="small-6 cell right" id="comment-ended">
-        @foreach( $comments as $comment )
+        <div class="small-6 cell right" id="contact-ended">
+        @foreach( $comments as $contact )
             <div class="media-object">
                 <div class="media-object-section">
                     <div class="thumbnail">
@@ -53,11 +53,11 @@
                     </div>
                 </div>
                 <div class="media-object-section">
-                    <h4 class="h4">{{$comment->author}}
-                        <small>@php $date = new DateTime($comment->created_at);
+                    <h4 class="h4">{{$contact->author}}
+                        <small>@php $date = new DateTime($contact->created_at);
                                 echo $date->format('l jS \of F Y \@ h:i:s A'); @endphp</small>
                     </h4>
-                    {{$comment->body}}
+                    {{$contact->body}}
                 </div>
             </div>
             <hr />

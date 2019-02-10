@@ -8,7 +8,7 @@
 
 $showcases =  \Classes\Core\Showcase::find_by_user_id(\Classes\Core\Session::instance()->user_id);
 
-//var_dump($showcases); exit;
+//var_dump($contacts); exit;
 
 
 ?>

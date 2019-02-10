@@ -17,9 +17,7 @@
 
     $comments =   \Classes\Core\Comment::find_comments($showcase->id);
 
-/*echo "<pre>";
-print_r($showcasePins);
-echo "</pre>";exit;*/
+
 	 ?>
 
 @extends('extends.base')
@@ -87,6 +85,7 @@ echo "</pre>";exit;*/
                                     <li><span><a href="/sc-panel/showcase/{{$id['id']}}">Delete</a></span></li>
                                 </ul>
                             @endif
+                            <a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact Dev</a>
                         </div>
                     </div>
                 </div>
@@ -144,5 +143,9 @@ echo "</pre>";exit;*/
         @include('includes.comments')
 
     </div>
-
+    <div id="contact_showcase_author">
+        @php
+            \Classes\Core\Contact::echo_form();
+        @endphp
+    </div>
 @endsection

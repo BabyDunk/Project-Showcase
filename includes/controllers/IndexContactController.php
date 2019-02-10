@@ -14,6 +14,8 @@
 	use Classes\Core\Email;
 	use Classes\Core\Params;
 	use Classes\Core\Session;
+	use Classes\Core\Showcase;
+	use Classes\Core\ShowcasePins;
 	
 	class IndexContactController
 	{
@@ -27,7 +29,20 @@
 				
 				
 				$post       = Params::get('post');
-				$contact    = Contact::set_inputs($post->userName, $post->userEmail, $post->userPhone, $post->userMess, $post->userDate);
+				
+				if(empty($post->showcaseID)){
+					$user_id = 1;
+				}else{
+					$user_id = Showcase::find_by_id($post->showcaseID)->user_id;
+				}
+				
+				if(empty($post->userDFate)){
+					$dateUser = '1970-04-30';
+				}else{
+					$dateUser = $post->userDate;
+				}
+				
+				$contact    = Contact::set_inputs($post->userName, $user_id, $post->showcaseID, $post->userEmail, $post->userPhone, $post->userMess, $dateUser);
 				
 				if($contact){
 					

@@ -36,8 +36,13 @@
         <li>
             <a href="/sc-panel/showcase"><i class="fa fa-fw fa-table"></i> Showcases</a>
         </li>
+        @if(!empty($user->privilege))
         <li>
-            <a href="/sc-panel/comments"><i class="fa fa-fw fa-edit"></i> Comments</a>
+            <a href="/sc-panel/contacts"><i class="fa fa-fw fa-edit"></i> Contacts</a>
+        </li>
+        @endif
+        <li>
+            <a href="/sc-panel/comments"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
         </li>
         @if(!empty($user->privilege))
         <li>

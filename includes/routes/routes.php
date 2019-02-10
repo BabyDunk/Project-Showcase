@@ -14,6 +14,10 @@
 	
 	// Map Contact Form
 	$router->map( 'POST', '/contact',  'Controllers\IndexContactController@insert', 'front_contact');
+	
+	
+	// Map Contact Form
+	$router->map( 'POST', '/showcase_contact',  'Controllers\IndexContactController@insert', 'showcases_contact');
 
 
 	// Map About Page

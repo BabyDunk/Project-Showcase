@@ -168,17 +168,26 @@
             var CSRFToken   = $('#CSRFToken').val();
             var submit      = $('#submit').val();
             var userName    = $('#name').val();
+            var showcaseID  = 0;
             var userEmail   = $('#email').val();
             var userPhone   = $('#phone').val();
             var userMess    = $('#message').val();
             var userDate    = $('#date_est').val();
 
-            console.log(userName + ' ' + userEmail + ' ' +  userPhone);
 
             $.ajax({
                 type: 'post',
                 url : '/contact',
-                data: {CSRFToken: CSRFToken, submit: submit, userName: userName, userEmail: userEmail, userPhone: userPhone, userMess: userMess, userDate: userDate},
+                data: {
+                    CSRFToken: CSRFToken,
+                    submit: submit,
+                    userName: userName,
+                    showcaseID: showcaseID,
+                    userEmail: userEmail,
+                    userPhone: userPhone,
+                    userMess: userMess,
+                    userDate: userDate
+                },
 
                 success: function (data) {
                     var res = jQuery.parseJSON(data);
@@ -249,6 +258,58 @@
 
 })();
 
+// Insert New Showcase Contact
+(function (){
+    
+    'use strict';
+    
+    SHOWCASE.front.submitshowcasecontact = function () {
+        
+        $('#submit').on('click', function (e) {
+            
+            e.preventDefault();
+            
+            var CSRFToken   = $('#CSRFToken').val();
+            var submit      = $('#submit').val();
+            var userName    = $('#name').val();
+            var showcaseID  = $('#showcaseID').val();
+            var userEmail   = $('#email').val();
+            var userPhone   = $('#phone').val();
+            var userMess    = $('#message').val();
+            var userDate    = 0;
+            
+            $.ajax({
+                type: 'post',
+                url : '/showcase_contact',
+                data: {
+                    CSRFToken: CSRFToken,
+                    submit: submit,
+                    userName: userName,
+                    showcaseID: showcaseID,
+                    userEmail: userEmail,
+                    userPhone: userPhone,
+                    userMess: userMess,
+                    userDate: userDate
+                },
+                
+                success: function (data) {
+                    var res = jQuery.parseJSON(data);
+                    
+                    if(res.status === 'OK'){
+                        $('.cont-notification').show().addClass('success').delay(4000).slideUp(300).html(res.message);
+                    }
+                    if(res.status === 'FAILED'){
+                        $('.cont-notification').show().addClass('danger').delay(4000).slideUp(300).html(res.message);
+                    }
+                }
+            });
+            
+        });
+        
+    };
+    
+})();
+
 (function (){
 
     'use strict';
@@ -266,6 +327,7 @@
             case 'showcased':
 
                 SHOWCASE.front.submitComment();
+                SHOWCASE.front.submitshowcasecontact();
                 break;
 
             // Admin

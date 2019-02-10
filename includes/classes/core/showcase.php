@@ -51,34 +51,7 @@ class Showcase extends PdoObject {
 		return self::$instance;
 	}
 	
-	/*
-	 * Get single user data in a named array
-	 *
-	 * */
-	public static function find_by_user_id($id, $limit=0, $order='desc'){
-		
-		$limit = !empty($limit) ? " LIMIT $limit " : "";
-		
-		$isOrder = "";
-		if($order === 'desc'){
-			$isOrder = " ORDER BY id DESC ";
-		}elseif($order === 'asc'){
-			$isOrder = " ORDER BY id ASC ";
-		}elseif($order === 'rand'){
-			$isOrder = " ORDER BY RAND() ";
-		}
-		
-		$params = [];
-		$params[] = [':holderid', $id, 'int'];
-		
-		$sql = "SELECT * FROM `" . static::$db_table . "` WHERE user_id = :holderid " . $isOrder . $limit;
-		
-		$item_array   =   static::find_by_query($sql, $params );
-		
-		
-		return (!empty($item_array)) ? $item_array : false;
-		
-	} // End of the Find_user_by_id Method
+	
 	
 	public static function find_all_for_feature($limit=0, $order='desc'){
 

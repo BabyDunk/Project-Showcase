@@ -54,6 +54,14 @@
 	$router->map( 'GET', '/sc-panel/comment_showcase/[i:id]',  'Controllers\Scpanel\ScpanelCommentsController@show_showcase', 'admin_showcase_comments');
 	
 	
+	// Map Contacts
+	$router->map( 'GET', '/sc-panel/contacts',  'Controllers\Scpanel\ScpanelContactsController@show', 'admin_contacts');
+	$router->map( 'GET', '/sc-panel/contacts/[i:id]/delete',  'Controllers\Scpanel\ScpanelContactsController@remove', 'admin_remove_contacts');
+	
+	// Map USer Indox
+	$router->map( 'GET', '/sc-panel/user_contacts',  'Controllers\Scpanel\ScpanelContactsController@show_users', 'user_contacts');
+	$router->map( 'GET', '/sc-panel/user_contacts/[i:id]/delete',  'Controllers\Scpanel\ScpanelContactsController@remove_users', 'user_remove_contacts');
+	
 	// Map Admin Statistics
 	$router->map( 'GET', '/sc-panel/statistics',  'Controllers\Scpanel\ScpanelStatsController@show', 'admin_statistics');
 	

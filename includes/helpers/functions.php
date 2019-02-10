@@ -5,22 +5,8 @@
  * Date: 04/12/2017
  * Time: 17:11
  */
-
-use Philo\Blade\Blade;
-
-function admin_autoload($class){
-
-	$class  =   strtolower($class);
-	$path   =   INCLUDES_PATH . "classes/core/{$class}.php";
-
-	if( is_file( $path ) &&  !class_exists($class) ){
-		require_once( $path );
-	} else {
-		die( "This file name {$class}.php was not found..." );
-	}
-}
-
-spl_autoload_register( 'admin_autoload' );
+	
+	use Philo\Blade\Blade;
 
 function redirect($redirect){
 
@@ -28,6 +14,23 @@ function redirect($redirect){
 
 }
 
+function showcaseUriID()
+{
+	$splitUri = explode('/', $_SERVER['REQUEST_URI']);
+
+	switch ($splitUri[1]){
+		case 'showcase':
+			
+			 return (int)$splitUri[2];
+			 break;
+		
+		default:
+			
+			return null;
+			break;
+	}
+	
+}
 
 // Bytes to KB to MB to GB conversion
 function formatSizeUnits($bytes)

@@ -15,11 +15,11 @@
 		foreach ( $showcases as $item )
 		{
 
-			$comment = (array)\Classes\Core\Comment::find_by_show_id( $item->id);
+			$contact = (array)\Classes\Core\Comment::find_by_show_id( $item->id);
 
-			if(!empty($comment[0]) && $commentCounter <= 5){
+			if(!empty($contact[0]) && $commentCounter <= 5){
 				$commentCounter++;
-			    $comments = array_merge( $comments , $comment );
+			    $comments = array_merge( $comments , $contact );
 			}
 		}
 	}
@@ -42,32 +42,32 @@
             <li>
                 <a href="#"><i class="fa fa-envelope"></i></a>
                 <ul class="menu vertical">
-                    @foreach($comments as $comment)
+                    @foreach($comments as $contact)
                     <li class="message-preview">
                         <a href="#">
                             <small class="small text-muted"><i class="fa fa-clock-o"></i> @php
-                                    $date = new DateTime($comment->created_at);
+                                    $date = new DateTime($contact->created_at);
                                     echo $date->format('l jS \of F Y h:i:s A');
                                 @endphp </small>
                             <div class="media-card">
                                 <div class="media-body-title">
                                     <span class="pull-left">
-                                        <div class="comment-media-object"  data-author="{{$comment->author}}"></div>
+                                        <div class="contact-media-object"  data-author="{{$contact->author}}"></div>
                                     </span>
                                     <div class="media-card-title">
                                         <h5>
-                                            <strong>{{$comment->author}}</strong>
+                                            <strong>{{$contact->author}}</strong>
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="media-card-body">
-                                    <p>@if(strlen($comment->body) > 100)
+                                    <p>@if(strlen($contact->body) > 100)
 
-                                           {{substr($comment->body, 0, 100)}}...
+                                           {{substr($contact->body, 0, 100)}}...
 
                                            @else
 
-                                           {{$comment->body}}
+                                           {{$contact->body}}
 
                                     @endif</p>
                                 </div>
@@ -111,7 +111,7 @@
                 <a href="#"><i class="fa fa-user"></i> {{$user->first_name}}</a>
                 <ul class="menu vertical">
                     <li><a href="#"><i class="fa fa-fw fa-user"></i> Profile</a></li>
-                    <li><a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
+                    <li><a href="/sc-panel/user_contacts"><i class="fa fa-fw fa-envelope"></i> Inbox</a></li>
                     <li><a href="/sc-panel/updateuser/{{\Classes\Core\Session::instance()->user_id}}"><i class="fa fa-fw fa-gear"></i> Settings</a></li>
                     <li><a href="/sc-panel/logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a></li>
                 </ul>

@@ -45,20 +45,20 @@
                         </tr>
                         </thead>
                         <tbody>
-						<?php foreach ( $comments as $comment ) : ?>
-						<?php $showcase  =   \Classes\Core\Showcase::find_by_id($comment->show_id); ?>
+						<?php foreach ( $comments as $contact ) : ?>
+						<?php $showcase  =   \Classes\Core\Showcase::find_by_id($contact->show_id); ?>
                         <tr>
-                            <td class="col-md-1"><h3>{{$comment->show_id}}</h3></td>
+                            <td class="col-md-1"><h3>{{$contact->show_id}}</h3></td>
                             <td class="col-md-2"><a href="/showcase/{{$showcase->id}}" class="thumbnail"><img class="img-responsive user-image" src="{{$showcase->get_picture()}}" /></a></td>
-                            <td class="col-md-3"><p>{{$comment->author}}</p>
+                            <td class="col-md-3"><p>{{$contact->author}}</p>
                                 <div class="action_link">
 
-                                    <a href="/sc-panel/comments/{{$comment->id}}/delete">Delete</a>
+                                    <a href="/sc-panel/comments/{{$contact->id}}/delete">Delete</a>
 
                                 </div>
                             </td>
-                            <td class="col-md-3"><p>{{$comment->body}}</p></td>
-                            <td class="col-md-3"><p>@php $date = new DateTime($comment->created_at);                    echo $date->format('l jS \of F Y h:i:s A');@endphp</p></td>
+                            <td class="col-md-3"><p>{{$contact->body}}</p></td>
+                            <td class="col-md-3"><p>@php $date = new DateTime($contact->created_at);                    echo $date->format('l jS \of F Y h:i:s A');@endphp</p></td>
                         </tr>
 
 						<?php endforeach; ?>

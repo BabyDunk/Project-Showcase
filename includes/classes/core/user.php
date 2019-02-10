@@ -395,6 +395,24 @@ class User extends PdoObject {
 		return ($user->privilege) ? true : false;
 		
 	}
+	
+	public static function userID(  )
+	{
+		$isUser = Session::instance()->user_id;
+		
+		if ($isUser){
+			return $isUser;
+		}else{
+			$message = "Please Login";
+			
+			Session::set('MESSAGE', $message);
+			
+			redirect('/sc-panel/login');
+		}
+		
+		
+		
+	}
 
 
 } // End of User class

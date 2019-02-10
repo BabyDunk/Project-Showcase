@@ -148,11 +148,11 @@
 		public function showupdateuser($id)
 		{
 			
-			$sess       =   new Session();
+			$userID       =   User::userID();
 			
-			if( !empty($id['id']) && User::hasPrivilege() || !empty($id['id']) && (int)$id['id'] === $sess->user_id){
+			if( !empty($id['id']) && User::hasPrivilege() || !empty($id['id']) && (int)$id['id'] === $userID){
 				
-				adminView('updateuser', ['id'=>$id, 'userid'=>$sess->user_id]);
+				adminView('updateuser', ['id'=>$id, 'userid'=>$userID]);
 				
 				
 			}else {

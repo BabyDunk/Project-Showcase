@@ -11,6 +11,7 @@
 	
 	use Classes\Core\Comment;
 	use Classes\Core\Session;
+	use Classes\Core\User;
 	
 	class ScpanelCommentsController
 	{
@@ -20,7 +21,7 @@
 		public function show(  )
 		{
 			
-			adminView('comments', ['userid'=> Session::instance()->user_id]);
+			adminView('comments', ['userid'=> User::userID()]);
 		}
 		
 		public function remove($id)
