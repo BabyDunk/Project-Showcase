@@ -36,7 +36,7 @@
 					$user_id = Showcase::find_by_id($post->showcaseID)->user_id;
 				}
 				
-				if(empty($post->userDFate)){
+				if(empty($post->userDate)){
 					$dateUser = '1970-04-30';
 				}else{
 					$dateUser = $post->userDate;
@@ -60,10 +60,10 @@
 						
 						echo json_encode([
 							'status'    =>  'OK',
-							'message'   =>  'Your request has been submitted successfully. We will get back you your ASAP'
+							'message'   =>  'Your request has been submitted successfully. We\'ll get back to you ASAP'
 						]);
 						
-						//Email::instance()->send([$post->userEmail => $post->userName]);
+						Email::instance()->send('Your message has been received', '<h2>Thank you for your message</h2><p>We will get back to you in due course</p>',[$post->userEmail => $post->userName]);
 						
 						return true;
 					} else {

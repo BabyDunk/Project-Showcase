@@ -118,6 +118,16 @@ function notEmpty($input){
 	return !empty($input) ? $input : '';
 }
 
+function isEmpty($var){
+	if(is_numeric($var)){
+		return false;
+	}elseif(empty($var)){
+		return true;
+	}else{
+		return false;
+	}
+}
+
 function allowedTags($input){
 	return strip_tags($input, '<ul><ol><li><p><h3><h4><h5><strong><em><i><a>');
 }

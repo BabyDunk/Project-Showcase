@@ -9,10 +9,12 @@
 	namespace Controllers\Scpanel;
 	
 	
+	use Classes\Core\CSRFToken;
+	use Classes\Core\Email;
 	use Classes\Core\Params;
 	use Classes\Core\Preference;
 	use Classes\Core\Session;
-	use http\Client\Curl\User;
+	
 	
 	class ScpanelSettingsController
 	{
@@ -87,11 +89,59 @@
 				sca_set_preference('showcase', 'sca_emailencryption', trim($post->emailencryption));
 				sca_set_preference('showcase', 'sca_emailserverport', trim($post->emailserverport));
 				sca_set_preference('showcase', 'sca_emailauth', $post->emailauth, 'INTEGER');
+				sca_set_preference('showcase', 'sca_email_debugger', $post->email_debugger, 'INTEGER');
+				sca_set_preference('showcase', 'sca_testemailaddess', $post->testemailaddess);
 				sca_set_preference('showcase', 'sca_emailsignature', $post->emailsignature);
 				
 				adminView('email-settings', ['userid'=>Session::instance()->user_id, 'message'=> 'Settings saved successfully']);
 			}else{
 				adminView('email-settings', ['userid'=>Session::instance()->user_id, 'error'=> 'Something went wrong, please try again']);
+			}
+			
+		}
+		
+		public static function sendTestMessage()
+		{
+			
+			if ( ! CSRFToken::_CheckToken() )
+			{
+				$message = 'Please refresh page abd try and again';
+				Session::set('MESSAGE', $message);
+				redirect('/sc-panel/email_settings');
+				return false;
+			}
+			if ( sca_get_preference( 'showcase' , 'sca_testemailaddess' ) )
+			{
+				
+				
+				
+				if ( Email::testMail() )
+				{
+					
+					
+					$message = 'Test sent successfully';
+					Session::set('MESSAGE', $message);
+					redirect('/sc-panel/email_settings');
+					return true;
+				}
+				else
+				{
+					
+					$message = 'Test sent was unsuccessful';
+					Session::set('MESSAGE', $message);
+					redirect('/sc-panel/email_settings');
+					return false;
+					
+				}
+			}
+			else
+			{
+				
+				$message = 'Test message needs a recipient address to send the test to';
+				Session::set('MESSAGE', $message);
+				redirect('/sc-panel/email_settings');
+				return false;
+				
 			}
 			
 		}

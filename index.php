@@ -11,8 +11,8 @@
 	define('INCLUDES_PATH', SITE_ROOT . 'includes' . DS );
 	define('UPLOAD_PATH', SITE_ROOT . 'resources' . DS . 'uploads' . DS);
 	define('UPLOADED_IMAGES_PATH', UPLOAD_PATH . 'images' . DS);
-	define('SITE_URL', (isset($_SERVER['HTTPS'])) ? 'https' : 'http' . '://'. $_SERVER['HTTP_HOST'] . '/');
-	define('UPLOADED_IMAGES_PATH_URL', (isset($_SERVER['HTTPS'])) ? 'https' : 'http' . '://'. $_SERVER['HTTP_HOST'] . '/resources/uploads/images/');
-	
+	define('IS_HTTP', (isset($_SERVER['HTTPS'])) ? 'https' : 'http');
+	define('SITE_URL', IS_HTTP . '://'. $_SERVER['HTTP_HOST'] . '/');
+	define('UPLOADED_IMAGES_PATH_URL', SITE_URL . 'resources/uploads/images/');
 	
 	require_once(INCLUDES_PATH . 'init.php');

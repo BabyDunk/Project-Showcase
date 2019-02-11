@@ -104,7 +104,7 @@
 
 
                 @php $i = 0; @endphp
-                @foreach($showcasePins as $item)
+                    @foreach($showcasePins as $item)
                         @if($i % 2 != 0)
                         <div class="thread-tab-left">
                             <div class="card">

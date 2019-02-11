@@ -28,15 +28,15 @@
 			return self::$instance;
 		}
 		
-		public function send($recipient=[])
+		public function send($emailTitle, $emailBody,$recipient=[])
 		{
 			$mail = new PHPMailer(true);    // Passing `true` enables exceptions
 			try {
 				//Server settings
-				$mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;   // Enable verbose debug output
+				$mail->SMTPDebug = sca_get_preference('showcase', 'sca_email_debugger');   // Enable verbose debug output
 				$mail->isSMTP();    // Set mailer to use SMTP
 				$mail->Host = sca_get_preference('showcase', 'sca_emailserver');    // Specify main and backup SMTP servers
-				$mail->SMTPAuth = !empty(sca_get_preference('showcase', 'sca_smtpauth')) ?  true : false;   // Enable SMTP authentication
+				$mail->SMTPAuth = !empty(sca_get_preference('showcase', 'sca_emailauth')) ?  true : false;   // Enable SMTP authentication
 				
 				$mail->Username = sca_get_preference('showcase', 'sca_emailgateway');   // SMTP username
 				$mail->Password = sca_get_preference('showcase', 'sca_emailgatewaypass');   // SMTP password
@@ -58,7 +58,7 @@
 					$mail->addAddress($address, $name);     // Add a recipient
 				}
 
-				$mail->addReplyTo('info@example.com', 'Information');
+				$mail->addReplyTo(sca_get_preference('showcase', 'sca_emailgateway'), sca_get_preference('showcase', 'sca_emailname'));
 
 				
 				//Attachments
@@ -67,15 +67,33 @@
 				
 				//Content
 				$mail->isHTML(true);                                  // Set email format to HTML
-				$mail->Subject = 'Here is the subject';
-				$mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+				$mail->Subject = $emailTitle;
+				$mail->Body    = $emailBody;
 				
-				$mail->send();
-				return true;
+				
+				if($mail->send()){
+					return true;
+				}
+				
 			} catch (Exception $e) {
-				Session::set('TESTER', 'Message could not be sent. Mailer Error: '. $mail->ErrorInfo);
+				Session::set('EMAIL_DEBUGGING', $e->getMessage().' '.$e->getCode());
 			}
+			
+		}
+		
+		public static function testMail()
+		{
+			
+			$testAddress = sca_get_preference('showcase', 'sca_testemailaddess');
+			$testName = "Showcase Admin Test Message";
+			
+			
+			if(static::instance()->send('Test Message', '<h1>Test Success</h1><p>This is a success message to verify that the mail server is working correctly</p>', [$testAddress => $testName])){
+				return true;
+			}
+			
+			return false;
+			
 			
 		}
 		

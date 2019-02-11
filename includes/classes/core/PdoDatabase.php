@@ -55,7 +55,7 @@
 				{
 					foreach ( $params as $param )
 					{
-						if(!empty($param[1]))
+						if(!isEmpty($param[1]))
 						{
 							
 							$this->lastquery->bindParam( $param[ 0 ] , $param[ 1 ] );

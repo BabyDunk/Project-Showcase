@@ -1,7 +1,7 @@
 {
   "name": "showcase_app",
   "version": "1.0.0",
-  "description": "Shoawcase app to show off all your amazing work",
+  "description": "Showcase app to show off all your amazing work",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

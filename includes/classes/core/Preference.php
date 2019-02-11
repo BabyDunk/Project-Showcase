@@ -38,15 +38,15 @@
 		{
 			if(empty($pref_section)){
 				return $this->errors[] = "Your section id is missing";
-				//return false;
+				return false;
 			}
 			if(empty($pref_key)){
 				return $this->errors[] = "Your request is missing preference id";
-				//return false;
+				return false;
 			}
 			if(empty($pref_type)){
 				return $this->errors[] = "Your request is missing preference type. can be STRING | INTEGER | BOOLEAN";
-				//return false;
+				return false;
 			}
 			
 			$pref_type = (in_array($pref_type, static::$db_Enum_Types)) ? $pref_type : 'STRING';

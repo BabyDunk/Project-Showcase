@@ -268,7 +268,6 @@
 		
 		public function create()
 		{
-			
 			global $pdo;
 			
 			$properties = $this->get_property();
@@ -276,7 +275,7 @@
 			$sortedProps = [];
 			foreach ( $properties as $key => $value )
 			{
-				if ( ! empty( $value ) )
+				if ( ! isEmpty( $value ) )
 				{
 					$sortedProps[ $key ] = $value;
 				}
@@ -351,17 +350,19 @@
 			$params = [];
 		
 			foreach ( $properties as $property => $value ) {
-				if($property !== 'pref_section' && $property !== 'pref_key')
+				if($property !== 'pref_section' && $property !== 'pref_key' && !isEmpty($value))
 				{
 					$properties_pairs[] = "`{$property}` = :holder{$property}";
+					$params[] = [':holder'.$property, $value, ''];
 				}
-				$params[] = [':holder'.$property, $value, ''];
-			
+				
 			}
+			
 			
 			$theClause =[];
 			foreach ($arrayOfColAndString as $key => $value){
 				$theClause[] = "`{$key}` = :holder{$key}";
+				$params[] = [':holder'.$key, $value, ''];
 			}
 			
 			
@@ -372,10 +373,6 @@
 			$sql        .=  " LIMIT 1";
 			
 			
-//			echo "<pre>";
-//			print_r($sql);
-//			print_r($params);
-//			echo "</pre>";
 			$pdo->query($sql,$params);
 			
 			

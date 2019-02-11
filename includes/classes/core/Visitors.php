@@ -91,7 +91,7 @@
 			{
 				Session::set( 'DATACOLLECT' , $this->visitors_sess );
 				
-				$this->save();
+				return $this->save();
 			}
 			else
 			{
@@ -101,8 +101,8 @@
 					if ( Session::get( 'DATACOLLECT' ) === $this->visitors_sess )
 					{
 						
-						$seenPage = self::find_by_visitor_sess_an_pageID( $this->visitors_sess, $page_id );
-				
+						$seenPage = self::find_by_visitor_sess_an_pageID( $this->visitors_sess , $page_id );
+						
 						if ( empty( $seenPage ) )
 						{
 							return $this->save();
@@ -113,7 +113,7 @@
 					else
 					{
 						Session::set( 'DATACOLLECT' , $this->visitors_sess );
-						$this->save();
+						return $this->save();
 					}
 				}
 			}
@@ -137,7 +137,7 @@
 		 *
 		 * @return array|bool|void
 		 */
-		public static function find_by_visitor_sess_an_pageID( $sess, $pageId )
+		public static function find_by_visitor_sess_an_pageID( $sess , $pageId )
 		{
 			
 			if ( empty( $sess ) )
@@ -145,12 +145,12 @@
 				return;
 			}
 			
-			$params = [];
-			$params[] = [':pageID', $pageId, 'int'];
-			$params[] = [':sess_id', $sess, 'str'];
-			$sql = "SELECT * FROM `" . static::$db_table . "` WHERE `visitors_sess` = :sess_id AND `visited_page_id` = :pageID";
+			$params   = [];
+			$params[] = [ ':pageID' , $pageId , 'int' ];
+			$params[] = [ ':sess_id' , $sess , 'str' ];
+			$sql      = "SELECT * FROM `" . static::$db_table . "` WHERE `visitors_sess` = :sess_id AND `visited_page_id` = :pageID";
 			
-			$item_array = static::find_by_query( $sql, $params );
+			$item_array = static::find_by_query( $sql , $params );
 			
 			
 			return ( ! empty( $item_array ) ) ? $item_array : false;

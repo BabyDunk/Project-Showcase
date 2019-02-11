@@ -41,6 +41,9 @@
                     if(res.status === 'OK'){
                         $('#pin-notification').delay(6000).slideUp(400).html('<div class="callout success">' + res.message + '</div>');
                         $('.information_pins').append(res.pins);
+    
+                        $('#information_pin_title').val('');
+                        $('#information_pin_body').val('');
                     }
 
                     if(res.status === 'FAILED'){
@@ -138,6 +141,9 @@
                         $('.notification').delay(5000).slideUp(600).html('<div class="callout success">'+ res.message + '</div>');
                         $('#insertedPinTitle-'+res.pin_id).html(res.pinTitle);
                         $('#insertedPinBody-'+res.pin_id).html(res.pinBody);
+    
+                        $('#pinTitle-'+pinId).val('');
+                        $('#pinBody-'+pinId).val('');
                     }
 
                     if(res.status === 'FAILED'){
@@ -194,6 +200,12 @@
 
                     if(res.status === 'OK'){
                         $('.cont-notification').show().addClass('success').delay(4000).slideUp(300).html(res.message);
+    
+                        $('#name').val('');
+                        $('#email').val('');
+                        $('#phone').val('');
+                        $('#message').val('');
+                        $('#date_est').val('');
                     }
                     if(res.status === 'FAILED'){
                         $('.cont-notification').show().addClass('danger').delay(4000).slideUp(300).html(res.message);
@@ -242,6 +254,9 @@
 
                     if(res.status === 'OK'){
                         $('#comment-notification').delay(5000).slideUp(600).html('<div class="callout success">'+ res.message + '</div>');
+                        $('#commentAuthor').val('');
+                        $('#commentEmail').val('');
+                        $('#commentBody').val('');
                     }
 
                     if(res.status === 'FAILED'){
@@ -297,6 +312,11 @@
                     
                     if(res.status === 'OK'){
                         $('.cont-notification').show().addClass('success').delay(4000).slideUp(300).html(res.message);
+                        
+                        $('#name').val('');
+                        $('#email').val('');
+                        $('#phone').val('');
+                        $('#message').val('');
                     }
                     if(res.status === 'FAILED'){
                         $('.cont-notification').show().addClass('danger').delay(4000).slideUp(300).html(res.message);
@@ -309,6 +329,40 @@
     };
     
 })();
+
+// Avatar colour Initial
+(function (){
+    
+    'use strict';
+    
+    SHOWCASE.admin.commentNameAvatar = function () {
+        
+        var needAvatar = document.querySelectorAll('.comment-media-object');
+        
+        var colours = [
+            "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+            "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
+        ];
+        
+        
+        
+        for (let x=0; x<needAvatar.length;x++){
+            
+            var firstChar = needAvatar[x].dataset.author.charAt(0).toUpperCase();
+            var randomColor = colours[Math.floor(Math.random()*colours.length)];
+            
+            
+            needAvatar[x].innerHTML = '<div id="avatarBox-"'+x+' style="background-color: '+randomColor+';width:50px;height: 50px;display:flex;justify-content: center;align-items: center;font-size:1.2em;color:#141414"><span>'+firstChar+'</span></div>';
+            console.log(needAvatar[x])
+        }
+        
+        
+        
+        
+    }
+    
+})();
+
 
 (function (){
 
@@ -440,6 +494,8 @@
                     plugins: "autoresize",
                     autoresize_overflow_padding: 50
                 });
+                
+                
                 break;
             case 'comments':
 
@@ -463,34 +519,4 @@
 })();
 
 
-(function (){
 
-    'use strict';
-
-    SHOWCASE.admin.commentNameAvatar = function () {
-        
-        var needAvatar = document.querySelectorAll('.comment-media-object');
-    
-        var colours = [
-            "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
-            "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
-        ];
-        
-        
-        
-        for (let x=0; x<needAvatar.length;x++){
-            
-            var firstChar = needAvatar[x].dataset.author.charAt(0).toUpperCase();
-            var randomColor = colours[Math.floor(Math.random()*colours.length)];
-       
-            
-            needAvatar[x].innerHTML = '<div id="avatarBox-"'+x+' style="background-color: '+randomColor+';width:50px;height: 50px;display:flex;justify-content: center;align-items: center;font-size:1.2em;color:#141414"><span>'+firstChar+'</span></div>';
-            console.log(needAvatar[x])
-        }
-        
-       
-       
-       
-    }
-
-})();

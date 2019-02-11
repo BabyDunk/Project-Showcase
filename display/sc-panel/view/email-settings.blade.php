@@ -6,6 +6,7 @@
 	 * Time: 01:59
 	 */
 
+	//\Classes\Core\Email::testMail();
 
 	?>
 
@@ -27,13 +28,14 @@
                         <small>Email Settings</small>
                     </h1>
                     @include('includes.messages')
-
-                    <form method="POST" action="/sc-panel/email_settings" enctype="multipart/form-data">
-                        <input type="hidden" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>
+                </div>
+                <div class="large-6">
+                   <form method="POST" action="/sc-panel/email_settings" enctype="multipart/form-data">
+                        <input type="hidden" id="CSRFToken" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>
                         <input type="hidden" name="emailauth" value="0">
                         <div class="grid-container full">
                             <div class="grid-x grid-padding-x">
-                                <div class="medium-6 cell">
+                                <div class="medium-12 cell">
                                     <fieldset class="fieldset">
                                         <legend>Email Server Settings</legend>
                                         <label for="emailtitle">Title To Appear On Email</label>
@@ -71,6 +73,46 @@
 
                                         </fieldset>
 
+                                        <fieldset class="fieldset">
+                                            <legend>Debugging Mode</legend>
+
+                                            <!-- Using radio buttons – each switch turns off the other two -->
+                                            <div class="switch large">
+                                                <input class="switch-input" id="email_debuggerRadioSwitch1" type="radio" value="0" name="email_debugger"  <?php echo (empty(sca_get_preference('showcase', 'sca_email_debugger'))) ? 'checked' : ''; ?> >
+                                                <label class="switch-paddle" for="email_debuggerRadioSwitch1">
+                                                    <span class="show-for-sr">Turn Email debugging off</span>
+                                                    <span class="switch-active" aria-hidden="true">OFF</span>
+                                                    <span class="switch-inactive" aria-hidden="true">ON</span>
+                                                </label>
+                                            </div>
+
+                                            <div class="switch large">
+                                                <input class="switch-input" id="email_debuggerRadioSwitch2" type="radio" value="1" name="email_debugger" <?php echo (!empty(sca_get_preference('showcase', 'sca_email_debugger'))  && sca_get_preference('showcase', 'sca_email_debugger') === 1) ? 'checked' : ''; ?> >
+                                                <label class="switch-paddle" for="email_debuggerRadioSwitch2">
+                                                    <span class="show-for-sr">Turn email debugging on for client notification</span>
+                                                    <span class="switch-active" aria-hidden="true">Client</span>
+                                                    <span class="switch-inactive" aria-hidden="true">OFF</span>
+                                                </label>
+                                            </div>
+
+                                            <div class="switch large">
+                                                <input class="switch-input" id="email_debuggerRadioSwitch3" type="radio"  value="2" name="email_debugger" <?php echo (!empty(sca_get_preference('showcase', 'sca_email_debugger'))  && sca_get_preference('showcase', 'sca_email_debugger') === 2) ? 'checked' : ''; ?> >
+                                                <label class="switch-paddle" for="email_debuggerRadioSwitch3">
+                                                    <span class="show-for-sr">Turn email debugging on for client and server notifications</span>
+                                                    <span class="switch-active" aria-hidden="true">Server</span>
+                                                    <span class="switch-inactive" aria-hidden="true">OFF</span>
+                                                </label>
+                                            </div>
+
+                                            <h4><small>*Client: activate client debugging mode</small></h4>
+                                            <h4><small>*Server: activate server & client debugging mode</small></h4>
+
+                                            <label for="testemailaddess">Test Recipient<small><em> eg; Email address to send the test to.</em></small></label>
+                                            <input class="form-control" type="text" name="testemailaddess" id="testemailaddess" value="<?php echo (!empty(sca_get_preference('showcase', 'sca_testemailaddess'))) ? sca_get_preference('showcase', 'sca_testemailaddess') : ''; ?>" placeholder="Email encryption type" />
+
+
+                                        </fieldset>
+
                                         <label for="emailsignature">Email Signature</label>
                                         <textarea class="form-control" name="emailsignature" id="emailsignature" placeholder="Describe in short what we do here" ><?php echo (!empty(sca_get_preference('showcase', 'sca_emailsignature'))) ? sca_get_preference('showcase', 'sca_emailsignature') : ''; ?></textarea>
                                     </fieldset>
@@ -79,9 +121,23 @@
                             </div>
                         </div>
                     </form>
+                </div>
 
+                <div class="large-6">
+                    <form method="POST" action="/sc-panel/email_test_message" >
+                        <input type="hidden" id="CSRFToken" name="CSRFToken" value="<?php echo \Classes\Core\CSRFToken::_SetToken(); ?>"/>
+                        <fieldset class="fieldset">
+                            <legend>Email Send Testing</legend>
 
-
+                            <button id="sendtestemailaddess" class="button warning">Send Test Message</button>
+                        </fieldset>
+                    </form>
+                    @if(\Classes\Core\Session::has('EMAIL_DEBUGGING'))
+                    <textarea id="">
+                        {{\Classes\Core\Session::get('EMAIL_DEBUGGING')}}
+                        @php \Classes\Core\Session::clear('EMAIL_DEBUGGING') @endphp
+                    </textarea>
+                    @endif
                 </div>
             </div>
             <!-- /.grid-x -->

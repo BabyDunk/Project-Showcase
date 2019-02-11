@@ -58,7 +58,7 @@
 	$router->map( 'GET', '/sc-panel/contacts',  'Controllers\Scpanel\ScpanelContactsController@show', 'admin_contacts');
 	$router->map( 'GET', '/sc-panel/contacts/[i:id]/delete',  'Controllers\Scpanel\ScpanelContactsController@remove', 'admin_remove_contacts');
 	
-	// Map USer Indox
+	// Map User Inbox
 	$router->map( 'GET', '/sc-panel/user_contacts',  'Controllers\Scpanel\ScpanelContactsController@show_users', 'user_contacts');
 	$router->map( 'GET', '/sc-panel/user_contacts/[i:id]/delete',  'Controllers\Scpanel\ScpanelContactsController@remove_users', 'user_remove_contacts');
 	
@@ -70,9 +70,13 @@
 	$router->map( 'GET', '/sc-panel/general_settings',  'Controllers\Scpanel\ScpanelSettingsController@showGeneral', 'admin_general_settings');
 	$router->map( 'POST', '/sc-panel/general_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeGeneral', 'admin_store_general_settings');
 	
+	// Map Admin Email Settings
 	$router->map( 'GET', '/sc-panel/email_settings',  'Controllers\Scpanel\ScpanelSettingsController@showEmail', 'admin_email_settings');
 	$router->map( 'POST', '/sc-panel/email_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeEmail', 'admin_store_email_settings');
+	$router->map( 'POST', '/sc-panel/email_test_message',  'Controllers\Scpanel\ScpanelSettingsController@sendTestMessage', 'admin_email_test_message');
 	
+	
+	// Map Admin Social Settings
 	$router->map( 'GET', '/sc-panel/social_settings',  'Controllers\Scpanel\ScpanelSettingsController@showSocial', 'admin_social_settings');
 	$router->map( 'POST', '/sc-panel/social_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeSocial', 'admin_store_social_settings');
 
