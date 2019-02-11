@@ -81,7 +81,7 @@ if ( \Classes\Core\User::hasPrivilege() ) {
 
 						@endphp
                         <tr>
-                            <td class="col-md-2"><a href="/sc-panel/showcase/{{ $showcase->id}}" class="thumbnail"> <img class="img-responsive" src="<?php echo $showcase->get_picture(); ?>" /></a>
+                            <td class="col-md-2"><a href="/showcase/{{ $showcase->id}}/{{urlString($showcase->title)}}" class="thumbnail"> <img class="img-responsive" src="<?php echo $showcase->get_picture(); ?>" /></a>
                                 <ul style="list-style-type: none; padding-left:0;margin-left:0;">
                                     <li style="padding:3px; border:1px solid #ccc;border-radius:3px; background-color: <?php echo $showcase->bg_colorselector; ?>;">Background color</li>
                                     <li style="padding:3px; border:1px solid #ccc;border-radius:3px; background-color: <?php echo $showcase->fg_colorselector; ?>;">Foreground Color</li>
@@ -90,7 +90,7 @@ if ( \Classes\Core\User::hasPrivilege() ) {
                                 <div class="pictures_link">
                                     <a href="/showcase/{{$showcase->id}}/{{urlString($showcase->title)}}">View</a>
                                     <a href="/sc-panel/uploads/{{ $showcase->id}}">Edit</a>
-                                    <a href="/sc-panel/showcase/{{ $showcase->id}}">Delete</a>
+                                    <a href="/sc-panel/showcase/{{ $showcase->id}}/delete">Delete</a>
 
                                 </div>
                             </td>

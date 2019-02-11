@@ -36,7 +36,7 @@
 	
 	// Map Admin Showcase
 	$router->map( 'GET', '/sc-panel/showcase',  'Controllers\Scpanel\ScpanelShowcaseController@show', 'admin_showcase');
-	$router->map( 'GET', '/sc-panel/showcase/[i:id]',  'Controllers\Scpanel\ScpanelShowcaseController@remove', 'admin_remove_showcase');
+	$router->map( 'GET', '/sc-panel/showcase/[i:id]/delete',  'Controllers\Scpanel\ScpanelShowcaseController@remove', 'admin_remove_showcase');
 	
 	
 	// Map Admin Uploads

@@ -61,7 +61,7 @@
 			
 		}
 		
-		public static function find_all( $limit = 0 , $order = 'rand' )
+		public static function find_all( $limit = 0 , $order = 'desc' )
 		{
 			
 			$limit = ! empty( $limit ) ? " LIMIT $limit " : "";

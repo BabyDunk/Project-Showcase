@@ -82,7 +82,7 @@
                             @if($isLogin === $showcase->user_id)
                                 <ul class="showcase-panel">
                                     <li><span><a href="/sc-panel/uploads/{{$id['id']}}">Edit</a></span></li> |
-                                    <li><span><a href="/sc-panel/showcase/{{$id['id']}}">Delete</a></span></li>
+                                    <li><span><a href="/sc-panel/showcase/{{$id['id']}}/delete">Delete</a></span></li>
                                 </ul>
                             @endif
                             <a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact Dev</a>
