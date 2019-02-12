@@ -1,9 +1,5 @@
-/*!
- * Start Bootstrap - Blog Home HTML Template (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-@import "../../font-awesome/scss/font-awesome";
+$fa-font-path: '../../../../node_modules/font-awesome/fonts' !default;
+@import "../../../../node_modules/font-awesome/scss/font-awesome";
 @import "../../../../vendor/zurb/foundation/assets/foundation";
 @import "../../../../node_modules/motion-ui/src/motion-ui";
 
