@@ -280,7 +280,7 @@
                                         <div class="grid-x grid-padding-x">
                                             <div class="medium-6 cell">
                                                 <label for="bg_colorselector-placement">Select background color
-                                                    <a href="#" id="bg_colorselector-placement" class="button" style="background-color:<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>">Select Color</a>
+                                                    <a href="#" id="bg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>">Select Color</a>
                                                     <input type="hidden" name="bg_colorselector" id="bg_colorselector" value="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>" />
                                                 </label>
                                             </div>
