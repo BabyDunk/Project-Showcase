@@ -1,6 +1,6 @@
 .idea/
 vendor/
 node_modules/
-display/sc-panel/cache/*
-display/front/cache/*
+display/sc-panel/cache/*.php
+display/front/cache/*.php
 resources/uploads/
