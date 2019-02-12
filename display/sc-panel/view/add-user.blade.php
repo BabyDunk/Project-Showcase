@@ -52,7 +52,7 @@
                             <label for="last_name">Last Name</label>
                             <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter a last name">
 
-                            <button type="submit" name="create" value="true" class="button primary float-right">Submit Registration</button>
+                            <button type="submit" name="create" value="true" class="button primary expanded">Submit Registration</button>
                         </form>
                     </div>
                 </div>

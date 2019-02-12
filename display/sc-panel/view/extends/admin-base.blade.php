@@ -25,6 +25,7 @@ if(!\Classes\Core\Session::instance()->is_signed_in()) { redirect('/sc-panel/log
 
     <!-- Custom CSS -->
     <link href="<?php sca_base_url(); ?>resources/assets/sc-panel/css/style.css" rel="stylesheet">
+    <link href="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.css" rel="stylesheet">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -62,21 +63,22 @@ if(!\Classes\Core\Session::instance()->is_signed_in()) { redirect('/sc-panel/log
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="<?php sca_base_url(); ?>vendor/components/jquery/jquery.min.js"></script>
+<script src="<?php sca_base_url(); ?>node_modules/jquery/dist/jquery.min.js"></script>
 <!-- jQuery-ui -->
-<script src="<?php sca_base_url(); ?>vendor/components/jqueryui/jquery-ui.min.js"></script>
+<script src="<?php sca_base_url(); ?>node_modules/jquery-ui/ui/jquery-1-7.js"></script>
 
 <!-- Zurb Foundation JavaScript -->
-<script src="<?php sca_base_url(); ?>vendor/zurb/foundation/dist/js/foundation.min.js"></script>
-<!-- Motion-ui -->
+<script src="<?php sca_base_url(); ?>node_modules/what-input/dist/what-input.min.js"></script>
 <script src="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.js"></script>
+<script src="<?php sca_base_url(); ?>node_modules/foundation-sites/dist/js/foundation.js"></script>
+
 
 
 <!-- Color Picker -->
 <script src="<?php sca_base_url(); ?>node_modules/vanilla-picker/dist/vanilla-picker.min.js"></script>
 
 <!-- WYSIWYG Tiny mce Editor -->
-<script src="<?php sca_base_url(); ?>vendor/tinymce/tinymce/tinymce.min.js"></script>
+<script src="<?php sca_base_url(); ?>node_modules/tinymce/tinymce.min.js"></script>
 
 <!-- Google Charts Loader -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

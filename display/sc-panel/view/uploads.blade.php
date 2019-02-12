@@ -279,24 +279,17 @@
                                         <legend>Color Selection</legend>
                                         <div class="grid-x grid-padding-x">
                                             <div class="medium-6 cell">
-                                                <label for="bg_colorselector-placement">Select background color
-                                                    <a href="#" id="bg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>">Select Color</a>
-                                                    <input type="hidden" name="bg_colorselector" id="bg_colorselector" value="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>" />
-                                                </label>
-                                            </div>
-                                            <div class="medium-6 cell float-right">
-                                                <div id="bg_colorselectorplacement">
-                                                </div>
+                                                <label for="bg_colorselector-placement">Select background color</label>
+                                                <a href="#" id="bg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>">Select Color</a>
+                                                <input type="hidden" name="bg_colorselector" id="bg_colorselector" value="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>" />
                                             </div>
                                         </div>
 
                                         <div class="grid-x grid-padding-x">
                                             <div class="medium-6 cell">
-                                                <label for="fg_colorselector-placement">Select foreground color
-                                                    <a href="#" id="fg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>">Select Color</a>
-                                                    <input  type="hidden" name="fg_colorselector" id="fg_colorselector" value="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>" />
-                                                </label>
-
+                                                <label for="fg_colorselector-placement">Select foreground color</label>
+                                                <a href="#" id="fg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>">Select Color</a>
+                                                <input  type="hidden" name="fg_colorselector" id="fg_colorselector" value="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>" />
                                             </div>
                                         </div>
                                     </fieldset>
@@ -348,7 +341,7 @@
                                     </fieldset>
 
 
-                                    <button class="button success float-right"  type="submit" name="submit" id="submit" value="true" >Submit!</button>
+                                    <button class="button success expanded"  type="submit" name="submit" id="submit" value="true" >Submit!</button>
 
                                 </div>
 

@@ -44,7 +44,7 @@
 
 
                                 <div class="form-group">
-                                    <button type="submit" name="submit" value="" class="button success float-right">Submit</button>
+                                    <button type="submit" name="submit" value="" class="button success expanded">Login</button>
 
                                 </div>
 
