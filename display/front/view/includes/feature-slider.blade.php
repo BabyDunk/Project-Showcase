@@ -16,7 +16,7 @@
     <div class="grid-container">
         <div class="grid-container full">
             <div class="grid-x grid-padding-x">
-                <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+                <div class="orbit large-12 medium-12 small-12" role="region" aria-label="Feature item picture" data-orbit>
                     <div class="orbit-wrapper">
                         <div class="orbit-controls">
                             <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
@@ -28,7 +28,7 @@
                                 @if(!empty($featured_img->filename))
                                 <li class="orbit-slide">
                                     <figure class="orbit-figure">
-                                        <img class="orbit-image featured-img" src="{{$featured_img->picture_url()}}" alt="Space">
+                                        <img class="orbit-image {{--featured-img--}}" src="{{$featured_img->picture_url()}}" alt="{{$featured_img->title}}">
                                         <figcaption class="orbit-caption"><a href="/showcase/{{$featured_img->id}}/{{urlString($featured_img->title)}}">{{$featured_img->title}}</a></figcaption>
                                     </figure>
                                 </li>

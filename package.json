@@ -9,11 +9,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-util": "^3.0.8"
   },
   "dependencies": {
     "flatpickr": "^4.5.2",
-    "simple-ajax-uploader": "^2.5.5"
+    "motion-ui": "^2.0.3",
+    "simple-ajax-uploader": "^2.5.5",
+    "vanilla-picker": "^2.7.2"
   }
 }

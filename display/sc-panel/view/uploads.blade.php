@@ -113,8 +113,10 @@
                                                     </select>
                                                 </label>
 
-                                                <label for="blocknotice_colorselector1">Select foreground color
-                                                    <input class="form-control colorselector" type="text" name="blocknotice_colorselector1" id="blocknotice_colorselector1" value="{{!empty($threeBlockNotice->blocknotice_colorselector1) ? $threeBlockNotice->blocknotice_colorselector1 : '##0a0a0a'}}" placeholder="Select foreground color" />
+                                                <label for="blocknotice_colorselector1-placement">Select foreground color
+                                                    <a href="#" id="blocknotice_colorselector1-placement" class="button" data-preselectedcolor="<?php echo (!empty($threeBlockNotice->blocknotice_colorselector1)) ? $threeBlockNotice->blocknotice_colorselector1 : ''; ?>">Select Color</a>
+
+                                                    <input type="hidden" name="blocknotice_colorselector1" id="blocknotice_colorselector1" value="{{!empty($threeBlockNotice->blocknotice_colorselector1) ? $threeBlockNotice->blocknotice_colorselector1 : ''}}"  />
                                                 </label>
 
                                                 <label for="blocknoticesubtitle1">Subtitle
@@ -142,8 +144,10 @@
                                                     </select>
                                                 </label>
 
-                                                <label for="blocknotice_colorselector2">Select foreground color
-                                                    <input class="form-control colorselector" type="text" name="blocknotice_colorselector2" id="blocknotice_colorselector2" value="{{!empty($threeBlockNotice->blocknotice_colorselector2) ? $threeBlockNotice->blocknotice_colorselector2 : '##0a0a0a'}}" placeholder="Select foreground color" />
+                                                <label for="blocknotice_colorselector2-placement">Select foreground color
+                                                    <a href="#" id="blocknotice_colorselector2-placement" class="button" data-preselectedcolor="<?php echo (!empty($threeBlockNotice->blocknotice_colorselector2)) ? $threeBlockNotice->blocknotice_colorselector2 : ''; ?>">Select Color</a>
+
+                                                    <input type="hidden" name="blocknotice_colorselector2" id="blocknotice_colorselector2" value="{{!empty($threeBlockNotice->blocknotice_colorselector2) ? $threeBlockNotice->blocknotice_colorselector2 : ''}}"  />
                                                 </label>
 
                                                 <label for="blocknoticesubtitle2">Subtitle
@@ -172,8 +176,9 @@
                                                     </select>
                                                 </label>
 
-                                                <label for="blocknotice_colorselector3">Select foreground color
-                                                    <input class="form-control colorselector" type="text" name="blocknotice_colorselector3" id="blocknotice_colorselector3" value="{{!empty($threeBlockNotice->blocknotice_colorselector3) ? $threeBlockNotice->blocknotice_colorselector3 : '##0a0a0a'}}" placeholder="Select foreground color" />
+                                                <label for="blocknotice_colorselector3-placement">Select foreground color
+                                                    <a href="#" id="blocknotice_colorselector3-placement" class="button" data-preselectedcolor="<?php echo (!empty($threeBlockNotice->blocknotice_colorselector3)) ? $threeBlockNotice->blocknotice_colorselector3 : ''; ?>">Select Color</a>
+                                                    <input  type="hidden" name="blocknotice_colorselector3" id="blocknotice_colorselector3" value="<?php echo (!empty($threeBlockNotice->blocknotice_colorselector3)) ? $threeBlockNotice->blocknotice_colorselector3 : ''; ?>" />
                                                 </label>
 
                                                 <label for="blocknoticesubtitle3">Subtitle
@@ -274,8 +279,9 @@
                                         <legend>Color Selection</legend>
                                         <div class="grid-x grid-padding-x">
                                             <div class="medium-6 cell">
-                                                <label for="bg_colorselector">Select background color
-                                                    <input class="form-control colorselector" type="text" name="bg_colorselector" id="bg_colorselector" value="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>" placeholder="Give your showcase background color" />
+                                                <label for="bg_colorselector-placement">Select background color
+                                                    <a href="#" id="bg_colorselector-placement" class="button" style="background-color:<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>">Select Color</a>
+                                                    <input type="hidden" name="bg_colorselector" id="bg_colorselector" value="<?php echo (!empty($showcase->bg_colorselector)) ? $showcase->bg_colorselector : ''; ?>" />
                                                 </label>
                                             </div>
                                             <div class="medium-6 cell float-right">
@@ -286,14 +292,11 @@
 
                                         <div class="grid-x grid-padding-x">
                                             <div class="medium-6 cell">
-                                                <label for="fg_colorselector">Select foreground color
-                                                    <input class="form-control colorselector" type="text" name="fg_colorselector" id="fg_colorselector" value="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>" placeholder="Select foreground color" />
+                                                <label for="fg_colorselector-placement">Select foreground color
+                                                    <a href="#" id="fg_colorselector-placement" class="button" data-preselectedcolor="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>">Select Color</a>
+                                                    <input  type="hidden" name="fg_colorselector" id="fg_colorselector" value="<?php echo (!empty($showcase->fg_colorselector)) ? $showcase->fg_colorselector : ''; ?>" />
                                                 </label>
 
-                                            </div>
-                                            <div class="medium-6 cell float-right">
-                                                <div id="fg_colorselectorplacement">
-                                                </div>
                                             </div>
                                         </div>
                                     </fieldset>

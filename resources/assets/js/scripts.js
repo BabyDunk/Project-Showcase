@@ -179,6 +179,7 @@
             var userPhone   = $('#phone').val();
             var userMess    = $('#message').val();
             var userDate    = $('#date_est').val();
+            
 
 
             $.ajax({
@@ -355,15 +356,37 @@
             needAvatar[x].innerHTML = '<div id="avatarBox-"'+x+' style="background-color: '+randomColor+';width:50px;height: 50px;display:flex;justify-content: center;align-items: center;font-size:1.2em;color:#141414"><span>'+firstChar+'</span></div>';
             console.log(needAvatar[x])
         }
-        
-        
-        
-        
     }
     
 })();
 
+(function (){
 
+    'use strict';
+
+    SHOWCASE.admin.vanillaColorPicker = function ($eleLocation)
+    {
+        var length = $eleLocation.length-10;
+        var getIputName = $eleLocation.slice(0,length);
+        var parentElement = document.getElementById($eleLocation);
+        
+        var picker = new Picker({
+            parent: parentElement,
+            color: parentElement.dataset.preselectedcolor,
+            popup: 'right',
+            alpha: true,
+            editor: true,
+            onChange: function(color) {
+                parentElement.style.backgroundColor = color.rgbaString;
+                document.getElementById(getIputName).value = color.rgbaString;
+            },
+        });
+    }
+
+})();
+
+
+// Function Callout Container
 (function (){
 
     'use strict';
@@ -406,72 +429,11 @@
                     autoresize_overflow_padding: 50
                 });
                 // ColorPicker
-                $('#bg_colorselector').iris({
-                    hide: false,
-                    palettes: true,
-                    target: '#bg_colorselectorplacement',
-
-                    change: function(event, ui) {
-                        // event = standard jQuery event, produced by whichever control was changed.
-                        // ui = standard jQuery UI object, with a color member containing a Color.js object
-
-                        // change the headline color
-                        $("#bg_colorselector").css( 'background-color', ui.color.toString());
-                    }
-                });
-
-                $('#fg_colorselector').iris({
-                    hide: false,
-                    palettes: true,
-                    target: '#fg_colorselectorplacement',
-
-                    change: function(event, ui) {
-                        // event = standard jQuery event, produced by whichever control was changed.
-                        // ui = standard jQuery UI object, with a color member containing a Color.js object
-
-                        // change the headline color
-                        $("#fg_colorselector").css( 'background-color', ui.color.toString());
-                    }
-                });
-
-                $('#blocknotice_colorselector1').iris({
-                    hide: false,
-                    palettes: true,
-
-                    change: function(event, ui) {
-                        // event = standard jQuery event, produced by whichever control was changed.
-                        // ui = standard jQuery UI object, with a color member containing a Color.js object
-
-                        // change the headline color
-                        $("#blocknotice_colorselector1").css( 'background-color', ui.color.toString());
-                    }
-                });
-
-                $('#blocknotice_colorselector2').iris({
-                    hide: false,
-                    palettes: true,
-
-                    change: function(event, ui) {
-                        // event = standard jQuery event, produced by whichever control was changed.
-                        // ui = standard jQuery UI object, with a color member containing a Color.js object
-
-                        // change the headline color
-                        $("#blocknotice_colorselector2").css( 'background-color', ui.color.toString());
-                    }
-                });
-
-                $('#blocknotice_colorselector3').iris({
-                    hide: false,
-                    palettes: true,
-
-                    change: function(event, ui) {
-                        // event = standard jQuery event, produced by whichever control was changed.
-                        // ui = standard jQuery UI object, with a color member containing a Color.js object
-
-                        // change the headline color
-                        $("#blocknotice_colorselector3").css( 'background-color', ui.color.toString());
-                    }
-                });
+                SHOWCASE.admin.vanillaColorPicker('blocknotice_colorselector1-placement');
+                SHOWCASE.admin.vanillaColorPicker('blocknotice_colorselector2-placement');
+                SHOWCASE.admin.vanillaColorPicker('blocknotice_colorselector3-placement');
+                SHOWCASE.admin.vanillaColorPicker('bg_colorselector-placement');
+                SHOWCASE.admin.vanillaColorPicker('fg_colorselector-placement');
 
                 // Upload Pins
                 SHOWCASE.admin.uploadPins();

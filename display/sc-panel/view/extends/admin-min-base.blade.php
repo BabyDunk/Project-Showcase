@@ -40,15 +40,17 @@
         <!-- /#wrapper -->
 
         <!-- jQuery -->
-        <script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/jquery/dist/jquery.js"></script>
+        <script src="<?php sca_base_url(); ?>vendor/components/jquery/jquery.min.js"></script>
         <!-- jQuery-ui -->
-        <script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/jquery-ui/jquery-ui.js"></script>
-
+        <script src="<?php sca_base_url(); ?>vendor/components/jqueryui/jquery-ui.min.js"></script>
         <!-- Zurb Foundation JavaScript -->
-        <script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/foundation-sites/dist/js/foundation.js"></script>
+        <script src="<?php sca_base_url(); ?>vendor/zurb/foundation/dist/js/foundation.min.js"></script>
+        <!-- Motion-ui -->
+
+        <script src="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.js"></script>
 
         <!-- WYSIWYG Tiny mce Editor -->
-        <script src="<?php sca_base_url(); ?>resources/assets/sc-panel/js/tinymce/tinymce.min.js"></script>
+        <script src="<?php sca_base_url(); ?>vendor/tinymce/tinymce/tinymce.min.js"></script>
         <script src="<?php sca_base_url(); ?>resources/assets/js/scripts.js" type="text/javascript" ></script>
 
     </body>

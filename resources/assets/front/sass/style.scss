@@ -4,8 +4,8 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 @import "../../font-awesome/scss/font-awesome";
-@import "../../bower/bower_components/foundation-sites/assets/foundation";
-@import "../../bower/bower_components/motion-ui/motion-ui";
+@import "../../../../vendor/zurb/foundation/assets/foundation";
+@import "../../../../node_modules/motion-ui/src/motion-ui";
 
 
 /* Front end Styles  */
@@ -126,7 +126,7 @@
   background-color: turquoise;
 
   .featured-img {
-   /* height:600px;*/
+    height:600px;
     width:1200px;
 
 

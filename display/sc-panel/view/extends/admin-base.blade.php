@@ -26,9 +26,6 @@ if(!\Classes\Core\Session::instance()->is_signed_in()) { redirect('/sc-panel/log
     <!-- Custom CSS -->
     <link href="<?php sca_base_url(); ?>resources/assets/sc-panel/css/style.css" rel="stylesheet">
 
-    <!-- Bootstrap Colorpciker style -->
-    <link href="<?php sca_base_url(); ?>vendor/itsjavi/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css" rel="stylesheet">
-
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,20 +62,21 @@ if(!\Classes\Core\Session::instance()->is_signed_in()) { redirect('/sc-panel/log
 <!-- /#wrapper -->
 
 <!-- jQuery -->
-<script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/jquery/dist/jquery.js"></script>
+<script src="<?php sca_base_url(); ?>vendor/components/jquery/jquery.min.js"></script>
 <!-- jQuery-ui -->
-<script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/jquery-ui/jquery-ui.js"></script>
+<script src="<?php sca_base_url(); ?>vendor/components/jqueryui/jquery-ui.min.js"></script>
 
 <!-- Zurb Foundation JavaScript -->
-<script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/foundation-sites/dist/js/foundation.js"></script>
-{{--<!-- Bootstrap Color Picker -->
-<script src="<?php sca_base_url(); ?>vendor/itsjavi/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.js"></script>--}}
+<script src="<?php sca_base_url(); ?>vendor/zurb/foundation/dist/js/foundation.min.js"></script>
+<!-- Motion-ui -->
+<script src="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.js"></script>
+
 
 <!-- Color Picker -->
-<script src="<?php sca_base_url(); ?>resources/assets/bower/bower_components/iris/dist/iris.js"></script>
+<script src="<?php sca_base_url(); ?>node_modules/vanilla-picker/dist/vanilla-picker.min.js"></script>
 
 <!-- WYSIWYG Tiny mce Editor -->
-<script src="<?php sca_base_url(); ?>resources/assets/sc-panel/js/tinymce/tinymce.min.js"></script>
+<script src="<?php sca_base_url(); ?>vendor/tinymce/tinymce/tinymce.min.js"></script>
 
 <!-- Google Charts Loader -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
