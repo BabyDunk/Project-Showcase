@@ -9,27 +9,26 @@
 	
 	$router = new AltoRouter();
 	
-	// map homepage
-	$router->map( 'GET', '/',  'Controllers\IndexController@show', 'home');
-	
-	// Map Contact Form
-	$router->map( 'POST', '/contact',  'Controllers\IndexContactController@insert', 'front_contact');
-	
-	
-	// Map Contact Form
-	$router->map( 'POST', '/showcase_contact',  'Controllers\IndexContactController@insert', 'showcases_contact');
-
-
 	// Map About Page
-	$router->map( 'GET', '/about',  'Controllers\IndexAboutController@show', 'front_about');
-
+	$router->map( 'GET', '/',  'Controllers\IndexHomeController@show', 'home');
+	
+	// Map Shop
+	$router->map( 'GET', '/shop',  'Controllers\IndexShopController@show', 'shop');
+	
+	// Map Contact Form
+	$router->map( 'POST', '/shop/contact',  'Controllers\IndexContactController@insert', 'front_contact');
+	
+	
+	// Map Contact Form
+	$router->map( 'POST', '/shop/showcase_contact',  'Controllers\IndexContactController@insert', 'showcases_contact');
+	
 
 	// Map Showcase Page
-	$router->map( 'GET', '/showcase/[i:id]/[*]',  'Controllers\IndexShowcaseController@show', 'front_showcase');
+	$router->map( 'GET', '/shop/showcase/[i:id]/[*]',  'Controllers\IndexShowcaseController@show', 'front_showcase');
 
 	
 	// Map Comment
-	$router->map( 'POST', '/showcase/comment',  'Controllers\IndexCommentController@store', 'store_comment');
+	$router->map( 'POST', '/shop/showcase/comment',  'Controllers\IndexCommentController@store', 'store_comment');
 
 
 	require_once(__DIR__ . '/sc-panel-routes.php');

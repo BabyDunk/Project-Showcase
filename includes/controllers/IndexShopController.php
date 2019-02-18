@@ -11,7 +11,7 @@
 	
 	use Classes\Core\Session;
 	
-	class IndexController extends BaseController
+	class IndexShopController extends BaseController
 	{
 		
 		function __construct()
@@ -25,7 +25,7 @@
 
 			$theUser = isset(Session::instance()->user_id) ? Session::instance()->user_id : '';
 			
-			view('home', ['user_id' => $theUser]);
+			view('shop', ['user_id' => $theUser]);
 			
 		}
 		

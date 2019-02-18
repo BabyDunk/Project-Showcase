@@ -1,10 +1,13 @@
 <?php
 	/**
 	 * Created by Chris Wilkinson.
-	 * Title: oop
-	 * Date: 26/05/2018
-	 * Time: 10:18
-	 */?>
+	 * Title: showcase_app
+	 * Date: 20/06/2018
+	 * Time: 20:58
+	 */
+
+
+	?>
 
 @extends('extends.base')
 
@@ -14,15 +17,11 @@
 
 @section('content')
 
-<div class="row">
-@include('includes.feature-slider')
-@include('includes.info-1')
-@include('includes.text-slider')
-@include('includes.featured')
-@include('includes.contact')
+    <div class="row">
 
+        Home
 
-</div>
-<!-- /.row -->
+    </div>
+    <!-- /.row -->
 
 @endsection

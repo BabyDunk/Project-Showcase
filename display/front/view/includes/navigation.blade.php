@@ -19,8 +19,8 @@
     <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
             <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="{{sca_get_preference('showcase', 'sca_siteurl')}}#contact" {{--data-smooth-scroll--}}>Contact</a></li>
+            <li><a href="/shop">Shop</a></li>
+            <li><a href="{{sca_get_preference('showcase', 'sca_siteurl')}}shop#contact" {{--data-smooth-scroll--}}>Contact</a></li>
             <li>@php echo ($user_id) ? '<a href="/sc-panel">User Panel</a>' : '<a href="/sc-panel/login">Login</a>' ; @endphp</li>
         </ul>
     </div>

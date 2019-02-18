@@ -9,14 +9,19 @@
 	namespace Controllers;
 	
 	
-	class IndexAboutController
+	use Classes\Core\Session;
+	
+	class IndexHomeController
 	{
 		
 		
 		
 		public function show(  )
 		{
-			view('about');
+			
+			$theUser = isset(Session::instance()->user_id) ? Session::instance()->user_id : '';
+			
+			view('home', ['user_id' => $theUser]);
 			
 		}
 		
