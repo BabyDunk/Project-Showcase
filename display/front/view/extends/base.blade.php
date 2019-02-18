@@ -17,9 +17,10 @@
 
     <title>@yield('title')</title>
 
-    <!-- Custom CSS -->
-    <link href="<?php sca_base_url(); ?>resources/assets/front/css/style.css" rel="stylesheet">
-    <link href="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.css" rel="stylesheet">
+    <!-- Bundled CSS -->
+    <link href="<?php sca_base_url(); ?>resources/assets/css/bundle.css" rel="stylesheet">
+    <link href="<?php sca_base_url(); ?>node_modules/motion-ui" rel="stylesheet">
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,20 +56,11 @@
     <!-- /.grid-container-->
 </footer>
 
-<!-- jQuery -->
-<script src="<?php sca_base_url(); ?>node_modules/jquery/dist/jquery.min.js"></script>
-<!-- jQuery-ui -->
-<script src="<?php sca_base_url(); ?>node_modules/jquery-ui/ui/jquery-1-7.js"></script>
 
-
-<!-- Zurb Foundation JavaScript -->
-<script src="<?php sca_base_url(); ?>node_modules/what-input/dist/what-input.min.js"></script>
-<script src="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.js"></script>
-<script src="<?php sca_base_url(); ?>node_modules/foundation-sites/dist/js/foundation.js"></script>
 
 
 <!-- base script -->
-<script src="<?php sca_base_url(); ?>resources/assets/js/scripts.js" type="text/javascript" ></script>
+<script src="<?php sca_base_url(); ?>resources/assets/js/bundle.js" type="text/javascript" ></script>
 
 </body>
 

@@ -7,7 +7,7 @@
 	 */?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js" lang="en">
     <head>
 
         <meta charset="{{DB_CHARSET}}">
@@ -18,8 +18,8 @@
 
         <title>@yield('title')</title>
 
-        <!-- Custom CSS -->
-        <link href="<?php sca_base_url(); ?>resources/assets/sc-panel/css/style.css" rel="stylesheet">
+        <!-- Bundled CSS -->
+        <link href="<?php sca_base_url(); ?>resources/assets/css/bundle.css" rel="stylesheet">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -39,19 +39,8 @@
         </div>
         <!-- /#wrapper -->
 
-        <!-- jQuery -->
-        <script src="<?php sca_base_url(); ?>node_modules/jquery/dist/jquery.min.js"></script>
-        <!-- jQuery-ui -->
-        <script src="<?php sca_base_url(); ?>node_modules/jquery-ui/ui/jquery-1-7.js"></script>
-        <!-- Zurb Foundation JavaScript -->
-        <script src="<?php sca_base_url(); ?>node_modules/what-input/dist/what-input.min.js"></script>
-        <script src="<?php sca_base_url(); ?>node_modules/motion-ui/dist/motion-ui.min.js"></script>
-        <script src="<?php sca_base_url(); ?>node_modules/foundation-sites/dist/js/foundation.js"></script>
-
-
-        <!-- WYSIWYG Tiny mce Editor -->
-        <script src="<?php sca_base_url(); ?>node_modules/tinymce/tinymce.min.js"></script>
-        <script src="<?php sca_base_url(); ?>resources/assets/js/scripts.js" type="text/javascript" ></script>
+        <!-- Bundled JS -->
+        <script src="<?php sca_base_url(); ?>resources/assets/js/bundle.js" type="text/javascript" ></script>
 
     </body>
 </html>

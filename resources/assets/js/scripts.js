@@ -1,4 +1,3 @@
-
 (function (){
 
     'use strict';
@@ -360,15 +359,35 @@
     
 })();
 
+
+// WYSIWYG Editor Initializer
+(function (){
+
+    'use strict';
+    
+    SHOWCASE.admin.textareaEditor = function ()
+    {
+        return tinymce.init({
+            selector:'textarea',
+            plugins: "autoresize",
+            autoresize_overflow_padding: 50
+        });
+    }
+
+})();
+
 (function (){
 
     'use strict';
 
+    
+    
     SHOWCASE.admin.vanillaColorPicker = function ($eleLocation)
     {
         var length = $eleLocation.length-10;
         var getIputName = $eleLocation.slice(0,length);
         var parentElement = document.getElementById($eleLocation);
+        
         
         var picker = new Picker({
             parent: parentElement,
@@ -422,12 +441,13 @@
                 break;
             case 'uploads':
 
-                // WYSIWYG Editor Initializer
-                tinymce.init({
+                // WYSIWYG Editor
+                SHOWCASE.admin.textareaEditor();
+               /* tinymce.init({
                     selector:'textarea',
                     plugins: "autoresize",
                     autoresize_overflow_padding: 50
-                });
+                });*/
                 // ColorPicker
                 SHOWCASE.admin.vanillaColorPicker('blocknotice_colorselector1-placement');
                 SHOWCASE.admin.vanillaColorPicker('blocknotice_colorselector2-placement');
@@ -451,11 +471,7 @@
 
             case 'settings':
                 // WYSIWYG Editor Initializer
-                tinymce.init({
-                    selector: "textarea",  // change this value according to your HTML
-                    plugins: "autoresize",
-                    autoresize_overflow_padding: 50
-                });
+                SHOWCASE.admin.textareaEditor();
                 
                 
                 break;
