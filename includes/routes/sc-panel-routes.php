@@ -81,4 +81,10 @@
 	$router->map( 'POST', '/sc-panel/social_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeSocial', 'admin_store_social_settings');
 
 	
+	// Map Admin Logging Settings
+	$router->map( 'GET', '/sc-panel/logging_settings',  'Controllers\Scpanel\ScpanelSettingsController@showLogging', 'admin_logging_settings');
+	$router->map( 'POST', '/sc-panel/logging_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeLogging', 'admin_store_logging_settings');
+
 	
+	// Map Install path
+	$router->map('GET', '/sc-panel/install', '\Controllers\Scpanel\ScpanelContactsInstallController@show', 'show_install_script');

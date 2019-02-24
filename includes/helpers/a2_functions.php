@@ -837,3 +837,27 @@ function faTest(){
 		'fa-font-awesome'                        => 'f2b4'
 	);
 }
+
+function exceptionCatcher($e){
+	
+	
+	if($e->getCode() === 1044){
+		$returnMessage = 'Invalid database name';
+	}elseif($e->getCode() === 1045){
+		$returnMessage = 'Invalid database username or password';
+	}else{
+		
+		if(sca_get_preference('showcase', 'sca_errorlogging')){
+			
+			$logging = new \Classes\Core\Logging();
+			
+			$logging->logs = "<strong>Exception : </strong>". $e->getMessage() . '<br><strong>Exception Code: </strong>' . $e->getCode();
+			$logging->created_at = date("Y-m-d H:i:s");
+			$logging->create();
+		}
+		
+		$returnMessage =  "<strong>Error Notice : </strong> something went wrong contact site admin";
+	}
+	
+	echo $returnMessage;
+}

@@ -16,6 +16,7 @@
     <div class="grid-container">
         <div class="grid-container full">
             <div class="grid-x grid-padding-x">
+                @if(!empty($featured_imgs))
                 <div class="orbit large-12 medium-12 small-12" role="region" aria-label="Feature item picture" data-orbit>
                     <div class="orbit-wrapper">
                         <div class="orbit-controls">
@@ -38,6 +39,7 @@
                         </ul>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>

@@ -71,7 +71,7 @@
 				
 				
 			}catch (\PDOException $e){
-				throw new \PDOException("PDO ERROR: " . $e->getMessage()/*, $e->getCode()*/);
+				throw new \PDOException("PDO ERROR: " . $e->getMessage(), $e->getCode());
 			}
 			
 			

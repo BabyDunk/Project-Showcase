@@ -184,5 +184,31 @@
 			
 		}
 		
+		public function showLogging(  )
+		{
+			\Classes\Core\User::isAdmin();
+			
+			adminView('logging-settings', ['userid'=>Session::instance()->user_id]);
+			Session::clear('MESSAGE');
+		}
+		
+		public function storeLogging(  )
+		{
+			\Classes\Core\User::isAdmin();
+			
+			$post = Params::get('post');
+
+			
+			if(Params::has('submit')){
+				sca_set_preference('showcase', 'sca_errorlogging', notEmpty($post->errorlogging));
+				
+				
+				adminView('logging-settings', ['userid'=>Session::instance()->user_id, 'message'=> 'Settings saved successfully']);
+			}else{
+				adminView('logging-settings', ['userid'=>Session::instance()->user_id, 'error'=> 'Something went wrong, please try again']);
+			}
+			
+		}
+		
 		
 	}

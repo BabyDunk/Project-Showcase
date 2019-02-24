@@ -9,9 +9,10 @@
     "build:scss": "node-sass   ./includes/src/sass/build.scss ./resources/assets/css/bundle.css",
     "build:autoprefixer": "postcss ./resources/assets/css/* -u autoprefixer -r",
     "build:css": "npm run build:scss && npm run build:autoprefixer",
+    "move:installer": "cp ./includes/src/install-temp.php ./install.php",
     "watch:js": "onchange -i -p 100 './includes/src/js/*.js' -- npm run build:browserify",
     "watch:css": "onchange -i -p 100 './includes/src/sass/*.scss' -- npm run build:css",
-    "watch:all": "concurrently \"npm run watch:css\" \"npm run watch:js\"",
+    "watch:all": "concurrently \"npm run watch:css\" \"npm run watch:js\" \"npm run move:installer\"",
     "postinstall": "npm run watch:all",
     "watch:manual": "npm run build:css && npm run build:browserify",
     "test": "echo \"Error: no test specified\" && exit 1"

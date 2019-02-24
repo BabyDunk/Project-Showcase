@@ -236,9 +236,6 @@ class User extends PdoObject {
 			} else {
 				
 				$this->filename = self::find_by_id($this->id)->filename;
-				echo "<pre>";
-				print_r($this);
-				echo "</pre>";
 				if($this->update()) {
 					
 					return true;

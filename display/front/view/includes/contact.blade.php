@@ -14,8 +14,8 @@
         <div class="grid-container full">
             <div class="grid-x grid-padding-x">
                 <div class="medium-5 cell">
-                    <h4 class="text-center">{{sca_get_preference('showcase', 'sca_contacttitle')}}</h4>
-                    <p><?php echo sca_get_preference('showcase', 'sca_contactdescription'); ?></p>
+                    <h4 class="text-center">{{ (sca_get_preference('showcase', 'sca_contacttitle')) ? sca_get_preference('showcase', 'sca_contacttitle') : '' }}</h4>
+                    <p>@php echo (sca_get_preference('showcase', 'sca_contactdescription')) ? sca_get_preference('showcase', 'sca_contactdescription') : ''; @endphp</p>
                 </div>
                 <div class="medium-2 cell">
                     <div class="grid-y grid-padding-y">
