@@ -134,8 +134,7 @@ class User extends PdoObject {
 
 			if(file_exists($target_path)) {
 
-				$this->errors[] =   "The file {$this->filename} already exists";
-				return false;
+				$this->removeProfileImage();
 
 			}
 
@@ -190,11 +189,8 @@ class User extends PdoObject {
 				}
 
 				if(file_exists($target_path)) {
-
-					$this->errors[] =   "The file {$this->filename} already exists";
-					$this->id = $pdo->lastInsertedId();
-					$this->delete();
-					return false;
+					
+					$this->removeProfileImage();
 
 				}
 
@@ -288,6 +284,17 @@ class User extends PdoObject {
 	}
 	
 	
+	public function removeProfileImage(  )
+	{
+		$files = glob( $this->upload_path . $this->get_last_insert(). DS. $this->upload_directory . DS. '*' );
+		if(!empty($files)) {
+			foreach ( $files as $file ) {
+				unlink( $file );
+			}
+		}
+		
+	}
+	
 	/**
 	 * Delete User
 	 *
@@ -295,12 +302,7 @@ class User extends PdoObject {
 	 */
 	public function delete_user(){
 			// TODO: need to take into account the showcase files and data for the user being deleted
-		$files = glob( $this->upload_path . $this->get_last_insert(). DS. $this->upload_directory . DS. '*' );
-		if(!empty($files)) {
-			foreach ( $files as $file ) {
-				unlink( $file );
-			}
-		}
+		$this->removeProfileImage();
 	
 		$showcasefiles = glob( $this->upload_path . $this->get_last_insert(). DS. '*' );
 		if(!empty($showcasefiles)) {
