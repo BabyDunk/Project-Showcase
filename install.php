@@ -146,8 +146,9 @@
 				$setloginId = json_decode(json_encode(['id'=> $pdo->lastInsertedId()]), false);
 				
 				$sess->login($setloginId);
-				
-				redirect('/sc-panel');
+				$msg = "Script installed sucessfully, Please complete the rest of the settings";
+				\Classes\Core\Session::set('MESSAGE', $msg);
+				redirect('/sc-panel/general_settings');
 				unlink('./install.php');
 			}else{
 				$message[] = 'Could not create user';
@@ -200,35 +201,23 @@
             border-radius: 7px;
             border: 1px solid #ccc;
             padding: 21px;
-            background-color: #e9e9e9;
-            color:#555;
-        }
-        
-        form{
-            display:grid;
-            grid-template-columns: 1fr;
         }
 
         form label {
             display: block;
             width: 100%;
             margin-top: 21px;
-            justify-self: center;
         }
 
         form input {
             width: 90%;
-            padding: 7px;
-            justify-self: center;
-            
+            padding: 7px
         }
 
         input[type="submit"] {
             display: block;
             width: 73%;
             margin-top: 21px;
-            background-color: #3cdb7a;
-            justify-self: center;
         }
 
         .messages {

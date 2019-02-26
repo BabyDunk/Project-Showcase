@@ -146,8 +146,9 @@
 				$setloginId = json_decode(json_encode(['id'=> $pdo->lastInsertedId()]), false);
 				
 				$sess->login($setloginId);
-				
-				redirect('/sc-panel');
+				$msg = "Script installed successfully, Please complete the rest of the settings";
+				\Classes\Core\Session::set('MESSAGE', $msg);
+				redirect('/sc-panel/general_settings');
 				unlink('./install.php');
 			}else{
 				$message[] = 'Could not create user';
