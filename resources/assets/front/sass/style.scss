@@ -1,8 +1,29 @@
+@import "partials/variables";
 $fa-font-path: '../../../../node_modules/font-awesome/fonts' !default;
 @import "../../../../node_modules/font-awesome/scss/font-awesome";
 @import "../../../../node_modules/foundation-sites/assets/foundation";
 
+/* Home section */
+.home-views{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
 
+#home-first-view{
+  background-color: $homeFirstColor;
+}
+#home-second-view{
+  background-color: $homeSecondColor;
+}
+#home-third-view{
+  background-color: $homeThirdColor;
+}
+#home-fourth-view{
+  background-color: $homeFourthColor;
+}
 
 /* Front end Styles  */
 #contact {

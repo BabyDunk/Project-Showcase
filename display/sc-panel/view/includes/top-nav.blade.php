@@ -40,7 +40,7 @@
     <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
             <li>
-                <a href="#"><i class="fa fa-envelope"></i></a>
+                <a href="#"><i class="fa fa-comments-o"></i></a>
                 <ul class="menu vertical">
                     @foreach($comments as $contact)
                     <li class="message-preview">
