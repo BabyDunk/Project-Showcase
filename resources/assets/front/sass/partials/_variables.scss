@@ -1,5 +1,14 @@
-$theme: 'JERICHO';
+$theme: jericho;
+$homeFirstColor: red;
+$homeSecondColor: red;
+$homeThirdColor: red;
+$homeFourthColor: red;
 
-if($theme == 'JERICHO'){
 
+
+@if $theme == jericho {
+  $homeFirstColor: #ff9555;
+  $homeSecondColor: green;
+  $homeThirdColor: blue;
+  $homeFourthColor: purple;
 }
