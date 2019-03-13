@@ -19,7 +19,7 @@
         <title>@yield('title')</title>
 
         <!-- Bundled CSS -->
-        <link href="<?php sca_base_url(); ?>resources/assets/css/bundle.css" rel="stylesheet">
+        <link href="<?php sca_base_url(); ?>resources/assets/sc-panel/css/bundle.css" rel="stylesheet">
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

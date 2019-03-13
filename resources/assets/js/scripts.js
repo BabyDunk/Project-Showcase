@@ -511,8 +511,12 @@
             // Front
             case 'home':
                 SHOWCASE.front.homepage();
+                break;
+                
+            case 'shop':
                 SHOWCASE.front.submitcontact();
                 break;
+                
             case 'showcased':
 
                 SHOWCASE.front.submitComment();
@@ -527,11 +531,12 @@
                 // Google 3D Chart Initializer
                 google.charts.load("current", {packages:["corechart"]});
                 google.charts.setOnLoadCallback(drawChart);
-
                 break;
+                
             case 'users':
 
                 break;
+                
             case 'uploads':
 
                 // WYSIWYG Editor
@@ -558,6 +563,7 @@
                 SHOWCASE.admin.updatePin();
 
                 break;
+                
             case 'showcase':
 
                 break;
@@ -568,15 +574,18 @@
                 
                 
                 break;
+                
             case 'comments':
 
                 break;
             case 'update-user':
 
                 break;
+                
             case 'add-user':
 
                 break;
+                
             case 'login':
 
                 break;

@@ -18,55 +18,17 @@
 @section('content')
 
 
-		<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>BabyDunk Web Development</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="assets/css/app.css" rel="stylesheet" type="text/css">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-</head>
-<body>
-<header id="header">
-	<nav id="nav-bar">
-		<div id="nav">
-			<div class="logo">
-				<a href="/responsivewebdesign/BuildAProductLandingPage/" ><img src="{{ASSETS_IMAGES_PATH_URL}}cylinder-code-2-logo300x250.png" id="header-img"></a>
-			</div>
-			<div class="home">
-				<a class="nav-link" href="#triCard">Get Started</a>
-			</div>
-			<div class="sales">
-				<a class="nav-link" href="#sales-div">Sales</a>
-			</div>
-			<div class="contact">
-				<a class="nav-link" href="#contact-div">Contact</a>
-			</div>
-		</div>
-	</nav>
-	<nav id="nav-bar-small">
-		<div id="nav-bar-navi">
-			<span id="nav-show-menu" class="fas fa-bars"></span>
-			<div class="logo">
-				<a href="/responsivewebdesign/BuildAProductLandingPage/"><img src="{{ASSETS_IMAGES_PATH_URL}}cylinder-code-2-logo300x250.png" class="header-img"></a>
-			</div>
-			<div id="nav-small">
-				<div class="home"><a class="nav-link" href="#triCard">Get Started</a></div>
-				<div class="sales"><a class="nav-link" href="#sales-div">Sales</a></div>
-				<div class="contact"><a class="nav-link" href="#contact-div">Contact</a></div>
-			</div>
-		</div>
-	</nav>
+<div class="header-shadow">
 	<video autoplay loop poster="{{ASSETS_IMAGES_PATH_URL}}laptop1625.JPG" id="video">
-		<source src="{{ASSETS_IMAGES_PATH_URL}}aptop1625.mp4" type="video/mp4">
+		<source src="{{ASSETS_IMAGES_PATH_URL}}laptop1625.mp4" type="video/mp4">
 		Your browser does not support the video tag.
 	</video>
 
 	<div id="business">
 		<div id="inner-bus">
-			<h1 id="title">BabyDunk Web Development</h1>
-			<form action="https://freecodecamp.com/email-submit" id="form">
+			<h1 id="title">{{sca_get_preference('showcase', 'sca_sitename')}}</h1>
+			<form action="" id="infoForm">
+				@php echoCSRFInput() @endphp
 				<label for="email">Get Important Info About Our Products</label>
 				<input type="email" required name="email" id="email" placeholder="Enter Your Email Address">
 				<input type="submit" id="submit" value="Submit!">
@@ -78,13 +40,14 @@
 	<div class="attention">
 		<p id="description">Specialist programmer,  coding in a variety of different languages from Javascript, PHP, SASS, CCS3, HTML5</p>
 	</div>
-</header>
+</div>
+
 <main>
 	<div class="container">
 		<div id="triCard">
 			<div class="card">
 				<div class="cardTitle">
-					<h3>High Quality Readable Code</h3>
+					<h3>Quality Readable Code</h3>
 				</div>
 				<div class="cardImg">
 					<i class="fas fa-5x fa-chart-line"></i>
@@ -280,11 +243,12 @@
 					<div class="conPanel conPhone">
 						<h3>Phone Us!</h3>
 						<p>Our phone service is only available while someone is in the office</p>
-						<p>Our number is <a href="tel:02855555555" >02855555555</a>,  if you can't reach the office please leave a message or try a different contact option</p>
+						<p>Our number is <a href="tel:{{sca_get_preference('showcase', 'sca_sitenumber')}}" >{{sca_get_preference('showcase', 'sca_sitenumber')}}</a>,  if you can't reach the office please leave a message or try a different contact option</p>
 					</div>
 					<div class="conPanel conEmail">
 						<h3>Email Us!</h3>
 						<form method="POST" action="" enctype="">
+							@php echoCSRFInput() @endphp
 							<div class="form-content">
 								<label for="cName"><i class="fa fa-user"></i> What's your name?</label>
 								<input type="text" name="cName" id="cName" value="" placeholder="Enter a contact name" />
@@ -346,12 +310,6 @@
 		</div> <!-- End of contact div -->
 
 	</div><!-- End of container div -->
-</main>
-<script src="assets/script/app.js"></script>
-</body>
-</html>
-
-
-    <!-- /.row -->
+</main><!-- /main -->
 
 @endsection

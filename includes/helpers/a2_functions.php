@@ -861,3 +861,7 @@ function exceptionCatcher($e){
 	
 	echo $returnMessage;
 }
+
+function echoCSRFInput(){
+	echo '<input type="hidden" name="CSRFToken" id="CSRFToken" value="' . \Classes\Core\CSRFToken::_SetToken() . '" />';
+}

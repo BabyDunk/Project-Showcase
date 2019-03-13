@@ -18,7 +18,8 @@
     <title>@yield('title')</title>
 
     <!-- Bundled CSS -->
-    <link href="<?php sca_base_url(); ?>resources/assets/css/bundle.css" rel="stylesheet">
+    <link href="<?php sca_base_url(); ?>resources/assets/front/css/bundle.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,7 +31,7 @@
 
 </head>
 
-<body data-page-id="@yield('page-id')">
+<body id="@yield('page-id')" data-page-id="@yield('page-id')">
 
 
 <!-- Navigation -->

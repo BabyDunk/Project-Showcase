@@ -29600,6 +29600,8 @@ return /******/ (function(modules) { // webpackBootstrap
             // Front
             case 'home':
                 SHOWCASE.front.homepage();
+                break;
+            case 'shop':
                 SHOWCASE.front.submitcontact();
                 break;
             case 'showcased':
@@ -29616,7 +29618,6 @@ return /******/ (function(modules) { // webpackBootstrap
                 // Google 3D Chart Initializer
                 google.charts.load("current", {packages:["corechart"]});
                 google.charts.setOnLoadCallback(drawChart);
-
                 break;
             case 'users':
 
