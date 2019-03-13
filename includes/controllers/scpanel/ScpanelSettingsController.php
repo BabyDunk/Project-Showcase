@@ -75,6 +75,7 @@
 			Session::clear('MESSAGE');
 		}
 		
+		
 		public function storeEmail(  )
 		{
 			\Classes\Core\User::isAdmin();
@@ -142,6 +143,31 @@
 				redirect('/sc-panel/email_settings');
 				return false;
 				
+			}
+			
+		}
+		
+		public function showEmailTemplates(  )
+		{
+			\Classes\Core\User::isAdmin();
+			
+			adminView('email-templates-settings', ['userid'=>Session::instance()->user_id]);
+			Session::clear('MESSAGE');
+		}
+		
+		public function storeEmailTemplates(  )
+		{
+			\Classes\Core\User::isAdmin();
+			$post = Params::get('post');
+			
+			if(Params::has('submit')){
+				sca_set_preference('showcase', 'sca_item_contact_notifier', $post->sca_item_contact_notifier);
+				sca_set_preference('showcase', 'sca_item_contact_notifier_title', $post->sca_item_contact_notifier_title);
+				
+				
+				adminView('email-templates-settings', ['userid'=>Session::instance()->user_id, 'message'=> 'Settings saved successfully']);
+			}else{
+				adminView('email-templates-settings', ['userid'=>Session::instance()->user_id, 'error'=> 'Something went wrong, please try again']);
 			}
 			
 		}

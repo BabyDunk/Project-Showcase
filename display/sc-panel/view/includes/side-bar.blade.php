@@ -54,7 +54,13 @@
                     <a href="#"><i class="fa fa-fw fa-wrench"></i> Settings</a>
                     <ul class="menu vertical nested">
                         <li><a href="/sc-panel/general_settings"><i class="fa fa-arrow-circle-right"></i> General</a></li>
-                        <li><a href="/sc-panel/email_settings"><i class="fa fa-envelope"></i> Email</a></li>
+                        <li>
+                            <a href="#"><i class="fa fa-envelope"></i> Email</a>
+                            <ul class="menu vertical nested">
+                                <li><a href="/sc-panel/email_settings"><i class="fa fa-envelope"></i> Email Settings</a></li>
+                                <li><a href="/sc-panel/email_templates_settings"><i class="fa fa-arrow-circle-right"></i> Email Templates</a></li>
+                            </ul>
+                        </li>
                         <li><a href="/sc-panel/social_settings"><i class="fa fa-share-square" aria-hidden="true"></i> Social</a></li>
                         <li><a href="/sc-panel/logging_settings"><i class="fa fa-history" aria-hidden="true"></i> Logging</a></li>
                     </ul>

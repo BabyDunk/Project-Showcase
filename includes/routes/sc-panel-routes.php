@@ -72,6 +72,8 @@
 	
 	// Map Admin Email Settings
 	$router->map( 'GET', '/sc-panel/email_settings',  'Controllers\Scpanel\ScpanelSettingsController@showEmail', 'admin_email_settings');
+	$router->map( 'GET', '/sc-panel/email_templates_settings',  'Controllers\Scpanel\ScpanelSettingsController@showEmailTemplates', 'admin_email_templates_settings');
+	$router->map( 'POST', '/sc-panel/email_templates_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeEmailTemplates', 'admin_store_email_templates_settings');
 	$router->map( 'POST', '/sc-panel/email_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeEmail', 'admin_store_email_settings');
 	$router->map( 'POST', '/sc-panel/email_test_message',  'Controllers\Scpanel\ScpanelSettingsController@sendTestMessage', 'admin_email_test_message');
 	

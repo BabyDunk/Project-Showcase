@@ -157,7 +157,100 @@
 })();
 
 
+(function (){
 
+    'use strict';
+
+    SHOWCASE.front.homepage = function () {
+    
+    
+        const flippers = document.querySelectorAll('#cubeFlip .card');
+        /*const respNav = document.querySelector('#nav-bar-navi span');
+         const respMenu = document.querySelector('#nav-small');*/
+        const contNav = document.querySelectorAll('#conWindow .controlend a');
+        const contPan = document.querySelectorAll('.businessend .conPanel');
+        const headNav = document.querySelectorAll('a.nav-link');
+    
+        for (let x=0;x<flippers.length;x++){
+        
+            let card = flippers[x].classList;
+        
+            flippers[x].addEventListener('click', function(){
+                setTimeout(function (){card.toggle('activeFlip')}, 200);
+                setTimeout(clearFlip, 15000);
+            
+            });
+        
+        }
+        function clearFlip(){
+            for (let x=0;x<flippers.length;x++){
+                let cCard = flippers[x].classList;
+                if(cCard.contains('activeFlip')){
+                    cCard.remove('activeFlip');
+                }
+            }
+        }
+    
+    
+        for (let x=0;x<contNav.length;x++){
+            contNav[x].addEventListener('click', function(evt){
+                evt.preventDefault();
+                blockReset();
+                let e = evt.target;
+                document.querySelector('.'+e.dataset.navid).style.transition = 'ease-in-out';
+                document.querySelector('.'+e.dataset.navid).style.display = 'block';
+            
+                console.log(document.querySelector('#'+e.dataset.navid).style.display);
+            });
+        }
+    
+        function blockReset(){
+            for (let x=0;x<contPan.length;x++){
+                contPan[x].style.display = 'none';
+            }
+        }
+    
+    
+        for(let x=0; x<headNav.length;x++){
+            headNav[x].addEventListener('click', function(evt){
+                evt.preventDefault();
+                scrollDown(evt.target);
+            })
+        }
+    
+        function scrollDown(el){
+            let speed = 10;
+            let actionScroll = setInterval(moveScroll, 1);
+        
+            function moveScroll(){
+                let to = document.scrollingElement;
+                let stopper = document.querySelector(el.hash).offsetTop;
+                stopper = Math.floor(stopper /= speed)*speed;
+            
+                let mover = to.scrollTop;
+                mover = Math.floor(mover /= speed)*speed;
+            
+                let bottomStop = Math.floor((to.scrollHeight-to.clientHeight)/speed)*speed;
+            
+                if(mover === bottomStop){
+                    document.scrollingElement.scrollTop -= speed;
+                    clearInterval(actionScroll);
+                }else if(mover < stopper){
+                    document.scrollingElement.scrollTop += speed;
+                }else if(mover > stopper){
+                    document.scrollingElement.scrollTop -= speed;
+                }else if(mover === stopper){
+                    clearInterval(actionScroll);
+                }
+            }
+        }
+    
+    
+    
+    
+    }
+
+})();
 
 // Insert New Contact
 (function (){
@@ -183,7 +276,7 @@
 
             $.ajax({
                 type: 'post',
-                url : '/contact',
+                url : '/shop/contact',
                 data: {
                     CSRFToken: CSRFToken,
                     submit: submit,
@@ -239,7 +332,7 @@
 
             $.ajax({
                 type: 'post',
-                url : '/showcase/comment',
+                url : '/shop/showcase/comment',
                 data: {
                     CSRFToken: CSRFToken,
                     showcaseId: showcaseId,
@@ -295,7 +388,7 @@
             
             $.ajax({
                 type: 'post',
-                url : '/showcase_contact',
+                url : '/shop/showcase_contact',
                 data: {
                     CSRFToken: CSRFToken,
                     submit: submit,
@@ -417,7 +510,7 @@
         switch($('body').data('page-id')){
             // Front
             case 'home':
-
+                SHOWCASE.front.homepage();
                 SHOWCASE.front.submitcontact();
                 break;
             case 'showcased':

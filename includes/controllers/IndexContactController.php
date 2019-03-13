@@ -63,7 +63,7 @@
 							'message'   =>  'Your request has been submitted successfully. We\'ll get back to you ASAP'
 						]);
 						
-						Email::instance()->send('Your message has been received', '<h2>Thank you for your message</h2><p>We will get back to you in due course</p>',[$post->userEmail => $post->userName]);
+						Email::instance()->send( sca_get_preference('showcase', 'sca_item_contact_notifier_title'), sca_get_preference('showcase', 'sca_item_contact_notifier'), [$post->userEmail => $post->userName]);
 						
 						return true;
 					} else {

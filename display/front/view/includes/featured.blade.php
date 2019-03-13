@@ -28,30 +28,30 @@ $i = 0;
 									<img class="thumbnail" src="{{$showcase->get_picture()}}"/>
 								</div>
 								<ul>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
 								</ul>
 							</div>
 							<div class="medium-9 callout">
 								<h3>{{$showcase->title}}</h3>
 								<h4>{{$showcase->subtitle}}</h4>
-								<p><?php echo allowedTags($showcase->description1); ?> </p>
+								<p>@php echo allowedTags($showcase->description1); @endphp </p>
 							</div>
 						@else
 							<div class="medium-9 cell" >
 								<h3>{{$showcase->title}}</h3>
 								<h4>{{$showcase->subtitle}}</h4>
-								<p><?php echo allowedTags($showcase->description1); ?> </p>
+								<p>@php echo allowedTags($showcase->description1); @endphp </p>
 							</div>
 							<div class="medium-3 cell">
 								<div class="image-featured">
 									<img class="thumbnail" src="{{$showcase->get_picture()}}"/>
 								</div>
 								<ul>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
-									<li><a href="/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
+									<li><a href="/shop/showcase/{{$showcase->id}}/{{$urlfriedlytitle}}" >View</a></li>
 								</ul>
 							</div>
 						@endif

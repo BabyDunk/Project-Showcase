@@ -14,6 +14,7 @@
 	define('IS_HTTP', (isset($_SERVER['HTTPS'])) ? 'https' : 'http');
 	define('SITE_URL', IS_HTTP . '://'. $_SERVER['HTTP_HOST'] . '/');
 	define('UPLOADED_IMAGES_PATH_URL', SITE_URL . 'resources/uploads/images/');
+	define('ASSETS_IMAGES_PATH_URL', SITE_URL . 'resources/assets/images/');
 	
 	if(is_file(INCLUDES_PATH . "new_config.php"))
 	{
