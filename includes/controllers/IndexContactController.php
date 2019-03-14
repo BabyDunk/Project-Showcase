@@ -20,8 +20,6 @@
 	class IndexContactController
 	{
 		
-		
-		
 		public function insert(  )
 		{
 			
@@ -32,17 +30,19 @@
 				
 				if(empty($post->showcaseID)){
 					$user_id = 1;
+					$showcaseID = 0;
 				}else{
 					$user_id = Showcase::find_by_id($post->showcaseID)->user_id;
+					$showcaseID = $post->showcaseID;
 				}
 				
-				if(empty($post->userDate)){
+				if(empty($post->date_est)){
 					$dateUser = '1970-04-30';
 				}else{
-					$dateUser = $post->userDate;
+					$dateUser = $post->date_est;
 				}
 				
-				$contact    = Contact::set_inputs($post->userName, $user_id, $post->showcaseID, $post->userEmail, $post->userPhone, $post->userMess, $dateUser);
+				$contact    = Contact::set_inputs($post->userName, $user_id, $showcaseID, $post->userEmail, $post->userPhone, $post->userMess, $dateUser);
 				
 				if($contact){
 					
@@ -79,6 +79,70 @@
 					echo json_encode([
 						'status'    =>  'FAILED',
 						'message'   =>  'There was a problem, Some of your inputs where empty'
+					]);
+					
+					return false;
+				}
+				
+				
+				
+				
+			} else {
+				echo json_encode([
+					'status'    =>  'FAILED',
+					'message'   =>  'There was a problem, No data was received'
+				]);
+				
+				return false;
+			}
+			
+		}
+		
+		
+		public function getInfo(  )
+		{
+			
+			if(Params::has('submitInfoForm')){
+				
+				
+				$post       = Params::get('post');
+				
+				
+				if($post->emailInfoForm){
+					
+					if(!CSRFToken::_CheckToken()){
+						
+						echo json_encode([
+							'status'    =>  'FAILED',
+							'message'   =>  'There was a problem, Refresh page and try again'.$post->CSRFToken
+						]);
+						
+						return false;
+					}
+					
+					if(Email::instance()->send( sca_get_preference('showcase', 'sca_user_request_info_notifier_title'), sca_get_preference('showcase', 'sca_user_request_info_notifier'), [$post->emailInfoForm => 'Cherished Customer'])){
+						
+						echo json_encode([
+							'status'    =>  'OK',
+							'message'   =>  'All relevant information has been sent to the email address, We hope to hear back from you soon'
+						]);
+						
+						return true;
+						
+					} else {
+						
+						echo json_encode([
+							'status'    =>  'FAILED',
+							'message'   =>  'Sorry there was a problem sending the information, please try again. if you keep getting this message, please contact the sites manager '
+						]);
+						
+						return false;
+					}
+					
+				} else {
+					echo json_encode([
+						'status'    =>  'FAILED',
+						'message'   =>  'There was a problem, You didn\'t supply a valid email address'
 					]);
 					
 					return false;

@@ -16,7 +16,8 @@
 	$router->map( 'GET', '/shop',  'Controllers\IndexShopController@show', 'shop');
 	
 	// Map Contact Form
-	$router->map( 'POST', '/shop/contact',  'Controllers\IndexContactController@insert', 'front_contact');
+	$router->map( 'POST', '/contact',  'Controllers\IndexContactController@insert', 'front_contact');
+	$router->map( 'POST', '/getinfo',  'Controllers\IndexContactController@getInfo', 'home_request_info');
 	
 	
 	// Map Contact Form

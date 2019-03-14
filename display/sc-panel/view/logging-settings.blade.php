@@ -13,7 +13,7 @@
 
 @section('title', 'Logging')
 
-@section('page-id', 'settings')
+@section('page-id', 'logging-settings')
 
 @section('content')
     <div id="page-wrapper">

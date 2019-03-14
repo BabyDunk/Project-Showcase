@@ -13,9 +13,6 @@
 	
 	class IndexHomeController
 	{
-		
-		
-		
 		public function show(  )
 		{
 			

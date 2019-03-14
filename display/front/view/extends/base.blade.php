@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="author" content="{{}}">
 
     <title>@yield('title')</title>
 
@@ -45,15 +45,13 @@
 
 <!-- Footer -->
 <footer>
-    <!-- Page Content -->
+    <!-- Footer Content -->
     <div class="grid-container">
         <hr/>
         <div class="text-center">
-            <p>Copyright &copy; {{sca_get_preference('showcase', 'sca_sitename')}} 2018 - <?php echo date('y'); ?></p>
+            <p>Copyright &copy; <a href="mailto:{{sca_get_preference('showcase', 'sca_sitecontact')}}" >{{sca_get_preference('showcase', 'sca_sitename')}}</a> 2018 - <?php echo date('y'); ?></p>
         </div>
-        <!-- /.large-12 -->
     </div>
-    <!-- /.grid-container-->
 </footer>
 
 

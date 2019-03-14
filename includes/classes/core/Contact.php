@@ -85,23 +85,34 @@ class Contact extends PdoObject
 		{
 			$html .= '<input type="hidden" name="showcaseID" id="showcaseID" value="' . $isShowCase . '" />';
 		}
-		$html .= '<label for="name">Your Name Please</label>
-				    <input type="text" name="name" id="name" value="" required placeholder="Your Name" />';
 		
-		$html .= '<label for="email">Your Email Address please</label>
-				    <input type="email" name="email" id="email" value="" required placeholder="Your Email" />';
-		
-		$html .= '<label for="phone">Your Phone Number please</label>
-				    <input type="text" name="phone" id="phone" value="" minlength="10" placeholder="Your Phone" />';
-		
-		$html .= '<label for="message">Descripption Of Job Request</label>
-				    <textarea name="message" id="message" rows="3" required placeholder="Describe with as much detail the job you would like us to perform" ></textarea>';
+		$html .= '<div class="form-content">';
+	    $html .= '<label for="name"><i class="fas fa-user-ninja"></i> What\'s your name?</label>';
+		$html .= '<input type="text" name="name" id="name" value="" placeholder="Enter a contact name"/>';
+		$html .= '</div>';
+		$html .= '<div class="form-content">';
+		$html .= '<label for="email"><i class="far fa-envelope-open"></i> What\'s your email address?</label>';
+		$html .= '<input type="email" name="email" id="email" value="" placeholder="Enter a contact email"/>';
+		$html .= '</div>';
+		$html .= '<div class="form-content">';
+		$html .= '<label for="phone"><i class="fas fa-mobile"></i> What\'s your phone number?</label>';
+		$html .= '<input type="number" name="phone" id="phone" value="" placeholder="Enter a contact phone number"/>';
+		$html .= '</div>';
+		$html .= '<div class="form-content">';
+		$html .= '<label for="message"><i class="far fa-comment"></i> Tell us your query</label>';
+		$html .= '<textarea name="message" id="message" placeholder="Write in as much detail what we can help you with!"></textarea>';
+		$html .= '</div>';
 		if ( ! $isShowCase )
 		{
-			$html .= '<label for="date_est">Deadline For Job Completion</label>
-				    <input type="text" name="date_est" id="date_est" value="" required placeholder="Select a date for completion" />';
+			$html .= '<div class="form-content">';
+			$html .= '<label for="date_est"><i class="far fa-calendar-alt"></i> Deadline For Job Completion</label>';
+			$html .= '<input type="text" name="date_est" id="date_est" value="" required placeholder="Select a date for completion" />';
+			$html .= '</div>';
 		}
-		$html .= '<button type="submit" name="submit" id="submit" value="true" class="button success float-right" >Submit!</button>';
+		$html .= '<div class="form-content">';
+		$html .= '<div></div>';
+		$html .= '<button type="submit" name="submit" id="submit" value="Submit!"><i class="far fa-paper-plane"></i> Submit!</button>';
+		$html .= '</div>';
 		
 		$html .= '</form>';
 		

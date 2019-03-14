@@ -161,8 +161,16 @@
 			$post = Params::get('post');
 			
 			if(Params::has('submit')){
+				
+				if(!CSRFToken::_CheckToken()){
+					adminView('email-templates-settings', ['userid'=>Session::instance()->user_id, 'error'=> 'Please refresh page and try again']);
+					 return false;
+				}
+				
 				sca_set_preference('showcase', 'sca_item_contact_notifier', $post->sca_item_contact_notifier);
 				sca_set_preference('showcase', 'sca_item_contact_notifier_title', $post->sca_item_contact_notifier_title);
+				sca_set_preference('showcase', 'sca_user_request_info_notifier', $post->sca_user_request_info_notifier);
+				sca_set_preference('showcase', 'sca_user_request_info_notifier_title', $post->sca_user_request_info_notifier_title);
 				
 				
 				adminView('email-templates-settings', ['userid'=>Session::instance()->user_id, 'message'=> 'Settings saved successfully']);

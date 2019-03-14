@@ -18,10 +18,10 @@ function showcaseUriID()
 {
 	$splitUri = explode('/', $_SERVER['REQUEST_URI']);
 
-	switch ($splitUri[1]){
+	switch ($splitUri[2]){
 		case 'showcase':
 			
-			 return (int)$splitUri[2];
+			 return (int)$splitUri[3];
 			 break;
 		
 		default:

@@ -14,7 +14,7 @@
 
 @section('title', 'Email Settings')
 
-@section('page-id', 'settings')
+@section('page-id', 'email-settings')
 
 @section('content')
     <div id="page-wrapper">

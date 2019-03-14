@@ -3,4 +3,5 @@ vendor/
 node_modules/
 display/sc-panel/cache/*.php
 display/front/cache/*.php
+resources/assets/images/email/
 resources/uploads/

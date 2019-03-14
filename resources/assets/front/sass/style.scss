@@ -1,5 +1,13 @@
 @import "partials/variables";
 
+/* Defaults */
+a:hover{
+  color: #f1a646
+}
+a{
+  color:inherit;
+}
+
 /* Home section */
 #home{
   font-size: 16px;
@@ -470,12 +478,21 @@ footer {
   width:100%;
   padding:21px 0;
   margin-top: 50px;
+
+  p {
+    text-align:center;
+    color:#fff;
+    font-weight:600;
+
+    a{
+        color:#fff;
+      text-decoration: none;
+    }
+  }
+
+
 }
-footer p {
-  text-align:center;
-  color:#fff;
-  font-weight:600;
-}
+
 
 
 /* Responsive Parts */

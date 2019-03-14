@@ -270,13 +270,13 @@
             var userEmail   = $('#email').val();
             var userPhone   = $('#phone').val();
             var userMess    = $('#message').val();
-            var userDate    = $('#date_est').val();
+            var date_est    = $('#date_est').val();
             
 
 
             $.ajax({
                 type: 'post',
-                url : '/shop/contact',
+                url : '/contact',
                 data: {
                     CSRFToken: CSRFToken,
                     submit: submit,
@@ -285,7 +285,7 @@
                     userEmail: userEmail,
                     userPhone: userPhone,
                     userMess: userMess,
-                    userDate: userDate
+                    date_est: date_est
                 },
 
                 success: function (data) {
@@ -354,6 +354,53 @@
 
                     if(res.status === 'FAILED'){
                         $('#comment-notification').delay(5000).slideUp(600).html('<div class="callout warning">'+ res.message + '</div>');
+                    }
+                }
+
+            });
+
+
+        })
+        
+    }
+
+})();
+
+// Request Information
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.requestInfoEmail = function () {
+        
+        $('#submitInfoForm').on('click', function (e) {
+
+            e.preventDefault();
+    
+    
+            var CSRFToken       = $('#CSRFToken').val();
+            var submitInfoForm  = $('#submitInfoForm').val();
+            var emailInfoForm   = $('#emailInfoForm').val();
+
+
+            $.ajax({
+                type: 'post',
+                url : '/getinfo',
+                data: {
+                    CSRFToken: CSRFToken,
+                    submitInfoForm: submitInfoForm,
+                    emailInfoForm: emailInfoForm
+                },
+
+                success: function (data) {
+                    var res = jQuery.parseJSON(data);
+
+                    if(res.status === 'OK'){
+                        console.dir(res)
+                    }
+
+                    if(res.status === 'FAILED'){
+                        console.dir(res)
                     }
                 }
 
@@ -511,16 +558,21 @@
             // Front
             case 'home':
                 SHOWCASE.front.homepage();
+                SHOWCASE.front.requestInfoEmail();
+                SHOWCASE.front.submitcontact();
+                flatpickr("#date_est");
                 break;
                 
             case 'shop':
                 SHOWCASE.front.submitcontact();
+                flatpickr("#date_est");
                 break;
                 
             case 'showcased':
 
                 SHOWCASE.front.submitComment();
                 SHOWCASE.front.submitshowcasecontact();
+                flatpickr("#date_est");
                 break;
 
             // Admin
@@ -568,7 +620,33 @@
 
                 break;
 
-            case 'settings':
+            case 'general-settings':
+                // WYSIWYG Editor Initializer
+                SHOWCASE.admin.textareaEditor();
+                
+                
+                break;
+             
+            case 'email-settings':
+                // WYSIWYG Editor Initializer
+                SHOWCASE.admin.textareaEditor();
+                
+                
+                break;
+             
+            case 'email-temp-settings':
+                
+                
+                break;
+             
+            case 'social-settings':
+                // WYSIWYG Editor Initializer
+                SHOWCASE.admin.textareaEditor();
+                
+                
+                break;
+             
+            case 'logging-settings':
                 // WYSIWYG Editor Initializer
                 SHOWCASE.admin.textareaEditor();
                 
