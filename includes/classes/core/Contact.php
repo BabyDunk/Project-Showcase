@@ -67,9 +67,7 @@ class Contact extends PdoObject
 		$isShowCase   = showcaseUriID();
 		$formlocation = ( $isShowCase ) ? 'showcase_contact' : 'contact';
 		
-		$html = '<div class="grid-container">';
-		$html .= '<div class="grid-x grid-padding-x">';
-		$html .= '<div class="medium-12 cell">';
+		$html = '<div>';
 		if ($isShowCase)
 		{
 			$html .= '<h3>Dev Contact</h3>';
@@ -99,13 +97,13 @@ class Contact extends PdoObject
 		$html .= '<input type="number" name="phone" id="phone" value="" placeholder="Enter a contact phone number"/>';
 		$html .= '</div>';
 		$html .= '<div class="form-content">';
-		$html .= '<label for="message"><i class="far fa-comment"></i> Tell us your query</label>';
+		$html .= '<label for="message"><i class="far fa-comment"></i> Tell us your query?</label>';
 		$html .= '<textarea name="message" id="message" placeholder="Write in as much detail what we can help you with!"></textarea>';
 		$html .= '</div>';
 		if ( ! $isShowCase )
 		{
 			$html .= '<div class="form-content">';
-			$html .= '<label for="date_est"><i class="far fa-calendar-alt"></i> Deadline For Job Completion</label>';
+			$html .= '<label for="date_est"><i class="far fa-calendar-alt"></i> Job Completion Deadline?</label>';
 			$html .= '<input type="text" name="date_est" id="date_est" value="" required placeholder="Select a date for completion" />';
 			$html .= '</div>';
 		}
@@ -116,9 +114,6 @@ class Contact extends PdoObject
 		
 		$html .= '</form>';
 		
-		
-		$html .= '</div>';
-		$html .= '</div>';
 		$html .= '</div>';
 		
 		

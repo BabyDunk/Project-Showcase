@@ -14,7 +14,7 @@
 
 @section('content')
 
-<div class="row">
+<main>
 @include('includes.feature-slider')
 @include('includes.info-1')
 @include('includes.text-slider')
@@ -22,7 +22,7 @@
 @include('includes.contact')
 
 
-</div>
+</main>
 <!-- /.row -->
 
 @endsection

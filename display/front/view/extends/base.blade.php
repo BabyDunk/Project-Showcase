@@ -46,7 +46,7 @@
 <!-- Footer -->
 <footer>
     <!-- Footer Content -->
-    <div class="grid-container">
+    <div class="container">
         <hr/>
         <div class="text-center">
             <p>Copyright &copy; <a href="mailto:{{sca_get_preference('showcase', 'sca_sitecontact')}}" >{{sca_get_preference('showcase', 'sca_sitename')}}</a> 2018 - <?php echo date('y'); ?></p>

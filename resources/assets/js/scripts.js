@@ -566,6 +566,30 @@
             case 'shop':
                 SHOWCASE.front.submitcontact();
                 flatpickr("#date_est");
+    
+                var carousel = new Carousel({
+                    elem: 'featured-carousel',    // id of the carousel container
+                    autoplay: true,     // starts the rotation automatically
+                    infinite: true,      // enables the infinite mode
+                    interval: 7000,      // interval between slide changes
+                    initial: 0,          // slide to start with
+                    dots: true,          // show navigation dots
+                    arrows: false,        // show navigation arrows
+                    buttons: false,      // hide play/stop buttons,
+                    btnStopText: 'Pause' // STOP button text
+                });
+    
+                var carouselText = new Carousel({
+                    elem: 'shoptext-carousel',    // id of the carousel container
+                    autoplay: true,     // starts the rotation automatically
+                    infinite: true,      // enables the infinite mode
+                    interval: 7000,      // interval between slide changes
+                    initial: 0,          // slide to start with
+                    dots: false,          // show navigation dots
+                    arrows: false,        // show navigation arrows
+                    buttons: false,      // hide play/stop buttons,
+                    btnStopText: 'Pause' // STOP button text
+                });
                 break;
                 
             case 'showcased':

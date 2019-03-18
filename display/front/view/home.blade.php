@@ -46,7 +46,7 @@
 
     <main>
         <div class="container">
-            <div id="triCard">
+            <div id="triCard" class="triCard">
                 <div class="card">
                     <div class="cardTitle">
                         <h3>Quality Readable Code</h3>

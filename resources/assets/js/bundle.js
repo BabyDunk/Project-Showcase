@@ -6,6 +6,7 @@ require('motion-ui');
 require('foundation-sites');
 window.Picker = require('vanilla-picker');
 require('../../../node_modules/flatpickr/dist/flatpickr.js');
+window.Carousel = require('vanilla-js-carousel');
 require('../../../resources/assets/js/scripts');
 
 
@@ -16,7 +17,7 @@ require('../../../resources/assets/js/scripts');
 
 
 
-},{"../../../node_modules/flatpickr/dist/flatpickr.js":2,"../../../resources/assets/js/scripts":9,"foundation-sites":3,"jquery":5,"jquery-ui":4,"motion-ui":6,"vanilla-picker":7,"what-input":8}],2:[function(require,module,exports){
+},{"../../../node_modules/flatpickr/dist/flatpickr.js":2,"../../../resources/assets/js/scripts":10,"foundation-sites":3,"jquery":5,"jquery-ui":4,"motion-ui":6,"vanilla-js-carousel":7,"vanilla-picker":8,"what-input":9}],2:[function(require,module,exports){
 /* flatpickr v4.5.2, @license MIT */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -29647,6 +29648,8 @@ return MotionUI;
 }));
 
 },{"jquery":5}],7:[function(require,module,exports){
+module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > ul li")[t];i.style.marginLeft=e,C.querySelector("."+T+" > ul").removeChild(i),C.querySelector("."+T+" > ul").insertAdjacentHTML(n,i.outerHTML)}function n(){var t=document.createElement("ul");t.classList.add(w),t.addEventListener("click",r.bind(this));for(var e=0;e<P;e++){var n=document.createElement("li");n.setAttribute("data-position",e),t.appendChild(n)}C.appendChild(t),i()}function i(){[].forEach.call(C.querySelectorAll("."+w+" li"),function(t){t.classList.remove("is-active")}),C.querySelectorAll("."+w+" li")[I].classList.add("is-active")}function r(t){"LI"===t.target.tagName&&(c(t.target.getAttribute("data-position")),h())}function l(){var t=document.createElement("button");t.innerHTML=A,t.classList.add(j);var e=document.createElement("button");e.innerHTML=x,e.classList.add(k),t.addEventListener("click",d),e.addEventListener("click",p),C.appendChild(t),C.appendChild(e)}function a(){var t=document.createElement("button");t.innerHTML=q,t.classList.add(M),t.addEventListener("click",b);var e=document.createElement("button");e.innerHTML=g,e.classList.add(H),e.addEventListener("click",E),C.appendChild(t),C.appendChild(e)}function o(t){t.style.marginLeft=""}function u(t){t.style.marginLeft=-C.offsetWidth+"px"}function c(t){var e=I-t;e<0?s(-e,p):s(e,d)}function s(t,e){for(var n=0;n<t;n++)e()}function d(){t.infinite?f():v(),h()}function f(){o(C.querySelectorAll("."+T+" > ul li")[0]),e(P-1,-C.offsetWidth+"px","afterBegin"),y(-1)}function v(){E(),0!==I&&(o(C.querySelectorAll("."+T+" > ul li")[I-1]),y(-1))}function p(){t.infinite?m():L(),h()}function m(){u(C.querySelectorAll("."+T+" > ul li")[1]),e(0,"","beforeEnd"),y(1)}function L(){I!==P-1?(u(C.querySelectorAll("."+T+" > ul li")[I]),y(1)):E()}function y(e){switch(I+=e){case-1:I=P-1;break;case P:I=0;break;default:I=I}t.dots&&i()}function h(){B&&(E(),b())}function b(){B||(B=setInterval(p.bind(this),S))}function E(){clearInterval(B),B=null}var C=document.getElementById(t.elem||"carousel"),S=t.interval||3e3,q=t.btnPlayText||"Play",g=t.btnStopText||"Stop",x=t.arrNextText||"&rsaquo;",A=t.arrPrevText||"&lsaquo;",T="js-Carousel",j="js-Carousel-arrowPrev",k="js-Carousel-arrowNext",w="js-Carousel-dots",H="js-Carousel-btnStop",M="js-Carousel-btnPlay",P=C.querySelectorAll("li").length,I=0,B=null;return P>1&&function(){var i={dots:function(){return n()},arrows:function(){return l()},buttons:function(){return a()},autoplay:function(){return b()},infinite:function(){return e(P-1,-C.offsetWidth+"px","afterBegin")},initial:function(){return c(t.initial>=P?P:t.initial)}};for(var r in i)t.hasOwnProperty(r)&&t[r]&&i[r]()}(),{live:function(){return I},show:c,prev:d,next:p,play:b,stop:E}};
+},{}],8:[function(require,module,exports){
 /*!
  * vanilla-picker v2.7.2
  * https://vanilla-picker.js.org
@@ -30782,7 +30785,7 @@ return MotionUI;
 
 })));
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * what-input - A global utility for tracking the current input method (mouse, keyboard or touch).
  * @version v5.1.3
@@ -31263,7 +31266,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function (){
 
     'use strict';
@@ -31832,6 +31835,30 @@ return /******/ (function(modules) { // webpackBootstrap
             case 'shop':
                 SHOWCASE.front.submitcontact();
                 flatpickr("#date_est");
+    
+                var carousel = new Carousel({
+                    elem: 'featured-carousel',    // id of the carousel container
+                    autoplay: true,     // starts the rotation automatically
+                    infinite: true,      // enables the infinite mode
+                    interval: 7000,      // interval between slide changes
+                    initial: 0,          // slide to start with
+                    dots: true,          // show navigation dots
+                    arrows: false,        // show navigation arrows
+                    buttons: false,      // hide play/stop buttons,
+                    btnStopText: 'Pause' // STOP button text
+                });
+    
+                var carouselText = new Carousel({
+                    elem: 'shoptext-carousel',    // id of the carousel container
+                    autoplay: true,     // starts the rotation automatically
+                    infinite: true,      // enables the infinite mode
+                    interval: 7000,      // interval between slide changes
+                    initial: 0,          // slide to start with
+                    dots: false,          // show navigation dots
+                    arrows: false,        // show navigation arrows
+                    buttons: false,      // hide play/stop buttons,
+                    btnStopText: 'Pause' // STOP button text
+                });
                 break;
                 
             case 'showcased':
