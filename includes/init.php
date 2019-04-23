@@ -7,8 +7,8 @@
 	 */
 	
 	# Load db config
-	require_once( INCLUDES_PATH . "config.php" );
-	
+	include_once ( INCLUDES_PATH . "config.php" );
+
 	# if fresh install load installer script
 	if ( empty( $DB_USER ) )
 	{
@@ -63,8 +63,10 @@
 	$user = new Classes\Core\User();
 	
 	# activate RouteDispatcher once install is complete
-	if(isset($IS_INSTALLED))
+	if($IS_INSTALLED)
 	{
-		new Classes\RouteDispatcher( $router );
+		 new Classes\RouteDispatcher( $router );
+	}else{
+		include_once 'install.php';
 	}
 ?>

@@ -3,8 +3,7 @@
 	
 	$message          = [];
 	$notify           = '';
-	$fileWrite        = false;
-	$install_base_url = ( ( $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ];
+	$fileWrite        = 0;
 	
 	if ( isset( $_POST[ 'submit' ] ) )
 	{
@@ -74,22 +73,24 @@
 				$data .= PHP_EOL;
 				
 				
-				
 				if ( file_put_contents( './includes/config.php' , $data ) )
 				{
-					$fileWrite = true;
+					$fileWrite = 1;
 					
 					require_once( "./index.php" );
 					require_once( './includes/src/sql/table_structure.php' );
 					
 					foreach ( $sqlQueries as $query )
 					{
-						if($pdo->query( $query )){
-						    continue;
-                        }else{
+						if ( $pdo->query( $query ) )
+						{
+							continue;
+						}
+						else
+						{
 							$notify = outputMessage( $message[] = 'Encountered a problem building database' );
 							break;
-                        }
+						}
 					}
 					
 					
@@ -108,7 +109,7 @@
 	}
     elseif ( isset( $_POST[ 'submitSiteData' ] ) )
 	{
-		$fileWrite = true;
+		$fileWrite = 1;
 		
 		require_once( './index.php' );
 		
@@ -145,6 +146,8 @@
 		}
 		
 		
+		
+		
 		if ( ! empty( $message ) )
 		{
 			$notify = outputMessage( $message );
@@ -173,20 +176,29 @@
 				$setloginId = json_decode( json_encode( [ 'id' => $pdo->lastInsertedId() ] ) , false );
 				
 				$sess->login( $setloginId );
-				$msg = "Script installed sucessfully, Please complete the rest of the settings";
+				$msg = "Script installed sucessfully, \nPlease complete the rest of the settings";
 				\Classes\Core\Session::set( 'MESSAGE' , $msg );
 				
-				redirect( '/sc-panel/general_settings' );
 				
 				# Set is installed to true
 				$addedData = PHP_EOL;
-				$addedData = PHP_EOL;
+				$addedData .= PHP_EOL;
+				$addedData .= '// Set is installed flag';
+				$addedData .= PHP_EOL;
 				$addedData .= '$IS_INSTALLED = true;';
 				$addedData .= PHP_EOL;
-				file_put_contents('./includes/config.php', $addedData , FILE_APPEND);
 				
-				# delete install.php
-				unlink( './install.php' );
+				if ( file_put_contents( './includes/config.php' , $addedData , FILE_APPEND ) )
+				{
+
+				    $IS_INSTALLED = true;
+				    $fileWrite = 2;
+		
+					# delete install.php
+					unlink( './install.php' );
+				}
+				
+				
 			}
 			else
 			{
@@ -218,8 +230,7 @@
 		
 		return $theMessages;
 	}
-	
-	var_dump( $fileWrite )
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -283,14 +294,14 @@
 <body>
 <div class="installPanel">
 	<?php
-		/*		if ( ! empty( $notify ) )
-				{
-					echo $notify;
-				}
-			*/ ?>
+		if ( ! empty( $notify ) )
+		{
+			echo $notify;
+		}
+	?>
     <h1>Project Showcase Installer</h1>
 	
-	<?php if ( $fileWrite ) { ?>
+	<?php if ( $fileWrite === 1 ) { ?>
 
         <form method="POST" action="" enctype="">
             <label for="sitename">Website Name</label>
@@ -320,6 +331,26 @@
             <input type="submit" name="submitSiteData" id="submit" value="Submit!"/>
         </form>
 	
+	<?php } elseif($fileWrite === 2) { ?>
+
+        <div id="success-box">
+            <span class="h3">
+                You have success
+            </span>
+            <p>The script has finished installing and is ready to your.</p>
+            <p><strong>Things to know</strong></p>
+            <ul>
+                <li>This scripts is in pre-alpha mode(ie; still needs alot of work)</li>
+                <li>The idea behind this script was to build a personal portfolio website for developers</li>
+                <li>There is some structure for a shopping cart. At present you can list your projects but hope to have a payment gateway added at some point</li>
+                <li>If you would like to add to this project your can find it <a href="https://github.com/BabyDunk/Project-Showcase" target="_blank" >Here on github</a> </li>
+            </ul>
+            
+            <form method="POST" action="/sc-panel/general_settings" enctype="">
+                <input type="submit" name="submit" id="submit" value="Continue to Setup" />
+            </form>
+        </div>
+        
 	<?php } else { ?>
 
         <form method="POST" action="" enctype="">
