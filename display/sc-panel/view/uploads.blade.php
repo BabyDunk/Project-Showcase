@@ -58,7 +58,7 @@
                         <input type="hidden" name="showcaseId" id="showcaseId" value="<?php echo (!empty($showcase->id)) ? $showcase->id : ''; ?>"/>
                         <div class="grid-container full">
                             <div class="grid-x grid-margin-x">
-                                <div class="medium-7 cell">
+                                <div class="medium-12 cell">
                                     <label for="title">Give your showcase a Title
                                         <input class="form-control" type="text" name="title" id="title" value="<?php echo (!empty($showcase->title)) ? $showcase->title : ''; ?>" placeholder="Give your Image a Title" />
                                     </label>

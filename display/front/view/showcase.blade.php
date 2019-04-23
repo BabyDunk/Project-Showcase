@@ -47,30 +47,35 @@ $comments = \Classes\Core\Comment::find_comments( $showcase->id );
                         </div>
                         <div class="info-section">
                             <fieldset class="fieldset">
-                                <legend>Demo Credentials</legend>
-                                <ul>
-                                    @if(!empty($showcase->front_demo_link))
-                                        <li><a href="{{$showcase->front_demo_link}}">Frontend Demo</a></li>
+                                <legend>Tool Box</legend>
+                                <ul class="showcase-panel">
+                                    @if($isLogin === $showcase->user_id)
+
+                                        <li><span><a href="/sc-panel/uploads/{{$id['id']}}">Edit</a></span></li>
+                                        |
+                                        <li><span><a href="/sc-panel/showcase/{{$id['id']}}/delete">Delete</a></span></li>
+                                        |
                                     @endif
-                                    @if(!empty($showcase->back_demo_link))
-                                        <li><a href="{{$showcase->back_demo_link}}">Backend
-                                                Demo</a> @if(!empty($showcase->back_demo_user) && !empty($showcase->back_demo_pass))
-                                                <small>Username: {{$showcase->back_demo_user}} -
-                                                    Password: {{$showcase->back_demo_pass}}</small>@endif</li>
-                                    @endif
+                                    <li><a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact Dev</a></li>
                                 </ul>
 
                                 <fieldset class="fieldset">
-                                    <legend>Controls</legend>
-                                    @if($isLogin === $showcase->user_id)
-                                        <ul class="showcase-panel">
-                                            <li><span><a href="/sc-panel/uploads/{{$id['id']}}">Edit</a></span></li>
-                                            |
-                                            <li><span><a href="/sc-panel/showcase/{{$id['id']}}/delete">Delete</a></span></li>
-                                        </ul>
-                                    @endif
-                                    <a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact Dev</a>
+                                    <legend>Demo Credentials</legend>
+                                    <ul>
+                                        @if(!empty($showcase->front_demo_link))
+                                            <li><a href="{{$showcase->front_demo_link}}">Frontend Demo</a></li>
+                                        @endif
+                                        @if(!empty($showcase->back_demo_link))
+                                            <li><a href="{{$showcase->back_demo_link}}">Backend
+                                                    Demo</a> @if(!empty($showcase->back_demo_user) && !empty($showcase->back_demo_pass))
+                                                    <small>Username: {{$showcase->back_demo_user}} -
+                                                        Password: {{$showcase->back_demo_pass}}</small>@endif</li>
+                                        @endif
+                                    </ul>
+
+
                                 </fieldset>
+
                             </fieldset>
 
                             <fieldset class="fieldset">

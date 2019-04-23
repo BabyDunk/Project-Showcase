@@ -41,22 +41,22 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="grid grid-padding-x">
+            <div class="large-12">
                 <h1 class="page-header">
                     Comments
                     <small>{{\Classes\Core\User::hasPrivilege() ? 'All User' : 'Your'}} Comments</small>
                 </h1>
                 @include('includes.messages')
-                <div class="col-md-12">
+                <div class="medium-12">
                     <table class="hover unstriped stack">
                         <thead>
                         <tr>
-                            <th class="col-md-1">ID</th>
-                            <th class="col-md-2">Showcase</th>
-                            <th class="col-md-3">Author</th>
-                            <th class="col-md-3">Comment</th>
-                            <th class="col-md-3">Comment Date</th>
+                            <th class="medium-1">ID</th>
+                            <th class="medium-2">Showcase</th>
+                            <th class="medium-3">Author</th>
+                            <th class="medium-3">Comment</th>
+                            <th class="medium-3">Comment Date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,17 +64,17 @@
                             @foreach ($comments  as $comment )
                             @php $showcase  =   \Classes\Core\Showcase::find_by_id($comment->show_id) @endphp
                             <tr>
-                                <td class="col-md-1"><h3>{{$comment->show_id}}</h3></td>
-                                <td class="col-md-2"><img style="width:100%; max-width:200px;" class="thumbnail" src="{{$showcase->get_picture()}}" /></td>
-                                <td class="col-md-3"><p>{{$comment->author}}</p>
+                                <td class="medium-1"><h3>{{$comment->show_id}}</h3></td>
+                                <td class="medium-2"><img style="width:100%; max-width:200px;" class="thumbnail" src="{{$showcase->get_picture()}}" /></td>
+                                <td class="medium-3"><p>{{$comment->author}}</p>
                                     <div class="action_link">
 
                                         <a href="/sc-panel/comments/{{$contact->id}}/delete">Delete</a>
 
                                     </div>
                                 </td>
-                                <td class="col-md-3"><p>{{$comment->body}}</p></td>
-                                <td class="col-md-3"><p>@php echo date( "D j M Y g:i A", strtotime($comment->created_at)); @endphp</p></td>
+                                <td class="medium-3"><p>{{$comment->body}}</p></td>
+                                <td class="medium-3"><p>@php echo date( "D j M Y g:i A", strtotime($comment->created_at)); @endphp</p></td>
                             </tr>
 
                             @endforeach

@@ -27,21 +27,21 @@
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="grid grid-padding-x">
+            <div class="large-12">
                 <h1 class="page-header">
                     Contacts
                     <small>{{\Classes\Core\User::hasPrivilege() ? 'All User' : 'Your'}} Contacts</small>
                 </h1>
                 @include('includes.messages')
-                <div class="col-md-12">
+                <div class="medium-12">
                     <table class="hover unstriped stack">
                         <thead>
                         <tr>
-                            <th class="col-md-1">ID</th>
-                            <th class="col-md-3">Author</th>
-                            <th class="col-md-3">Comment</th>
-                            <th class="col-md-3">Comment Date</th>
+                            <th class="medium-1">ID</th>
+                            <th class="medium-3">Author</th>
+                            <th class="medium-3">Comment</th>
+                            <th class="medium-3">Comment Date</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,8 +50,8 @@
                             @foreach ($contacts  as $contact )
 
                             <tr>
-                                <td class="col-md-1"><h3>{{$contact->id}}</h3></td>
-                                <td class="col-md-3">
+                                <td class="medium-1"><h3>{{$contact->id}}</h3></td>
+                                <td class="medium-3">
                                     <p>{{$contact->name}}</p>
                                     <p><a href="mailto:{{$contact->email}}">{{$contact->email}}</a></p>
                                     @if($contact->phone)
@@ -63,8 +63,8 @@
 
                                     </div>
                                 </td>
-                                <td class="col-md-3"><p>{{$contact->message}}</p></td>
-                                <td class="col-md-3"><p>@php echo date( "D j M Y g:i A", strtotime($contact->created_at)); @endphp</p></td>
+                                <td class="medium-3"><p>{{$contact->message}}</p></td>
+                                <td class="medium-3"><p>@php echo date( "D j M Y g:i A", strtotime($contact->created_at)); @endphp</p></td>
                             </tr>
 
                             @endforeach

@@ -1,9 +1,10 @@
 <?php
 	
 	
-	$message   = [];
-	$notify    = '';
-	$fileWrite = false;
+	$message          = [];
+	$notify           = '';
+	$fileWrite        = false;
+	$install_base_url = ( ( $_SERVER[ 'HTTPS' ] ) ? 'https' : 'http' ) . '://' . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'PHP_SELF' ];
 	
 	if ( isset( $_POST[ 'submit' ] ) )
 	{
@@ -45,7 +46,7 @@
 		else
 		{
 			
-			if ( is_file( './includes/new_config.php' ) )
+			if ( is_file( './includes/config.php' ) )
 			{
 				
 				$data = '<?php';
@@ -73,21 +74,36 @@
 				$data .= PHP_EOL;
 				
 				
-				if ( file_put_contents( './includes/new_config.php' , $data ) )
+				
+				if ( file_put_contents( './includes/config.php' , $data ) )
 				{
 					$fileWrite = true;
 					
-					require_once( './index.php' );
+					require_once( "./index.php" );
 					require_once( './includes/src/sql/table_structure.php' );
 					
-					foreach ($sqlQueries as $query){
-						$pdo->query($query);
+					foreach ( $sqlQueries as $query )
+					{
+						if($pdo->query( $query )){
+							continue;
+						}else{
+							$notify = outputMessage( $message[] = 'Encountered a problem building database' );
+							break;
+						}
 					}
 					
 					
 				}
+				else
+				{
+					$notify = outputMessage( $message[] = 'Could write config, Please retry' );
+					
+				}
 			}
-			
+			else
+			{
+				$notify = outputMessage( $message[] = 'Config not found' );
+			}
 		}
 	}
     elseif ( isset( $_POST[ 'submitSiteData' ] ) )
@@ -96,39 +112,49 @@
 		
 		require_once( './index.php' );
 		
+		
 		$post = \Classes\Core\Params::get( 'post' );
 		
 		
-		if(!\Classes\Core\Params::has('sitename')){
+		if ( ! \Classes\Core\Params::has( 'sitename' ) )
+		{
 			$message[] = 'Need to supply a sitename';
 		}
-		if(!\Classes\Core\Params::has('siteurl')){
+		if ( ! \Classes\Core\Params::has( 'siteurl' ) )
+		{
 			$message[] = 'Need to supply a siteurl';
 		}
 		
-		if(!\Classes\Core\Params::has('sitetitle')){
+		if ( ! \Classes\Core\Params::has( 'sitetitle' ) )
+		{
 			$message[] = 'Need to supply a site title';
 		}
 		
-		if(!\Classes\Core\Params::has('adminuser')){
+		if ( ! \Classes\Core\Params::has( 'adminuser' ) )
+		{
 			$message[] = 'Need to supply a username';
 		}
 		
-		if(!\Classes\Core\Params::has('admipassword')){
+		if ( ! \Classes\Core\Params::has( 'admipassword' ) )
+		{
 			$message[] = 'Need to supply a password';
 		}
-		if(!\Classes\Core\Params::has('adminemail')){
+		if ( ! \Classes\Core\Params::has( 'adminemail' ) )
+		{
 			$message[] = 'Need to supply an email address';
 		}
 		
 		
-		if(!empty($message)){
-			$notify = outputMessage($message);
-		}else{
+		if ( ! empty( $message ) )
+		{
+			$notify = outputMessage( $message );
+		}
+		else
+		{
 			
-			sca_set_preference('showcase', 'sca_sitename', $post->sitename);
-			sca_set_preference('showcase', 'sca_sitetitle', $post->sitetitle);
-			sca_set_preference('showcase', 'sca_siteurl', $post->siteurl);
+			sca_set_preference( 'showcase' , 'sca_sitename' , $post->sitename );
+			sca_set_preference( 'showcase' , 'sca_sitetitle' , $post->sitetitle );
+			sca_set_preference( 'showcase' , 'sca_siteurl' , $post->siteurl );
 			
 			$user = new \Classes\Core\User();
 			$hash = new \Classes\Core\Hashing();
@@ -139,20 +165,33 @@
 			$user->privilege  = 1;
 			$user->created_at = date( "Y-m-d H:i:s" );
 			
-			if($user->create()){
+			if ( $user->create() )
+			{
 				global $pdo;
 				$sess = new \Classes\Core\Session();
 				
-				$setloginId = json_decode(json_encode(['id'=> $pdo->lastInsertedId()]), false);
+				$setloginId = json_decode( json_encode( [ 'id' => $pdo->lastInsertedId() ] ) , false );
 				
-				$sess->login($setloginId);
-				$msg = "Script installed successfully, Please complete the rest of the settings";
-				\Classes\Core\Session::set('MESSAGE', $msg);
-				redirect('/sc-panel/general_settings');
-				unlink('./install.php');
-			}else{
+				$sess->login( $setloginId );
+				$msg = "Script installed sucessfully, Please complete the rest of the settings";
+				\Classes\Core\Session::set( 'MESSAGE' , $msg );
+				
+				redirect( '/sc-panel/general_settings' );
+				
+				# Set is installed to true
+				$addedData = PHP_EOL;
+				$addedData = PHP_EOL;
+				$addedData .= '$IS_INSTALLED = true;';
+				$addedData .= PHP_EOL;
+				file_get_contents('./includes/config.php', $addedData , FILE_APPEND);
+				
+				# delete install.php
+				unlink( './install.php' );
+			}
+			else
+			{
 				$message[] = 'Could not create user';
-				$notify = outputMessage($message);
+				$notify    = outputMessage( $message );
 			}
 			
 		}
@@ -162,9 +201,10 @@
 	function outputMessage( $messageArr )
 	{
 		
-		$theMessages = '<div class="messages">';
+		$theMessages = '';
 		if ( ! empty( $messageArr ) )
 		{
+			$theMessages .= '<div class="messages">';
 			foreach ( $messageArr as $message )
 			{
 				if ( ! empty( $message ) )
@@ -172,12 +212,14 @@
 					$theMessages .= '<span class="message">' . $message . '</span>';
 				}
 			}
+			$theMessages .= '</div>';
 		}
-		$theMessages .= '</div>';
+		
 		
 		return $theMessages;
 	}
-
+	
+	var_dump( $fileWrite )
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -241,16 +283,16 @@
 <body>
 <div class="installPanel">
 	<?php
-		if ( ! empty( $notify ) )
-		{
-			echo $notify;
-		}
-	?>
+		/*		if ( ! empty( $notify ) )
+				{
+					echo $notify;
+				}
+			*/ ?>
     <h1>Project Showcase Installer</h1>
 	
 	<?php if ( $fileWrite ) { ?>
 
-        <form method="POST" action="<?php echo $_SERVER[ 'PHP_SELF' ]; ?>" enctype="">
+        <form method="POST" action="" enctype="">
             <label for="sitename">Website Name</label>
             <input type="text" name="sitename" id="sitename"
                    value="<?php echo ( isset( $_POST[ 'sitename' ] ) ) ? $_POST[ 'sitename' ] : '' ?>" required
@@ -280,7 +322,7 @@
 	
 	<?php } else { ?>
 
-        <form method="POST" action="<?php echo $_SERVER[ 'PHP_SELF' ]; ?>" enctype="">
+        <form method="POST" action="" enctype="">
             <label for="dbhost">Database Host Location</label>
             <input type="text" name="dbhost" id="dbhost"
                    value="<?php echo ( isset( $_POST[ 'dbhost' ] ) ) ? $_POST[ 'dbhost' ] : '' ?>" required

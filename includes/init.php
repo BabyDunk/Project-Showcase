@@ -6,19 +6,26 @@
 	 * Time: 02:41
 	 */
 	
+	# Load db config
+	require_once( INCLUDES_PATH . "config.php" );
 	
+	# if fresh install load installer script
 	if ( empty( $DB_USER ) )
 	{
 		header( 'location: install.php' );
 	}
 	
+	# Define db constants
+	if ( ! empty( $DB_USER ) )
+	{
+		define( 'DB_HOST' , $DB_HOST );
+		define( 'DB_USER' , $DB_USER );
+		define( 'DB_PASS' , $DB_PASS );
+		define( 'DB_NAME' , $DB_NAME );
+		define( 'DB_CHARSET' , $DB_CHARSET );
+		define( 'DB_PREFIX' , $DB_PREFIX );
+	}
 	
-	define( 'DB_HOST' , $DB_HOST );
-	define( 'DB_USER' , $DB_USER );
-	define( 'DB_PASS' , $DB_PASS );
-	define( 'DB_NAME' , $DB_NAME );
-	define( 'DB_CHARSET' , $DB_CHARSET );
-	define( 'DB_PREFIX' , $DB_PREFIX );
 	
 	
 	function admin_autoload( $class )
@@ -42,16 +49,22 @@
 	{
 		require_once( $file );
 	}
+	
+	# Load route mapping
 	require_once( INCLUDES_PATH . "routes/routes.php" );
-
+	
 	// Low level Exception Handling
 	set_exception_handler('exceptionCatcher');
-
-	//$db   = new Classes\Core\Database();
+	
+	
+	# Instantiate import class
 	$pdo  = new \Classes\Core\PdoDatabase();
 	$sess = new Classes\Core\Session();
 	$user = new Classes\Core\User();
 	
-	
-	new Classes\RouteDispatcher( $router );
+	# activate RouteDispatcher once install is complete
+	if(isset($IS_INSTALLED))
+	{
+		new Classes\RouteDispatcher( $router );
+	}
 ?>

@@ -6,6 +6,8 @@
 	 * Time: 12:13
 	 */
 	
+	
+	
 	defined('DS') ? null : define('DS', DIRECTORY_SEPARATOR);
 	define('SITE_ROOT', __DIR__ . DS);
 	define('INCLUDES_PATH', SITE_ROOT . 'includes' . DS );
@@ -15,11 +17,6 @@
 	define('SITE_URL', IS_HTTP . '://'. $_SERVER['HTTP_HOST'] . '/');
 	define('UPLOADED_IMAGES_PATH_URL', SITE_URL . 'resources/uploads/images/');
 	define('ASSETS_IMAGES_PATH_URL', SITE_URL . 'resources/assets/images/');
-	
-	if(is_file(INCLUDES_PATH . "new_config.php"))
-	{
-		require_once( INCLUDES_PATH . "new_config.php" );
-	}
 	
 	require_once(INCLUDES_PATH . 'init.php');
 	

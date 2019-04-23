@@ -10,7 +10,7 @@
 	
 	use Mysqli;
 
-	require_once( INCLUDES_PATH . 'new_config.php' );
+	require_once( INCLUDES_PATH . 'config.php' );
 
 class Database {
 

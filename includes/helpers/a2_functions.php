@@ -851,6 +851,10 @@ function exceptionCatcher($e){
 		$returnMessage = 'Invalid database name';
 	}elseif($e->getCode() === 1045){
 		$returnMessage = 'Invalid database username or password';
+	}elseif($e->getCode() === 1050){
+		$returnMessage = 'Base table or view already exists';
+	}elseif($e->getCode() === 1146){
+		$returnMessage = 'Base table or view not found';
 	}else{
 		
 		if(sca_get_preference('showcase', 'sca_errorlogging')){

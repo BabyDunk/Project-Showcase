@@ -23,14 +23,14 @@ $users =  \Classes\Core\User::find_all();
     <div class="container-fluid">
 
         <!-- Page Heading -->
-        <div class="row">
-            <div class="col-lg-12">
+        <div class="grid grid-padding-x">
+            <div class="large-12">
                 <h1 class="page-header">
                     Users
                     <small><a href="/sc-panel/adduser" > Add User</a></small>
                 </h1>
                 @include('includes.messages')
-                <div class="col-md-12">
+                <div class="medium-12">
                     <table class="hover unstriped stack">
                         <thead>
                         <tr>

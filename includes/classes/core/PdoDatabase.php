@@ -8,7 +8,7 @@
 	
 	namespace Classes\Core;
 	
-	require_once(INCLUDES_PATH . 'new_config.php');
+	require_once(INCLUDES_PATH . 'config.php');
 	
 	class PdoDatabase
 	{
@@ -39,6 +39,8 @@
 			try
 			{
 				$this->pdo = new \PDO( 'mysql: host=' . DB_HOST . '; dbname=' . DB_NAME , DB_USER , DB_PASS , static::$options );
+				
+				return $this->pdo;
 			}
 			catch ( \PDOException $e )
 			{
