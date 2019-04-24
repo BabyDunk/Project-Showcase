@@ -176,7 +176,7 @@
 				$setloginId = json_decode( json_encode( [ 'id' => $pdo->lastInsertedId() ] ) , false );
 				
 				$sess->login( $setloginId );
-				$msg = "Script installed sucessfully, \nPlease complete the rest of the settings";
+				$msg = "Please complete the rest of the settings";
 				\Classes\Core\Session::set( 'MESSAGE' , $msg );
 				
 				

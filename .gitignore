@@ -2,6 +2,10 @@
 vendor/
 node_modules/
 display/sc-panel/cache/*.php
+!display/sc-panel/cache/.gitkeep
 display/front/cache/*.php
+!display/front/cache/.gitkeep
 resources/assets/images/email/
 resources/uploads/
+composer.lock
+package-lock.json
