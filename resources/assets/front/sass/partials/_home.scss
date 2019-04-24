@@ -1,0 +1,470 @@
+
+/* Home section */
+#home {
+  font-size: 16px;
+  top: 0;
+  left: 0;
+  padding: 0;
+  margin: 0;
+  background: linear-gradient(180deg, #f0f8ff, #4f4f4f);
+}
+
+p {
+  font-family: Ubuntu, sans-serif;
+}
+
+/* Header section */
+nav {
+  position: fixed;
+  width: 100%;
+  background-color: transparent;
+  z-index: 999;
+}
+
+#nav {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+}
+
+#nav > div {
+  padding: 21px;
+  font-size: 2vw;
+
+}
+
+#nav a {
+  text-decoration: none;
+  color: white;
+  text-shadow: 2px 2px 3px #555;
+}
+
+#nav a:hover {
+  text-decoration: underline;
+}
+
+header {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-shadow {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-shadow video {
+  margin-top: -300px;
+  width: 100%;
+}
+
+
+#nav-bar-navi {
+  padding: 7px;
+  background-color: #131313;
+  width: 100%;
+  z-index: 999;
+  font-size: 1.5em;
+  color: #fff;
+}
+
+#nav-small {
+  display: none;
+  color: #fff;
+  background-color: darkturquoise;
+  position: fixed;
+  width: 70%;
+  z-index: 999;
+  padding: 21px;
+}
+
+#nav-small > div a {
+  padding: 7px;
+  margin-top: 7px;
+  font-size: 1.2em;
+  text-decoration: none;
+}
+
+#nav-show-menu:hover ~ #nav-small {
+  display: block;
+}
+
+#nav-small:hover {
+  display: block;
+}
+
+#nav-bar-navi .logo {
+  float: right;
+  padding-right: 21px;
+  padding-bottom: 7px;
+}
+
+#nav-bar-navi .header-img {
+  width: 1.5em;
+}
+
+
+#business {
+  position: absolute;
+  top: 19%;
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  z-index: 1;
+}
+
+#inner-bus {
+  position: relative;
+  width: 100%;
+  display: block;
+  height: 300px;
+}
+
+#inner-bus #title {
+  text-align: center;
+  color: #fff;
+  font-size: 4em;
+}
+
+#header-img {
+  width: 4vw;
+  max-width: 130px;
+  z-index: 1;
+  vertical-align: bottom;
+}
+
+#infoForm label {
+  display: block;
+  color: #fff;
+  font-size: 1.2em;
+}
+
+#infoForm input {
+  padding: 21px;
+}
+
+
+.header-shadow .attention {
+  position: absolute;
+  background-color: rgba(227, 227, 227, 0.76);
+  margin-top: -200px;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  height: 200px;
+  z-index: 2;
+}
+
+#description {
+  text-align: center;
+  padding: 21px;
+  font-size: 1.5em;
+  font-family: Ubuntu, sans-serif;
+}
+
+
+/* Main Section */
+
+
+/* Tri Info Boxes  */
+.triCard {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .card {
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    padding: 21px;
+    width: 25%;
+    flex-basis: 250px;
+    box-shadow: 1px 1px 7px #bcbcbc, -1px -1px 7px #bcbcbc;
+    background-color: #fff;
+
+    .cardTitle {
+      text-align: center;
+    }
+
+    .cardImg {
+      text-align: center;
+
+      .fas.fa-5x.fa-life-ring {
+        color: #ff3e67;
+      }
+
+      .fas.fa-5x.fa-piggy-bank {
+        color: #fff283;
+      }
+
+      .fas.fa-5x.fa-chart-line {
+        color: #04d8bb;
+      }
+    }
+  }
+}
+
+
+/* Quad Pictures Center Mass */
+#cubed {
+  margin-top: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 21px;
+}
+
+#cubed .cubedImg {
+  position: relative;
+  overflow: hidden;
+}
+
+#cubed .cubedImg img {
+  width: 100%;
+}
+
+#cubed .cubedText {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
+  color: #fff;
+  font-size: 2em;
+  text-shadow: 3px 3px 7px #555;
+  padding: 21px;
+}
+
+/* Sale Section */
+#sales-div {
+  margin-top: 100px;
+}
+
+#cubeFlip {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap
+}
+
+#cubeFlip .cardArea {
+  width: 250px;
+  height: 450px;
+  perspective: 600px;
+  padding: 21px;
+}
+
+
+#cubeFlip .card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: 1s;
+  transform-origin: left center;
+}
+
+#cubeFlip .cardface {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: solid 1px #ccc;
+  box-shadow: 3px 3px 7px #b1b1b1, -3px -3px 7px #b1b1b1;
+  overflow: hidden;
+}
+
+#cubeFlip .cardface--front {
+  background-color: mediumpurple;
+}
+
+#cubeFlip .cardface--back {
+  background-color: #ecffe6;
+  /*background-image: linear-gradient(120deg, rgba(249, 187, 255, 0.75), rgba(138, 223, 255, 0.75), rgba(255, 255, 255, 0.75));*/
+  transform: rotateY(180deg);
+}
+
+.activeFlip {
+  transform: rotateY(-180deg) translate(-100%);
+}
+
+
+#cubeFlip .slantTitle {
+  background-color: #d1d1d1;
+  background-image: linear-gradient(0deg, #bdbdbd, turquoise);
+  transform: rotate(15deg);
+  transform-origin: 655% 10%;
+  width: 122%;
+  height: 520px;
+  position: absolute;
+  display: grid;
+  align-items: end;
+  justify-items: end;
+}
+
+#cubeFlip .slantBody {
+  position: absolute;
+  left: 20px;
+
+}
+
+#cubeFlip .slantBody h3 {
+  margin-top: 1.2em;
+  margin-bottom: .5em;
+  font-size: 2em;
+}
+
+#cubeFlip .slantBody ul {
+  padding-left: 7px;
+  list-style-type: disclosure-closed;
+  font-weight: 600;
+  font-family: ubuntu, sans-serif;
+}
+
+#cubeFlip .slantBody ul li {
+  padding: 7px;
+}
+
+#cubeFlip .tallSlant {
+  background-color: #d1d1d1;
+  background-image: linear-gradient(180deg, #bdbdbd, turquoise);
+  transform: rotate(300deg);
+  transform-origin: 78% 55%;
+  width: 500px;
+  height: 420px;
+  position: absolute;
+}
+
+
+#cubeFlip .clickIt {
+  padding: 3px 27px;
+  font-weight: 600;
+  font-family: Ubuntu, sans-serif;
+  font-size: 0.8em;
+}
+
+#cubeFlip .card1 {
+  background-color: gold;
+}
+
+#cubeFlip .card2 {
+  background-color: #008de3;
+}
+
+#cubeFlip .card3 {
+  background-color: #f1a646;
+}
+
+.cardflip-back {
+  margin: 21px;
+  display: grid;
+}
+
+.cardflip-back ol {
+  padding-left: 7px;
+
+}
+
+
+/* Contact Section */
+#contact-div {
+  margin-top: 100px;
+}
+
+#conWindow {
+  border: 1px solid #ccc;
+  -webkit-box-shadow: 3px 3px 7px #bababa, -3px -3px 7px #bababa;
+  -moz-box-shadow: 3px 3px 7px #bababa, -3px -3px 7px #bababa;
+  box-shadow: 3px 3px 7px #bababa, -3px -3px 7px #bababa;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding: 7px;
+  background: linear-gradient(120deg, aliceblue, aqua);
+}
+
+#conWindow > div {
+  border: 1px solid #ccc;
+  padding: 14px;
+}
+
+#conWindow > .controlend {
+  background: linear-gradient(120deg, bisque, lavender);
+}
+
+#conWindow > .businessend {
+  background: linear-gradient(40deg, lavender, beige);
+}
+
+.conPhone, .conEmail, .conChat, .conFAQ {
+  display: none;
+}
+
+.cardflip-back .cardPrice {
+  align-self: end;
+  justify-self: end;
+}
+
+.controlend ul {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: start;
+  list-style-type: none;
+  padding-left: 3px;
+}
+
+.controlend ul li {
+  padding: 7px;
+  transition: 1s;
+}
+
+.controlend ul li:hover {
+  background-color: turquoise;
+  padding-right: 40px;
+  border-radius: 0 50% 50% 0;
+}
+
+.controlend a {
+  text-decoration: none;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.controlend a:hover {
+  color: #f1a646
+}
+
+.form-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-top: 7px;
+}
+
+.form-content > label {
+  font-size: 1.1em;
+  font-family: Ubuntu, sans-serif;
+}
+
+.form-content > input[type="number"], .form-content > textarea, .form-content > input, .form-content > button {
+  max-width: 300px;
+  width: 100%;
+  padding: 7px;
+}
+
+
+.qBorder {
+  margin-top: 7px;
+}
+
+.qBorder > div {
+  padding: 3px;
+  font-family: Ubuntu, sans-serif;
+}
+
+
+#links-div {
+  margin-top: 100px;
+}
