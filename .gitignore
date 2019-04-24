@@ -7,5 +7,3 @@ display/front/cache/*.php
 !display/front/cache/.gitkeep
 resources/assets/images/email/
 resources/uploads/
-composer.lock
-package-lock.json
