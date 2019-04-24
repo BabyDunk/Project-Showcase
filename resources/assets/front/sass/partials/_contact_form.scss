@@ -98,4 +98,22 @@
     }
   }
 
+  .form-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin-top: 7px;
+
+    label {
+      font-size: 1.1em;
+      font-family: Ubuntu, sans-serif;
+    }
+    input[type="number"], .form-content > textarea, .form-content > input, .form-content > button {
+      max-width: 300px;
+      width: 100%;
+      padding: 7px;
+    }
+
+  }
+
+
 }
