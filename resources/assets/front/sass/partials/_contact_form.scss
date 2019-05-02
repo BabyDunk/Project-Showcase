@@ -28,6 +28,10 @@
       }
     }
   }
+}
+
+
+#contact-form{
 
   .outta-cont-notification {
     position: relative;
@@ -46,45 +50,33 @@
 
   }
 
-  .indiv-row {
-    width: 100%;
-    padding: 7px 0;
-    position: relative;
+
+  .form-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    margin-top: 7px;
 
     input {
-      width: 100%;
       line-height: 27px;
-      padding: 3px 7px;
       background-color: rgba(255, 239, 213, 0.66);
-      -webkit-box-shadow: 1px 1px 2px #555;
-      -moz-box-shadow: 1px 1px 2px #555;
-      box-shadow: 1px 1px 2px #555;
-
-      &:focus {
-        -webkit-box-shadow: inset 1px 1px 2px #555;
-        -moz-box-shadow: inset 1px 1px 2px #555;
-        box-shadow: inset 1px 1px 2px #555;
-      }
     }
 
     textarea {
-      width: 100%;
       line-height: 23px;
-      padding: 3px 7px;
       background-color: rgba(255, 239, 213, 0.66);
-      -webkit-box-shadow: 1px 1px 2px #555;
-      -moz-box-shadow: 1px 1px 2px #555;
-      box-shadow: 1px 1px 2px #555;
-
-      &:focus {
-        -webkit-box-shadow: inset 1px 1px 2px #555;
-        -moz-box-shadow: inset 1px 1px 2px #555;
-        box-shadow: inset 1px 1px 2px #555;
-      }
     }
 
     button {
       line-height: 23px;
+    }
+
+    label {
+      font-size: 1.1em;
+      font-family: Ubuntu, sans-serif;
+    }
+    input[type="number"], textarea, input,  button {
+      max-width: 300px;
+      width: 100%;
       padding: 3px 7px;
       -webkit-box-shadow: 1px 1px 2px #555;
       -moz-box-shadow: 1px 1px 2px #555;
@@ -95,22 +87,6 @@
         -moz-box-shadow: inset 1px 1px 2px #555;
         box-shadow: inset 1px 1px 2px #555;
       }
-    }
-  }
-
-  .form-content {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    margin-top: 7px;
-
-    label {
-      font-size: 1.1em;
-      font-family: Ubuntu, sans-serif;
-    }
-    input[type="number"], .form-content > textarea, .form-content > input, .form-content > button {
-      max-width: 300px;
-      width: 100%;
-      padding: 7px;
     }
 
   }

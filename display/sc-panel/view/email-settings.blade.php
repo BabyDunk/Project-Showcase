@@ -53,12 +53,15 @@
                                         <label for="emailgatewaypass">Email Gateway Password</label>
                                         <input class="form-control" type="password" name="emailgatewaypass" id="emailgatewaypass" value="<?php echo (!empty(sca_get_preference('showcase', 'sca_emailgatewaypass'))) ? sca_get_preference('showcase', 'sca_emailgatewaypass') : ''; ?>" placeholder="Password email gateway" />
 
-                                        <label for="emailserverport">Server Port<small><em> eg; 993</em></small></label>
+                                        <label for="emailserverport">Server Port<small><em> eg; 25</em></small></label>
                                         <input class="form-control" type="text" name="emailserverport" id="emailserverport" value="<?php echo (!empty(sca_get_preference('showcase', 'sca_emailserverport'))) ? sca_get_preference('showcase', 'sca_emailserverport') : ''; ?>" placeholder="Server port number" />
 
                                         <label for="emailencryption">Encryption Type <small><em> eg; Leave blank, tls, ssl</em></small></label>
-                                        <input class="form-control" type="text" name="emailencryption" id="emailencryption" value="<?php echo (!empty(sca_get_preference('showcase', 'sca_emailencryption'))) ? sca_get_preference('showcase', 'sca_emailencryption') : ''; ?>" placeholder="Email encryption type" />
-
+                                         <select class="form-control" type="text" name="emailencryption" id="emailencryption">
+                                            <option value=""></option>
+                                            <option value="tls" <?php echo (!empty(sca_get_preference('showcase', 'sca_emailencryption')) && sca_get_preference('showcase', 'sca_emailencryption') === 'tls') ? 'selected' : ''; ?>>TLS</option>
+                                            <option value="ssl" <?php echo (!empty(sca_get_preference('showcase', 'sca_emailencryption')) && sca_get_preference('showcase', 'sca_emailencryption') === 'ssl') ? 'selected' : ''; ?>>SSL</option>
+                                        </select>
                                         <fieldset class="fieldset">
                                             <legend>Enable SMTP Authentication</legend>
 

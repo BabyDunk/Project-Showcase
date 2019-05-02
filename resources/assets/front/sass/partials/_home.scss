@@ -135,14 +135,15 @@ header {
   vertical-align: bottom;
 }
 
-#infoForm label {
-  display: block;
-  color: #fff;
-  font-size: 1.2em;
-}
-
-#infoForm input {
-  padding: 21px;
+#infoForm {
+  label {
+    display: block;
+    color: #fff;
+    font-size: 1.2em;
+  }
+  input {
+    padding: 21px;
+  }
 }
 
 

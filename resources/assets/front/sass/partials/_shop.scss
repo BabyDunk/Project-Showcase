@@ -244,12 +244,31 @@
   padding-bottom: 60px;
   overflow: hidden;
 
+
+  .figure-comment {
+    margin-top: 7px;
+    clear: both;
+    border-bottom: 3px #7c7c7c solid;
+    overflow: hidden;
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
 }
 
 
-.figure-comment {
-  margin-top: 7px;
-  clear: both;
-  border-bottom: 3px #7c7c7c solid;
-  overflow: hidden;
+
+
+#contact_showcase_author {
+
+  .container{
+
+    #contact-dev{
+      width:70%;
+      margin:auto;
+    }
+  }
+
 }

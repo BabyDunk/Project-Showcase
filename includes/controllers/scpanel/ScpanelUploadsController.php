@@ -171,15 +171,20 @@
 				if ( $showcasePins->create() )
 				{
 					
-					$thePins = '<fieldset class="fieldset">
-									<legend>Inserted Pins: ' . $post->pinTitle . '</legend>
-									<div class="card">
-										<div class="callout">
-									 	
-											<p>' . $post->pinBody . '</p>
-									</div>
-									</div>
-								</fieldset>';
+					$thePins = '<fieldset class="fieldset" id="insertedPin-'.$showcasePins->get_last_insert().'">
+                                    <legend>Inserted Pins: <span id="insertedPinTitle-'.$showcasePins->get_last_insert().'">'.$showcasePins->show_title.'</span></legend>
+                                    <div class="card">
+                                        <div class="callout">
+                                            <span id="insertedPinBody-'.$showcasePins->get_last_insert().'">'. allowedTags($showcasePins->show_body).'</span>
+                                        </div>
+                                    </div>
+                                    <div class="button-group float-right">
+                                        <small>* You can edit this pin once you have saved this isting.</small>
+                                    </div>
+                                </fieldset>';
+					
+					
+                                
 					
 					echo json_encode( [
 						'status'  => 'OK' ,

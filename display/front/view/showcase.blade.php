@@ -27,6 +27,9 @@ $comments = \Classes\Core\Comment::find_comments( $showcase->id );
 @section('page-id', 'showcased')
 
 @section('content')
+
+    <!-- Navigation -->
+    @include('includes.navigation')
     <main>
         <div id="info-top">
             <div class="container" data-equalizer data-equalize-on="medium">
@@ -53,10 +56,12 @@ $comments = \Classes\Core\Comment::find_comments( $showcase->id );
 
                                         <li><span><a href="/sc-panel/uploads/{{$id['id']}}">Edit</a></span></li>
                                         |
-                                        <li><span><a href="/sc-panel/showcase/{{$id['id']}}/delete">Delete</a></span></li>
+                                        <li><span><a href="/sc-panel/showcase/{{$id['id']}}/delete">Delete</a></span>
+                                        </li>
                                         |
                                     @endif
-                                    <li><a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact Dev</a></li>
+                                    <li><a href="#contact_showcase_author" class="button success" data-smooth-scroll>Contact
+                                            Dev</a></li>
                                 </ul>
 
                                 <fieldset class="fieldset">
@@ -102,7 +107,7 @@ $comments = \Classes\Core\Comment::find_comments( $showcase->id );
                                         @if(!empty($showcase->showcasePayment))
                                             @php echo implode(', ', unserialize($showcase->showcasePayment))@endphp
                                         @else
-                                            No payment options selected
+                                            No payment options offered
                                         @endif</li>
                                 </ul>
                             </fieldset>
@@ -168,9 +173,11 @@ $comments = \Classes\Core\Comment::find_comments( $showcase->id );
 
         <div id="contact_showcase_author" class="clearfix">
             <div class="container">
-                @php
-                    \Classes\Core\Contact::echo_form();
-                @endphp
+                <div id="contact-dev">
+                    @php
+                        \Classes\Core\Contact::echo_form();
+                    @endphp
+                </div>
             </div>
         </div>
     </main>
