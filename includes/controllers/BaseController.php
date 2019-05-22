@@ -13,6 +13,11 @@
 	{
 		
 		
-	
+		
+		public function show(  )
+		{
+			
+			view('redirected');
+		}
 	
 	}

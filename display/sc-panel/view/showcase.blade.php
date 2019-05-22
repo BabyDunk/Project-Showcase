@@ -6,15 +6,6 @@
  * Time: 01:51
  */
 
-$showcases = null;
-if ( \Classes\Core\User::hasPrivilege() )
-{
-	$showcases = \Classes\Core\Showcase::find_all();
-}
-else
-{
-	$showcases = \Classes\Core\Showcase::find_by_user_id( \Classes\Core\Session::instance()->user_id );
-}
 
 
 
@@ -48,7 +39,7 @@ else
                             <th class="medium-2 large-2">Title</th>
                             <th class="medium-4 large-4">Description</th>
                             <th class="medium-1 large-1">Payment Method</th>
-                            <th class="medium-1 large-1">Deposit</th>
+                            <th class="medium-1 large-1">Fees</th>
                             <th class="medium-1 large-1">Id</th>
                             <th class="medium-1 large-1">Comments</th>
                         </tr>
@@ -84,7 +75,7 @@ else
                                 @endphp
                                 <tr>
                                     <td class="medium-2 large-2"><a
-                                                href="/showcase/{{ $showcase->id}}/{{urlString($showcase->title)}}"
+                                                href="/shop/showcase/{{ $showcase->id}}/{{urlString($showcase->title)}}"
                                                 class="thumbnail"> <img class="img-responsive" style="width:100%; max-width:200px;"
                                                                         src="<?php echo $showcase->get_picture(); ?>"/></a>
                                         <ul style="list-style-type: none; padding-left:0;margin-left:0;">
@@ -111,7 +102,17 @@ else
                                         <p>{{(!empty($showcase->showcasePayment)) ? implode(', ', unserialize($showcase->showcasePayment)) : 'No payment method selected'}}</p>
                                     </td>
                                     <td class="medium-1 large-1">
-                                        <p><?php echo ( ! empty( $showcase->job_deposit ) ) ? '&pound;' . $showcase->job_deposit : 'No deposit set'; ?></p>
+                                        <p><?php
+                                            $feeDue = 0;
+                                            if(!empty( $showcase->price ) ){
+                                            	$feeDue = 'Price: '.sca_show_price($showcase->price, true);
+                                            }else if(!empty($showcase->job_deposit)){
+                                            	$feeDue = 'Deposit: &pound;'.$showcase->job_deposit;
+                                            }else{
+                                            	$feeDue = 'No fees set';
+                                            }
+
+                                            echo $feeDue  ?></p>
                                     </td>
                                     <td class="medium-1 large-1"><p>{{$showcase->id}}</p></td>
                                     <td class="medium-1 large-1 contact-list">

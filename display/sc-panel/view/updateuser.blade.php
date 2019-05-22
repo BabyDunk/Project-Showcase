@@ -33,7 +33,7 @@
 
                 <div class="grid-x grid-padding-x">
                     <div class="large-4 medium-4 cell">
-                        <a href="<?php echo $userData->image_path_placeholder(); ?>" class="thumbnail"><img src="<?php echo $userData->image_path_placeholder(); ?>" alt="" class="rounded responsive"></a>
+                        <a href="<?php echo $userData->get_picture(); ?>" class="thumbnail"><img src="<?php echo $userData->get_picture(); ?>" alt="" class="rounded responsive"></a>
                     </div>
 
                     <div class="large-5 medium-5 cell">
@@ -85,7 +85,7 @@
                                         </div>
                                     </fieldset>
 
-                                    <a type="submit" href="/sc-panel/users/{{$id['id']}}" class="button warning float-left">Delete User</a>
+                                    <a type="submit" href="/sc-panel/deleteusers/{{$id['id']}}" class="button warning float-left">Delete User</a>
                                     <button type="submit" name="update" value="true" class="button success float-right">Submit Update</button>
                                 </div>
                             </div>

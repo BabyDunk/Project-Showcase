@@ -98,7 +98,7 @@
 				$message = 'Invalid identifier';
 				
 				Session::set('MESSAGE', $message);
-				redirect('/sc-panel/user-contacts');
+				redirect('/sc-panel/user_contacts');
 			}
 			
 			return false;

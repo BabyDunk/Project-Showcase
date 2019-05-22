@@ -9,6 +9,9 @@
 	
 	$router = new AltoRouter();
 	
+	// Map Redirect
+	$router->map('GET', '/redirected', 'Controllers\BaseController@show', 'redirected');
+	
 	// Map About Page
 	$router->map( 'GET', '/',  'Controllers\IndexHomeController@show', 'home');
 	
@@ -31,6 +34,14 @@
 	// Map Comment
 	$router->map( 'POST', '/shop/showcase/comment',  'Controllers\IndexCommentController@store', 'store_comment');
 
-
+	
+	// Map Shopping Cart
+	$router->map('GET', '/shop/cart', 'Controllers\IndexShopController@showCart', 'shopping_cart');
+	// Map Stripe Payment
+	$router->map('POST', '/shop/stripe_payment', 'Controllers\IndexShopController@stripeAjax', 'stripe_payment');
+	// Map Payment Success
+	$router->map('GET', '/shop/payment_notice/[i:id]/[:CSRFToken]', 'Controllers\IndexShopController@paymentNoticeCart', 'shopping_cart_payment_notice');
+	
+	
 	require_once(__DIR__ . '/sc-panel-routes.php');
 	

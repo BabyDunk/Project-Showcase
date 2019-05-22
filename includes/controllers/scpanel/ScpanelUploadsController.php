@@ -56,7 +56,7 @@
 				$showcase = new Showcase();
 				$post     = Params::get( 'post' );
 				
-				$showcasePayment = ( Params::has( 'showcasePayment' ) ) ? serialize( $post->showcasePayment ) : '';
+				$showcasePayment = ( Params::has( 'showcasePayment' ) ) ? serialize( $post->showcasePayment ) : null;
 				
 				if ( Params::has( 'showcaseId' ) )
 				{
@@ -88,8 +88,9 @@
 				$showcase->description1       = $post->description1;
 				$showcase->showcasePayment    = $showcasePayment;
 				$showcase->three_notice_block = $the3BlockNotice;
-				$showcase->job_deposit        = $post->job_deposit;
-				$showcase->job_duration       = $post->job_duration;
+				$showcase->price              = ( Params::has( 'price' ) ) ? sca_set_price($post->price) : null;
+				$showcase->job_deposit        = ( Params::has( 'job_deposit' ) ) ? $post->job_deposit : null;
+				$showcase->job_duration       = ( Params::has( 'job_duration' ) ) ? $post->job_duration : null;
 				$showcase->bg_colorselector   = $post->bg_colorselector;
 				$showcase->fg_colorselector   = $post->fg_colorselector;
 				$showcase->front_demo_link    = $post->frontDemo;

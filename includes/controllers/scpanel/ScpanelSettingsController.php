@@ -14,6 +14,7 @@
 	use Classes\Core\Params;
 	use Classes\Core\Preference;
 	use Classes\Core\Session;
+	use Classes\Core\User;
 	
 	
 	class ScpanelSettingsController
@@ -26,8 +27,6 @@
 			\Classes\Core\User::isAdmin();
 			
 			adminView('general-settings', ['userid'=>Session::instance()->user_id]);
-			Session::clear('MESSAGE');
-			
 			
 		}
 		
@@ -42,11 +41,21 @@
 			if(Params::has('submit')){
 				//var_dump(sca_set_preference('showcase', 'sca_sitename', $post->sitename));exit;
 				sca_set_preference('showcase', 'sca_sitename', $post->sitename);
+				
+				if(!empty($post->siteurl)){
+					$split_str = substr($post->siteurl, (strlen($post->siteurl)-1), 1);
+					
+					if($split_str !== '/'){
+						$post->siteurl = $post->siteurl.'/';
+					}
+				}
+				
 				sca_set_preference('showcase', 'sca_siteurl', $post->siteurl);
 				sca_set_preference('showcase', 'sca_sitetitle', $post->sitetitle);
 				sca_set_preference('showcase', 'sca_sitesubtitle', $post->sitesubtitle);
 				sca_set_preference('showcase', 'sca_sitecontact', $post->sitecontact);
 				sca_set_preference('showcase', 'sca_sitenumber', $post->sitenumber);
+				sca_set_preference('showcase', 'sca_timezone', $post->timezone);
 				sca_set_preference('showcase', 'sca_sitedescriptionshort', $post->sitedescriptionshort);
 				sca_set_preference('showcase', 'sca_sitedescriptionfull', $post->sitedescriptionfull);
 				sca_set_preference('showcase', 'sca_contacttitle', $post->contacttitle);
@@ -67,6 +76,33 @@
 			
 		}
 		
+		public function showPayment(  )
+		{
+			User::isAdmin();
+			
+			adminView('payment-settings', ['userid' => Session::instance()->user_id]);
+			
+		}
+		
+		public function storePayment(  )
+		{
+			User::isAdmin();
+			
+			$post = Params::get('post');
+			
+			if($post->submit){
+				sca_set_preference('showcase', 'sca_currencyType', $post->currencyType, 'STRING');
+				sca_set_preference('showcase', 'sca_stripe_mode', $post->stripe_mode, 'BOOLEAN');
+				sca_set_preference('showcase', 'sca_livePubKey', Params::has('livePubKey') ? $post->livePubKey : '');
+				sca_set_preference('showcase', 'sca_liveSecretKey', Params::has('liveSecretKey') ? $post->liveSecretKey : '');
+				sca_set_preference('showcase', 'sca_testPubKey', Params::has('testPubKey') ? $post->testPubKey : '');
+				sca_set_preference('showcase', 'sca_testSecretKey', Params::has('testSecretKey') ? $post->testSecretKey : '');
+			}
+			
+			adminView('payment-settings', ['userid'=>User::userID()]);
+			
+		}
+		
 		public function showEmail(  )
 		{
 			\Classes\Core\User::isAdmin();
@@ -74,7 +110,6 @@
 			adminView('email-settings', ['userid'=>Session::instance()->user_id]);
 			Session::clear('MESSAGE');
 		}
-		
 		
 		public function storeEmail(  )
 		{

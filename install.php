@@ -20,7 +20,7 @@
 		}
 		if ( empty( $_POST[ 'dbuser' ] ) )
 		{
-			$message[] = 'You need to supply a valid database user';
+			$message[] = 'You need to supply a valid database username';
 		}
 		if ( empty( $_POST[ 'dbpass' ] ) )
 		{
@@ -176,7 +176,7 @@
 				$setloginId = json_decode( json_encode( [ 'id' => $pdo->lastInsertedId() ] ) , false );
 				
 				$sess->login( $setloginId );
-				$msg = "Please complete the rest of the settings";
+				$msg = "Script installed sucessfully, \nPlease complete the rest of the settings";
 				\Classes\Core\Session::set( 'MESSAGE' , $msg );
 				
 				

@@ -16,9 +16,10 @@
 @section('page-id', 'home')
 
 @section('content')
+    <!-- Navigation -->
+    @include('includes.navigation')
 
-
-    <div class="header-shadow">
+    <div class="header-shadow" id="welcome-section">
         <video autoplay loop poster="{{ASSETS_IMAGES_PATH_URL}}laptop1625.JPG" id="video">
             <source src="{{ASSETS_IMAGES_PATH_URL}}laptop1625.mp4" type="video/mp4">
             Your browser does not support the video tag.

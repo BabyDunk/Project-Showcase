@@ -10,7 +10,9 @@
         "philo/laravel-blade": "^3.1",
         "altorouter/altorouter": "^1.2",
         "phpmailer/phpmailer": "^6.0",
-        "awps/font-awesome-php": "^4.7"
+        "awps/font-awesome-php": "^4.7",
+        "stripe/stripe-php": "^6.34",
+        "ext-json": "*"
     },
 
     "config":{

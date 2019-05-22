@@ -17,7 +17,7 @@
     <h3> Welcome {{($user->privilege) ? 'Admin' : 'Dev'}} </h3>
 
     <div class="image-holder text-center">
-        <img src="{{$user->image_path_placeholder()}}" alt="{{$user->first_name}}" title="Admin" >
+        <img src="{{$user->get_picture()}}" alt="{{$user->first_name}}" title="Admin" >
 
         <p>{{$user->first_name}} {{$user->last_name}}</p>
     </div>
@@ -45,6 +45,16 @@
             <a href="/sc-panel/comments"><i class="fa fa-fw fa-comments-o"></i> Comments</a>
         </li>
         @if(!empty($user->privilege))
+            <li>
+                <a href="/sc-panel/promotions"><i class="fa fa-fw fa-certificate"></i> Promotions</a>
+            </li>
+        @endif
+        @if(!empty($user->privilege))
+            <li>
+                <a href="/sc-panel/shopping_lists"><i class="fa fa-fw fa-shopping-cart"></i> Shopping Cart</a>
+            </li>
+        @endif
+        @if(!empty($user->privilege))
         <li>
             <a href="/sc-panel/statistics"><i class="fa fa-fw fa-bar-chart-o"></i> Statistics</a>
         </li>
@@ -54,6 +64,7 @@
                     <a href="#"><i class="fa fa-fw fa-wrench"></i> Settings</a>
                     <ul class="menu vertical nested">
                         <li><a href="/sc-panel/general_settings"><i class="fa fa-arrow-circle-right"></i> General</a></li>
+                        <li><a href="/sc-panel/payment_settings"><i class="fa fa-money"></i> Payments</a></li>
                         <li>
                             <a href="#"><i class="fa fa-envelope"></i> Email</a>
                             <ul class="menu vertical nested">

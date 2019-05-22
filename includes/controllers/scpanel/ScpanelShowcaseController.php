@@ -21,7 +21,17 @@
 		public function show()
 		{
 			
-			adminView( 'showcase' , [ 'userid' => Session::instance()->user_id ] );
+			$showcases = null;
+			if ( \Classes\Core\User::hasPrivilege() )
+			{
+				$showcases = \Classes\Core\Showcase::find_all();
+			}
+			else
+			{
+				$showcases = \Classes\Core\Showcase::find_by_user_id( \Classes\Core\Session::instance()->user_id );
+			}
+			
+			adminView( 'showcase' , [ 'userid' => Session::instance()->user_id, 'showcases'=> $showcases ] );
 			
 			Session::clear( 'MESSAGE' );
 			

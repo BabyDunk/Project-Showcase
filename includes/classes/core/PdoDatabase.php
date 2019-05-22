@@ -8,15 +8,20 @@
 	
 	namespace Classes\Core;
 	
-	require_once(INCLUDES_PATH . 'config.php');
+	require_once( INCLUDES_PATH . 'config.php' );
 	
+	/**
+	 * Class PdoDatabase
+	 *
+	 * @package Classes\Core
+	 */
 	class PdoDatabase
 	{
 		
 		
 		
 		private $pdo;
-		protected $lastquery = NULL;
+		protected $lastquery = null;
 		public $prefix = DB_PREFIX;
 		
 		
@@ -26,13 +31,22 @@
 			\PDO::ATTR_EMULATE_PREPARES   => false
 		];
 		
-		public function __construct(  )
+		/**
+		 * PdoDatabase constructor.
+		 */
+		public function __construct()
 		{
+			
 			$this->pdo_master_connection();
-		
+			
 		}
 		
 		
+		/**
+		 * Creates PDO DB connection
+		 *
+		 * @return \PDO
+		 */
 		private function pdo_master_connection()
 		{
 			
@@ -44,82 +58,132 @@
 			}
 			catch ( \PDOException $e )
 			{
-				throw new \PDOException("PDO ERROR: " . $e->getMessage(), $e->getCode());
+				throw new \PDOException( "PDO ERROR: " . $e->getMessage() , $e->getCode() );
 			}
 		}
 		
-		public function query($sql,$params=[])
+		/**
+		 * Queries PDO DB
+		 *
+		 * @param       $sql
+		 * @param array $params
+		 *
+		 * @return null|bool
+		 */
+		public function query( $sql , $params = [] )
 		{
-			try{
-				$this->lastquery = $this->pdo->prepare($sql);
+			
+			try
+			{
+				$this->lastquery = $this->pdo->prepare( $sql );
 				
-				if(!empty($params))
+				if ( ! empty( $params ) )
 				{
-					foreach ( $params as $param )
+					
+					foreach ( $this->clean_params( $params ) as $param )
 					{
-						if(!isEmpty($param[1]))
-						{
-							
-							$this->lastquery->bindParam( $param[ 0 ] , $param[ 1 ] );
-						}
+						// TODO: Keep until finish testing
+						/*if(!isEmpty($param[1]))
+						{*/
+						
+						$this->lastquery->bindParam( $param[ 0 ] , $param[ 1 ] );
+						/*}*/
 					}
 				}
 				
 				
-			
 				$this->lastquery->execute();
 				
-				return ($this->lastquery) ? $this->lastquery : false;
+				return ( $this->lastquery ) ? $this->lastquery : false;
 				
 				
-			}catch (\PDOException $e){
-				throw new \PDOException("PDO ERROR: " . $e->getMessage(), $e->getCode());
+			}
+			catch ( \PDOException $e )
+			{
+				throw new \PDOException( "PDO ERROR: " . $e->getMessage() , $e->getCode() );
 			}
 			
 			
 		}
 		
 		
+		/**
+		 * Returns the next row in an Array or Object = Default
+		 *
+		 * @param string $fetchmode
+		 *
+		 * @return null|mixed
+		 */
 		public function fetch( $fetchmode = 'OBJECT' )
 		{
 			
-			$fetchmode = strtoupper($fetchmode);
-			$mode = -1;
-			if($fetchmode === 'ARRAY'){
+			$fetchmode = strtoupper( $fetchmode );
+			
+			if ( $fetchmode === 'ARRAY' )
+			{
 				$mode = 2;
-			}else{
+			}
+			else
+			{
 				$mode = 5;
 			}
 			
-			return !empty($this->lastquery->fetch($mode)) ? array_shift($this->lastquery->fetch($mode)):NULL;
+			return ! empty( $this->lastquery->fetch( $mode ) ) ? array_shift( $this->lastquery->fetch( $mode ) ) : null;
 			
 		}
 		
+		/**
+		 * Returns all rows in an Array or Object = Default
+		 *
+		 * @param string $fetchmode
+		 *
+		 * @return mixed
+		 */
 		public function fetchAll( $fetchmode = 'OBJECT' )
 		{
-			$fetchmode = strtoupper($fetchmode);
-			$mode = -1;
-			if($fetchmode === 'ARRAY'){
+			
+			$fetchmode = strtoupper( $fetchmode );
+			
+			if ( $fetchmode === 'ARRAY' )
+			{
 				$mode = 2;
-			}else{
+			}
+			else
+			{
 				$mode = 5;
 			}
 			
-			$result =  $this->lastquery->fetchAll($mode);
+			$result = $this->lastquery->fetchAll( $mode );
 			
 			return $result;
 			
 		}
 		
-	
-		private function bind_params( $sql, $params )
+		
+		/**
+		 * Binds key => value pairs to query string
+		 *
+		 * @param $sql
+		 * @param $params
+		 *
+		 * @return mixed|void
+		 */
+		private function bind_params( $sql , $params )
 		{
-			if(empty($sql) || empty($params)) return;
-
-			for ($x=0;$x<count($params); $x++){
-				$sql = str_replace($params[$x][0], $params[$x][1], $sql);
+			
+			// TODO: incorporate to project
+			if ( empty( $sql ) || empty( $params ) )
+			{
+				return;
 			}
-	
+			
+			$params = $this->clean_params( $params );
+			
+			for ( $x = 0; $x < count( $params ); $x ++ )
+			{
+				$sql = str_replace( $params[ $x ][ 0 ] , $params[ $x ][ 1 ] , $sql );
+			}
+			
 			return $sql;
 		}
 		
@@ -132,8 +196,8 @@
 		 */
 		private function clean_params( $params )
 		{
-			$newParams = [];
-			if(empty($params))
+			
+			if ( empty( $params ) )
 			{
 				for ( $x = 0; $x < count( $params ); $x ++ )
 				{
@@ -155,17 +219,29 @@
 					}
 				}
 			}
+			
 			return $params;
 		}
 		
-		public function lastInsertedId(  )
+		/**
+		 * Return last inserted id
+		 *
+		 * @return mixed
+		 */
+		public function lastInsertedId()
 		{
 			
 			return $this->pdo->lastInsertId();
 		}
 		
-		public function rowsEffected(  )
+		/**
+		 * Returns count of effect rows
+		 *
+		 * @return mixed
+		 */
+		public function rowsEffected()
 		{
+			
 			return $this->lastquery->rowCount();
 			
 		}

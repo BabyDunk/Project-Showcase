@@ -9,40 +9,74 @@
 	namespace Classes\Core;
 	
 	
+	/**
+	 * Class CSRFToken
+	 *
+	 * @package Classes\Core
+	 */
 	class CSRFToken
 	{
-		private     static  $instance;
 		
+		
+		
+		private static $instance;
+		
+		/**
+		 * Create a static instance
+		 *
+		 * @return \Classes\Core\CSRFToken
+		 */
 		public static function instance()
 		{
-			if(!self::$instance instanceof self){
+			
+			if ( ! self::$instance instanceof self )
+			{
 				self::$instance = new self;
 			}
+			
 			return self::$instance;
 		}
 		
 		
-		public static function _SetToken(  )
+		/**
+		 * Set a CSRF Token if not already present
+		 *
+		 * @return mixed
+		 * @throws \Exception
+		 */
+		public static function _SetToken()
 		{
-			If(session_status() !== PHP_SESSION_ACTIVE){
+			
+			If ( session_status() !== PHP_SESSION_ACTIVE )
+			{
 				session_start();
 			}
 			
-			if(!Session::has('CSRFToken')){
-				Session::set('CSRFToken', Hashing::instance()->uniqidReal(64).'-'.time());
+			if ( ! Session::has( 'CSRFToken' ) )
+			{
+				Session::set( 'CSRFToken' , Hashing::instance()->uniqidReal( 64 ) . '-' . time() );
 			}
 			
-			return Session::get('CSRFToken');
+			return Session::get( 'CSRFToken' );
 		}
 		
 		
-		public static function _CheckToken( $_CSRFToken='' )
+		/**
+		 * Check if CSRF Token match then clear of correct
+		 *
+		 * @param string $_CSRFToken
+		 *
+		 * @return bool
+		 */
+		public static function _CheckToken( $_CSRFToken = '' )
 		{
 			
-			if(Session::has('CSRFToken') && Session::get('CSRFToken') === Params::get('post')->CSRFToken
-			   || Session::has('CSRFToken') && Session::get('CSRFToken') === $_CSRFToken){
+			if ( Session::has( 'CSRFToken' ) && Session::get( 'CSRFToken' ) === Params::get( 'post' )->CSRFToken
+			     || Session::has( 'CSRFToken' ) && Session::get( 'CSRFToken' ) === $_CSRFToken )
+			{
 				
-				Session::clear('CSRFToken');
+				Session::clear( 'CSRFToken' );
+				
 				return true;
 			}
 			

@@ -44,6 +44,11 @@
 		public $created_at;
 		
 		
+		/**
+		 * Creats static instance
+		 *
+		 * @return \Classes\Core\Visitors
+		 */
 		public static function instance()
 		{
 			
@@ -55,15 +60,20 @@
 			return self::$instance;
 		}
 		
+		/**
+		 * Blank method
+		 */
 		public function get()
 		{
 		
 		}
 		
 		/**
-		 *  Set Visitors data to storage.
+		 * Set Visitors data to storage.
 		 *
 		 * @param $page_id
+		 *
+		 * @return bool
 		 */
 		public function set( $page_id )
 		{
@@ -113,6 +123,7 @@
 					else
 					{
 						Session::set( 'DATACOLLECT' , $this->visitors_sess );
+						
 						return $this->save();
 					}
 				}
@@ -123,6 +134,9 @@
 		// TODO: finish setting the stats for collection
 		
 		
+		/**
+		 * Blank method
+		 */
 		public function check()
 		{
 		

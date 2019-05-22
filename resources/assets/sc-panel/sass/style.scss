@@ -134,7 +134,37 @@ html,body
   .media-card-body{
 
   }
-
-
-
 }
+
+
+#promo-showcases{
+  max-height:300px;
+  overflow: auto;
+}
+
+.successful {
+  color:springgreen;
+}
+
+.warned {
+  color: orangered;
+}
+
+
+.promo-info{
+  display:grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 10px;
+  justify-items: start;
+  align-items: center;
+
+  .promo-cap{
+    text-transform: uppercase;
+  }
+
+  .bold{
+    font-weight:600;
+    text-transform: capitalize;
+  }
+}
+

@@ -10,36 +10,55 @@
 	
 	use AltoRouter;
 	
+	/**
+	 * Class RouteDispatcher
+	 *
+	 * @package Classes
+	 */
 	class RouteDispatcher
 	{
+		
+		
+		
 		public $match;
 		public $controller;
 		public $method;
 		
-		function __construct(AltoRouter $router)
+		/**
+		 * RouteDispatcher constructor.
+		 *
+		 * @param \AltoRouter $router
+		 */
+		function __construct( AltoRouter $router )
 		{
 			
 			$this->match = $router->match();
 			
-			if ( $this->match ) {
+			if ( $this->match )
+			{
 				
-				list( $this->controller , $this->method ) = explode( '@' , $this->match['target'] );
+				list( $this->controller , $this->method ) = explode( '@' , $this->match[ 'target' ] );
 				
-				if ( is_callable( array( new $this->controller , $this->method ) ) ) {
+				if ( is_callable( array( new $this->controller , $this->method ) ) )
+				{
 					call_user_func_array(
 						array( new $this->controller , $this->method ) ,
 						array( $this->match[ 'params' ] )
 					);
-				} else {
+				}
+				else
+				{
 					
 					echo "The method {$this->method} isn\'t define in controller {$this->controller}";
 					
 				}
-			} else {
+			}
+			else
+			{
 				
-				header($_SERVER['SERVER_PROTOCOL'] . ' 404 not found');
+				header( $_SERVER[ 'SERVER_PROTOCOL' ] . ' 404 not found' );
 				
-				view('errors/404');
+				view( 'errors/404' );
 				
 			}
 		}

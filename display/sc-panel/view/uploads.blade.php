@@ -16,8 +16,6 @@
 		$paymentMethod = unserialize($showcase->showcasePayment);
     }
 
-    //var_dump($paymentMethod); exit;
-
     $threeBlockNotice = (object)unserialize($showcase->three_notice_block);
 
     }
@@ -67,25 +65,54 @@
                                         <input class="form-control" type="text" name="subtitle" id="subtitle" value="<?php echo (!empty($showcase->subtitle)) ? $showcase->subtitle : ''; ?>" placeholder="Give your showcase a Subtitle" />
                                     </label>
 
-                                    <label for="job_deposit">Deposit
-                                        <input class="form-control" type="number" name="job_deposit" id="job_deposit" value="<?php echo (!empty($showcase->job_deposit)) ? $showcase->job_deposit : ''; ?>" placeholder="Select the deposit value in &pound;" />
-                                    </label>
-
-                                    <label for="job_duration">Job duration in days
-                                        <input class="form-control" type="number" name="job_duration" id="job_duration" value="<?php echo (!empty($showcase->job_duration)) ? $showcase->job_duration : ''; ?>" placeholder="Select number of days for the duration of the job." />
-                                    </label>
-
                                     <fieldset class="fieldset">
-                                        <legend>Payment Methods</legend>
-                                        <label>Multiple Select Menu
-                                            <select multiple name="showcasePayment[]" id="showcasePayment">
-                                                <option value="cash" <?php echo (!empty($paymentMethod) && in_array("cash", $paymentMethod) ? 'selected="selected"' : ''); ?>>Cash</option>
-                                                <option value="paypal" <?php echo (!empty($paymentMethod) && in_array("paypal", $paymentMethod) ? 'selected="selected"' : ''); ?>>Paypal</option>
-                                                <option value="card" <?php echo (!empty($paymentMethod) && in_array("card", $paymentMethod) ? 'selected="selected"' : ''); ?>>Card</option>
-                                                <option value="bitcoin" <?php echo (!empty($paymentMethod) && in_array("bitcoin", $paymentMethod) ? 'selected="selectLove Parade ed"' : ''); ?>>Bitcoin</option>
-                                            </select>
-                                        </label>
+                                        <legend>
+                                            Monetise
+                                        </legend>
+
+                                        <ul class="accordion" data-accordion>
+                                            <li class="accordion-item <?php echo ($showcase->job_deposit) ? '' : 'is-active'; ?>" data-accordion-item>
+                                                <!-- Accordion tab title -->
+                                                <a href="#" class="accordion-title">Fixed Price</a>
+
+                                                <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+                                                <div class="accordion-content" data-tab-content>
+                                                    <label for="price">Price
+                                                        <input class="form-control" type="number" step=".01" name="price" id="price" value="<?php echo (!empty($showcase->price)) ? sca_show_price($showcase->price) : ''; ?>" placeholder="Set items value in &pound;" />
+                                                    </label>
+                                                </div>
+                                            </li>
+                                            <li class="accordion-item <?php echo ($showcase->job_deposit) ? 'is-active' : '' ; ?>" data-accordion-item>
+                                                <!-- Accordion tab title -->
+                                                <a href="#" class="accordion-title">Quoted Price</a>
+
+                                                <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+                                                <div class="accordion-content" data-tab-content>
+                                                    <label for="job_deposit">Deposit
+                                                        <input class="form-control" type="number" name="job_deposit" id="job_deposit" value="<?php echo (!empty($showcase->job_deposit)) ? $showcase->job_deposit : ''; ?>" placeholder="Set the deposit value in &pound;" />
+                                                    </label>
+
+                                                    <label for="job_duration">Job duration in days
+                                                        <input class="form-control" type="number" name="job_duration" id="job_duration" value="<?php echo (!empty($showcase->job_duration)) ? $showcase->job_duration : ''; ?>" placeholder="Set number of days for the duration of the job." />
+                                                    </label>
+
+                                                    <fieldset class="fieldset">
+                                                        <legend>Payment Methods</legend>
+                                                        <label>Multiple Select Menu
+                                                            <select multiple name="showcasePayment[]" id="showcasePayment">
+                                                                <option value="cash" <?php echo (!empty($paymentMethod) && in_array("cash", $paymentMethod) ? 'selected="selected"' : ''); ?>>Cash</option>
+                                                                <option value="paypal" <?php echo (!empty($paymentMethod) && in_array("paypal", $paymentMethod) ? 'selected="selected"' : ''); ?>>Paypal</option>
+                                                                <option value="card" <?php echo (!empty($paymentMethod) && in_array("card", $paymentMethod) ? 'selected="selected"' : ''); ?>>Card</option>
+                                                                <option value="bitcoin" <?php echo (!empty($paymentMethod) && in_array("bitcoin", $paymentMethod) ? 'selected="selectLove Parade ed"' : ''); ?>>Bitcoin</option>
+                                                            </select>
+                                                        </label>
+                                                    </fieldset>
+                                                </div>
+                                            </li>
+
+                                        </ul>
                                     </fieldset>
+
 
                                     <label for="description1">Description <small>Will be visible if the showcase is featured</small>
                                         <textarea class="form-control" name="description1" id="description1" placeholder="Describe your showcase" ><?php echo (!empty($showcase->description1)) ? $showcase->description1 : ''; ?></textarea>

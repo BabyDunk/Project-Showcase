@@ -9,73 +9,129 @@
 	namespace Classes\Core;
 	
 	
+	/**
+	 * Class Hashing
+	 *
+	 * @package Classes\Core
+	 */
 	class Hashing
 	{
-		private     static  $instance;
 		
 		
-		public  $errors = array();
+		
+		private static $instance;
 		
 		
+		public $errors = array();
+		
+		
+		/**
+		 * Creates static instance
+		 *
+		 * @return \Classes\Core\Hashing
+		 */
 		public static function instance()
 		{
-			if(!self::$instance instanceof self){
+			
+			if ( ! self::$instance instanceof self )
+			{
 				self::$instance = new self;
 			}
+			
 			return self::$instance;
 		}
 		
 		/**
 		 * Get Real Unique ID
+		 *
 		 * @param int $lenght
 		 *
 		 * @return bool|string
 		 * @throws \Exception
 		 */
-		public function uniqidReal($lenght = 32) {
+		public function uniqidReal( $lenght = 32 )
+		{
+			
 			// uniqid gives 32 chars, but you could adjust it to your needs.
-			if (function_exists("random_bytes")) {
-				$bytes = random_bytes(ceil($lenght / 2));
-			} elseif (function_exists("openssl_random_pseudo_bytes")) {
-				$bytes = openssl_random_pseudo_bytes(ceil($lenght / 2));
-			} else {
+			if ( function_exists( "random_bytes" ) )
+			{
+				$bytes = random_bytes( ceil( $lenght / 2 ) );
+			}
+			elseif ( function_exists( "openssl_random_pseudo_bytes" ) )
+			{
+				$bytes = openssl_random_pseudo_bytes( ceil( $lenght / 2 ) );
+			}
+			else
+			{
 				$this->errors[] = "no cryptographically secure random function available";
 			}
-			return substr(bin2hex($bytes), 0, $lenght);
-		}
-		
-		public function hashIt( $password)
-		{
-			return password_hash($password, PASSWORD_DEFAULT );
-		}
-		
-		public function checkHash($password, $hash)
-		{
-			return password_verify($password, $hash);
-		}
-		
-		// Verify User for login
-		public function verify_user($username, $password){
 			
-			if(empty($username)){
+			return substr( bin2hex( $bytes ) , 0 , $lenght );
+		}
+		
+		/**
+		 * Hashes password for storage
+		 *
+		 * @param $password
+		 *
+		 * @return bool|string
+		 */
+		public function hashIt( $password )
+		{
+			
+			return password_hash( $password , PASSWORD_DEFAULT );
+		}
+		
+		/**
+		 * Verifies hashed password
+		 *
+		 * @param $password
+		 * @param $hash
+		 *
+		 * @return bool
+		 */
+		public function checkHash( $password , $hash )
+		{
+			
+			return password_verify( $password , $hash );
+		}
+		
+		
+		/**
+		 * Verifies user and sets sessions logged in if correct
+		 *
+		 * @param $username
+		 * @param $password
+		 *
+		 * @return bool|mixed
+		 */
+		public function verify_user( $username , $password )
+		{
+			
+			if ( empty( $username ) )
+			{
 				return false;
 			}
 			
-			if(empty($password)){
-				return  false;
-			}
-			
-			$user = User::find_by_username($username);
-			
-			if(empty($user)){
+			if ( empty( $password ) )
+			{
 				return false;
 			}
 			
-			$ifVerified = $this->checkHash($password, $user->password);
+			$user = User::find_by_username( $username );
 			
-			if($ifVerified) {
+			if ( empty( $user ) )
+			{
+				return false;
+			}
+			
+			$ifVerified = $this->checkHash( $password , $user->password );
+			
+			if ( $ifVerified )
+			{
 				
-				if (!empty($user) ) {
+				if ( ! empty( $user ) )
+				{
 					$sess = new Session();
 					$sess->login( $user );
 					
@@ -89,24 +145,36 @@
 		} // End of Verify_user Method
 		
 		
-		// Verify Hash
-		public function verify_hash($username, $password){
+		/**
+		 * Verifies Hash
+		 *
+		 * @param $username
+		 * @param $password
+		 *
+		 * @return bool
+		 */
+		public function verify_hash( $username , $password )
+		{
 			
-			if(empty($username)){
+			if ( empty( $username ) )
+			{
 				return false;
 			}
 			
-			if(empty($password)){
-				return  false;
-			}
-			
-			$user = User::find_by_username($username);
-
-			if(empty($user)){
+			if ( empty( $password ) )
+			{
 				return false;
 			}
-
-			if($password === $user->password) {
+			
+			$user = User::find_by_username( $username );
+			
+			if ( empty( $user ) )
+			{
+				return false;
+			}
+			
+			if ( $password === $user->password )
+			{
 				
 				return true;
 			}
@@ -115,9 +183,16 @@
 			
 		} // End of Verify Hash
 		
-		public function show_id(  )
+		/**
+		 * Creates a total unique show id
+		 *
+		 * @return string
+		 * @throws \Exception
+		 */
+		public function show_id()
 		{
-			return 'ID_'.$this->uniqidReal(64).'_'.time();
+			
+			return 'ID_' . $this->uniqidReal( 64 ) . '_' . time();
 			
 		}
 		

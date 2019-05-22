@@ -44,12 +44,12 @@ $users =  \Classes\Core\User::find_all();
 						<?php foreach ( $users as $user ) : ?>
                         <tr>
                             <td><h3><?php echo $user->id; ?></h3></td>
-                            <td><img class="img-responsive user-image" src="<?php echo $user->image_path_placeholder(); ?>" /></td>
+                            <td><img class="img-responsive user-image" src="<?php echo $user->get_picture(); ?>" /></td>
                             <td><p><?php echo $user->username; ?></p>
                                 <div class="action_link">
 
                                     <a href="/sc-panel/updateuser/<?php echo $user->id; ?>">Edit</a>
-                                    <a href="/sc-panel/users/<?php echo $user->id; ?>">Delete</a>
+                                    <a href="/sc-panel/deleteusers/<?php echo $user->id; ?>">Delete</a>
 
                                 </div>
                             </td>

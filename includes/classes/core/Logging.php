@@ -32,6 +32,11 @@
 		public $created_at;
 		
 		
+		/**
+		 * Creates static instance
+		 *
+		 * @return \Classes\Core\Logging
+		 */
 		public static function instance()
 		{
 			
@@ -43,12 +48,13 @@
 			return self::$instance;
 		}
 		
+		/**
+		 *
+		 */
 		public function get()
 		{
 		
 		}
-		
-		
 		
 		
 	}

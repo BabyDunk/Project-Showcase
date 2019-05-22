@@ -20,7 +20,7 @@
 		}
 		if ( empty( $_POST[ 'dbuser' ] ) )
 		{
-			$message[] = 'You need to supply a valid database user';
+			$message[] = 'You need to supply a valid database username';
 		}
 		if ( empty( $_POST[ 'dbpass' ] ) )
 		{

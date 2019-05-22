@@ -21,14 +21,12 @@
 	$router->map( 'GET', '/sc-panel/adduser',  'Controllers\Scpanel\ScpanelUsersController@showadduser', 'admin_show_adduser');
 	$router->map( 'POST', '/sc-panel/adduser',  'Controllers\Scpanel\ScpanelUsersController@insertadduser', 'admin_insert_adduser');
 	
-	
 	// Map Admin Update User
 	$router->map( 'GET', '/sc-panel/updateuser/[i:id]',  'Controllers\Scpanel\ScpanelUsersController@showupdateuser', 'admin_show_updateuser');
 	$router->map( 'POST', '/sc-panel/updateuser',  'Controllers\Scpanel\ScpanelUsersController@editupdateuser', 'admin_edit_updateuser');
 	
-	
 	// Map Admin Delete User
-	$router->map( 'GET', '/sc-panel/users/[i:id]',  'Controllers\Scpanel\ScpanelUsersController@remove', 'delete_user');
+	$router->map( 'GET', '/sc-panel/deleteusers/[i:id]',  'Controllers\Scpanel\ScpanelUsersController@remove', 'delete_user');
 	
 	// Map Admin User List
 	$router->map( 'GET', '/sc-panel/users',  'Controllers\Scpanel\ScpanelUsersController@show', 'admin_users');
@@ -62,13 +60,38 @@
 	$router->map( 'GET', '/sc-panel/user_contacts',  'Controllers\Scpanel\ScpanelContactsController@show_users', 'user_contacts');
 	$router->map( 'GET', '/sc-panel/user_contacts/[i:id]/delete',  'Controllers\Scpanel\ScpanelContactsController@remove_users', 'user_remove_contacts');
 	
+	
+	// Map Promotions List
+	$router->map('GET', '/sc-panel/promotions', 'Controllers\Scpanel\ScpanelPromoController@show', 'admin_promotions');
+	
+	// Map Add Promotion
+	$router->map('GET', '/sc-panel/add_promotion', 'Controllers\Scpanel\ScpanelPromoController@showAdd', 'admin_add_promotion');
+	$router->map('POST', '/sc-panel/add_promotion', 'Controllers\Scpanel\ScpanelPromoController@insertAdd', 'admin_insert_promotion');
+	
+	// Map Delete Promotion
+	$router->map('GET', '/sc-panel/promo/[i:id]/delete', 'Controllers\Scpanel\ScpanelPromoController@deleteAdd', 'admin_delete_promotion');
+	
+	// Map Edit Promotion
+	$router->map('GET', '/sc-panel/updatepromo/[i:id]/edit', 'Controllers\Scpanel\ScpanelPromoController@showAdd', 'admin_edit_promotion');
+	$router->map('POST', '/sc-panel/updatepromo/[i:id]/edit', 'Controllers\Scpanel\ScpanelPromoController@insertAdd', 'admin_update_promotion');
+	
+	// Map Ajax Promotion
+	$router->map('POST', '/sc-panel/promo/ajax', 'Controllers\Scpanel\ScpanelPromoController@ajax', 'multi_use_ajax_promotion');
+	
 	// Map Admin Statistics
 	$router->map( 'GET', '/sc-panel/statistics',  'Controllers\Scpanel\ScpanelStatsController@show', 'admin_statistics');
 	
 	
-	// Map Admin Settings
+	// Map Shopping List
+	$router->map('GET', '/sc-panel/shopping_lists', 'Controllers\Scpanel\ScpanelShoppingCartController@show', 'admin_show_shopping_list');
+	
+	// Map Admin General Settings
 	$router->map( 'GET', '/sc-panel/general_settings',  'Controllers\Scpanel\ScpanelSettingsController@showGeneral', 'admin_general_settings');
 	$router->map( 'POST', '/sc-panel/general_settings',  'Controllers\Scpanel\ScpanelSettingsController@storeGeneral', 'admin_store_general_settings');
+	
+	// Map Payment Settings
+	$router->map('GET', '/sc-panel/payment_settings', 'Controllers\Scpanel\ScpanelSettingsController@showPayment', 'admin_show_payment_settings');
+	$router->map( 'POST', '/sc-panel/payment_settings',  'Controllers\Scpanel\ScpanelSettingsController@storePayment', 'admin_store_payment_settings');
 	
 	// Map Admin Email Settings
 	$router->map( 'GET', '/sc-panel/email_settings',  'Controllers\Scpanel\ScpanelSettingsController@showEmail', 'admin_email_settings');

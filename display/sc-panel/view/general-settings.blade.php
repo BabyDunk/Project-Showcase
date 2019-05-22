@@ -56,6 +56,11 @@
                                     </fieldset>
 
                                     <fieldset class="fieldset full">
+                                        <legend>Timezone</legend>
+                                        @php echo  returnTimezoneSelect('timezone', sca_get_preference('showcase', 'sca_timezone')) @endphp
+                                    </fieldset>
+
+                                    <fieldset class="fieldset full">
                                         <legend>About statement</legend>
 
                                         <span data-tooltip aria-haspopup="true" class="has-tip right" data-disable-hover="false" tabindex=1 title="<div class='callout'> call this input with the following function sca_get_preference('showcase', 'sca_sitedescriptionshort') </div>"><i class="fa fa-info-circle"></i></span>

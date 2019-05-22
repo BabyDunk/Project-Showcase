@@ -9,6 +9,11 @@
 	namespace Classes\Core;
 	
 	
+	/**
+	 * Class PdoObject
+	 *
+	 * @package Classes\Core
+	 */
 	class PdoObject
 	{
 		
@@ -29,6 +34,9 @@
 		
 		);
 		
+		/**
+		 * PdoObject constructor.
+		 */
 		public function __construct()
 		{
 			
@@ -37,12 +45,19 @@
 		}
 		
 		
+		/**
+		 * Set file properties
+		 *
+		 * @param $file
+		 *
+		 * @return bool
+		 */
 		public function set_file( $file )
 		{
 			
 			if ( empty( $file ) || ! is_array( $file ) || ! $file )
 			{
-				$this->error[] = "There was no file uploaded here";
+				$this->errors[] = "There was no file uploaded here";
 				
 				return false;
 			}
@@ -59,8 +74,17 @@
 			$this->filetype = $file[ 'type' ];
 			$this->size     = $file[ 'size' ];
 			
+			return true;
 		}
 		
+		/**
+		 * Find all data in a table
+		 *
+		 * @param int    $limit
+		 * @param string $order
+		 *
+		 * @return array
+		 */
 		public static function find_all( $limit = 0 , $order = 'desc' )
 		{
 			
@@ -86,7 +110,14 @@
 			
 		}
 		
-		// Get single user data in a named array
+		
+		/**
+		 * Get single row of data in an object
+		 *
+		 * @param $id
+		 *
+		 * @return bool|mixed
+		 */
 		public static function find_by_id( $id )
 		{
 			
@@ -101,8 +132,18 @@
 			
 		} // End of the Find_user_by_id Method
 		
-		public static function find_by_show_id( $id , $limit = 0 , $order = 'desc')
+		/**
+		 * Find data by show_id returned as an object
+		 *
+		 * @param        $id
+		 * @param int    $limit
+		 * @param string $order
+		 *
+		 * @return array|bool
+		 */
+		public static function find_by_show_id( $id , $limit = 0 , $order = 'desc' )
 		{
+			
 			$limit = ! empty( $limit ) ? " LIMIT $limit " : "";
 			
 			$isOrder = "";
@@ -129,36 +170,56 @@
 			
 		} // End of the Find_user_by_show_id Method
 		
-		/*
-		 * Get single user data in a named array
+		
+		/**
+		 * Find data by user_id returned as an object
 		 *
-		 * */
-		public static function find_by_user_id($id, $limit=0, $order='desc'){
+		 * @param        $id
+		 * @param int    $limit
+		 * @param string $order
+		 *
+		 * @return array|bool
+		 */
+		public static function find_by_user_id( $id , $limit = 0 , $order = 'desc' )
+		{
 			
-			$limit = !empty($limit) ? " LIMIT $limit " : "";
+			$limit = ! empty( $limit ) ? " LIMIT $limit " : "";
 			
 			$isOrder = "";
-			if($order === 'desc'){
+			if ( $order === 'desc' )
+			{
 				$isOrder = " ORDER BY id DESC ";
-			}elseif($order === 'asc'){
+			}
+			elseif ( $order === 'asc' )
+			{
 				$isOrder = " ORDER BY id ASC ";
-			}elseif($order === 'rand'){
+			}
+			elseif ( $order === 'rand' )
+			{
 				$isOrder = " ORDER BY RAND() ";
 			}
 			
-			$params = [];
-			$params[] = [':holderid', $id, 'int'];
+			$params   = [];
+			$params[] = [ ':holderid' , $id , 'int' ];
 			
 			$sql = "SELECT * FROM `" . static::$db_table . "` WHERE user_id = :holderid " . $isOrder . $limit;
 			
-			$item_array   =   static::find_by_query($sql, $params );
+			$item_array = static::find_by_query( $sql , $params );
 			
 			
-			return (!empty($item_array)) ? $item_array : false;
+			return ( ! empty( $item_array ) ) ? $item_array : false;
 			
 		} // End of the Find_user_by_id Method
 		
 		// Get single preference by pref id
+		/**
+		 * Search and return data by sending array of key value pairs
+		 *
+		 * @param array $arrayOfColAndString
+		 * @param int   $limit
+		 *
+		 * @return bool|mixed
+		 */
 		public static function find_by_like( $arrayOfColAndString = [] , $limit = 1 )
 		{
 			
@@ -184,13 +245,20 @@
 			}
 			
 			$item_array = static::find_by_query( $sql , $params );
-		
+			
 			return ( ! empty( $item_array ) ) ? array_shift( $item_array ) : false;
 			
 		} // End of the Find preference by pref id
 		
 		
-		// Search the Database
+		/**
+		 * Return all rows by sql query narrow result by adding array of key value pairs
+		 *
+		 * @param       $sql
+		 * @param array $params
+		 *
+		 * @return array
+		 */
 		public static function find_by_query( $sql , $params = [] )
 		{
 			
@@ -211,14 +279,14 @@
 			
 		} // End of the Find_the_query Method
 		
-		private function has_property( $propName )
-		{
-			
-			$classProperty = get_object_vars( $this );
-			
-			return array_key_exists( $propName , $classProperty );
-		}
 		
+		/**
+		 * Instantiates class and build properties
+		 *
+		 * @param $data
+		 *
+		 * @return mixed
+		 */
 		private static function instantiation( $data )
 		{
 			
@@ -226,9 +294,7 @@
 			
 			
 			$newInstants = new $calledClass;
-			/*echo "<pre>";
-			print_r($newInstants);
-			echo "</pre>";*/
+			
 			foreach ( $data as $propName => $propVal )
 			{
 				
@@ -241,6 +307,11 @@
 			return $newInstants;
 		}
 		
+		/**
+		 * Get property from class
+		 *
+		 * @return array
+		 */
 		private function get_property()
 		{
 			
@@ -254,11 +325,16 @@
 					$property[ $db_table_field ] = $this->$db_table_field;
 				}
 			}
-		
+			
 			return $property;
 		}
 		
-		// Auto choose Create or Update Method
+		
+		/**
+		 * Auto choose Create or Update Method
+		 *
+		 * @return bool
+		 */
 		public function save()
 		{
 			
@@ -266,8 +342,14 @@
 			
 		} // End of the Save Method
 		
+		/**
+		 * Creates new DB row
+		 *
+		 * @return bool
+		 */
 		public function create()
 		{
+			
 			global $pdo;
 			
 			$properties = $this->get_property();
@@ -308,6 +390,11 @@
 			
 		} // End of Create Method
 		
+		/**
+		 * Updates existing DB row
+		 *
+		 * @return bool
+		 */
 		public function update()
 		{
 			
@@ -319,21 +406,23 @@
 			$params           = [];
 			foreach ( $properties as $property => $value )
 			{
-				if ( ! empty( $value ))
+				
+				// TODO: Keep until finish testing
+				/*if ( ! empty( $value ))
+				{*/
+				if ( $property !== 'id' )
 				{
-					if ($property !== 'id')
-					{
-						$properties_pairs[] = "`{$property}` = :holder{$property}";
-					}
-					$params[]           = [ ':holder' . $property , $value , '' ];
+					$properties_pairs[] = "`{$property}` = :holder{$property}";
 				}
+				$params[] = [ ':holder' . $property , $value , '' ];
+				/*}*/
 				
 			}
 			
 			$sql = "UPDATE `" . static::$db_table . "` SET ";
 			$sql .= implode( ", " , $properties_pairs ) . " ";
 			$sql .= "WHERE `id` = :holderid LIMIT 1";
-	
+			
 			$pdo->query( $sql , $params );
 			
 			
@@ -341,92 +430,130 @@
 			
 		}
 		
-		public function updateByColString($arrayOfColAndString){
+		/**
+		 * Update column string
+		 *
+		 * @param $arrayOfColAndString
+		 *
+		 * @return bool
+		 */
+		public function updateByColString( $arrayOfColAndString )
+		{
+			
 			global $pdo;
 			
-			$properties =   $this->get_property();
+			$properties = $this->get_property();
 			
-			$properties_pairs   =   array();
-			$params = [];
-		
-			foreach ( $properties as $property => $value ) {
-				if($property !== 'pref_section' && $property !== 'pref_key' && !isEmpty($value))
+			$properties_pairs = [];
+			$params           = [];
+			
+			foreach ( $properties as $property => $value )
+			{
+				if ( $property !== 'pref_section' && $property !== 'pref_key')
 				{
 					$properties_pairs[] = "`{$property}` = :holder{$property}";
-					$params[] = [':holder'.$property, $value, ''];
+					$params[]           = [ ':holder' . $property , $value , '' ];
 				}
 				
 			}
 			
 			
-			$theClause =[];
-			foreach ($arrayOfColAndString as $key => $value){
+			$theClause = [];
+			foreach ( $arrayOfColAndString as $key => $value )
+			{
 				$theClause[] = "`{$key}` = :holder{$key}";
-				$params[] = [':holder'.$key, $value, ''];
+				$params[]    = [ ':holder' . $key , $value , '' ];
 			}
 			
 			
-			$sql        =   "UPDATE `" . static::$db_table . "` SET ";
-			$sql        .=  implode(", ", $properties_pairs ) . " ";
-			$sql        .=  "WHERE ";
-			$sql        .=  implode(' AND ', $theClause);
-			$sql        .=  " LIMIT 1";
+			$sql = "UPDATE `" . static::$db_table . "` SET ";
+			$sql .= implode( ", " , $properties_pairs ) . " ";
+			$sql .= "WHERE ";
+			$sql .= implode( ' AND ' , $theClause );
+			$sql .= " LIMIT 1";
 			
 			
-			$pdo->query($sql,$params);
+			$pdo->query( $sql , $params );
 			
 			
-			return ( $pdo->rowsEffected()>= 1 ) ? true : false;
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Update Method
 		
-		public function updateByColInteger($column, $string){
+		/**
+		 * Update row where clause match. takes single column and data to match
+		 *
+		 * @param $columnName
+		 * @param $clauseInput
+		 *
+		 * @return bool
+		 */
+		public function updateByColClause( $columnName , $clauseInput )
+		{
+			
 			global $pdo;
 			
-			$properties =   $this->get_property();
+			$properties = $this->get_property();
 			
-			$properties_pairs   =   array();
-			$params = [];
-			$params[] = [':holderstring', $string, '' ];
-			$params[] = [':holdercolumn', $column, '' ];
-			foreach ( $properties as $property => $value ) {
+			$properties_pairs = array();
+			$params           = [];
+			$params[]         = [ ':holderstring' , $clauseInput , '' ];
+			$params[]         = [ ':holdercolumn' , $columnName , '' ];
+			foreach ( $properties as $property => $value )
+			{
 				
-				$properties_pairs[] =   "`{$property}` = :holder{$property}";
-				$params[] = [':holder'.$property, $value, ''];
+				$properties_pairs[] = "`{$property}` = :holder{$property}";
+				$params[]           = [ ':holder' . $property , $value , '' ];
 			}
 			
-			$sql        =   "UPDATE `" . static::$db_table . "` SET ";
-			$sql        .=  implode(", ", $properties_pairs ) . " ";
-			$sql        .=  "WHERE `:holdercolumn` = :holderstring LIMIT 1";
+			$sql = "UPDATE `" . static::$db_table . "` SET ";
+			$sql .= implode( ", " , $properties_pairs ) . " ";
+			$sql .= "WHERE `:holdercolumn` = :holderstring LIMIT 1";
 			
-			$pdo->query($sql, $params);
+			$pdo->query( $sql , $params );
 			
 			
-			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Update Method
 		
-		public function delete(){
+		/**
+		 * Deletes row from DB
+		 *
+		 * @return bool
+		 */
+		public function delete()
+		{
+			
 			global $pdo;
 			
 			
-			$params = [];
-			$params[] = [':holderid', $this->id, 'int'];
+			$params   = [];
+			$params[] = [ ':holderid' , $this->id , 'int' ];
 			
-			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE id = :holderid LIMIT 1";
-		
+			$sql = "DELETE FROM `" . static::$db_table . "` WHERE id = :holderid LIMIT 1";
 			
-			$pdo->query($sql,$params);
 			
-			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			$pdo->query( $sql , $params );
+			
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		
-		public static function deleteAllByCond($conditions=[]){
+		/**
+		 * Delete by condition. supply array of key => value pairs
+		 *
+		 * @param array $conditions
+		 *
+		 * @return bool
+		 */
+		public static function deleteAllByCond( $conditions = [] )
+		{
+			
 			global $pdo;
 			
 			$loadCond = '';
-			$params = [];
+			$params   = [];
 			
 			if ( ! empty( $conditions ) )
 			{
@@ -441,52 +568,76 @@
 					{
 						$loadCond .= ' AND ';
 					}
-					$params[] = [':holder'.$key, $condition, ''];
+					$params[] = [ ':holder' . $key , $condition , '' ];
 				}
 			}
 			
-			$sql    =   "DELETE FROM `" . static::$db_table . "`".$loadCond;
-		
+			$sql = "DELETE FROM `" . static::$db_table . "`" . $loadCond;
 			
-			$pdo->query($sql,$params);
 			
-			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			$pdo->query( $sql , $params );
+			
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		
-		public function deleteByColString($arrayOfColAndString){
+		/**
+		 * Delete one by condition
+		 *
+		 * @param $arrayOfColAndString
+		 *
+		 * @return bool
+		 */
+		public function deleteByColString( $arrayOfColAndString )
+		{
+			
 			global $pdo;
 			
 			$theArray = [];
-			$params = [];
-			foreach ( $arrayOfColAndString as $key => $value ) {
+			$params   = [];
+			foreach ( $arrayOfColAndString as $key => $value )
+			{
 				$theArray[] = "`{$key}` = :holder{$key}";
-				$params[] = [':holder'.$key, $value, ''];
+				$params[]   = [ ':holder' . $key , $value , '' ];
 			}
 			
-			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE ";
-			$sql    .=   implode(' AND ', $theArray);
-			$sql    .=  " LIMIT 1";
+			$sql = "DELETE FROM `" . static::$db_table . "` WHERE ";
+			$sql .= implode( ' AND ' , $theArray );
+			$sql .= " LIMIT 1";
 			
-			$pdo->query($sql);
+			$pdo->query( $sql , $params );
 			
-			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		
-		public function deleteAllOfUser($id){
+		/**
+		 * Deletes all  with the user_id
+		 *
+		 * @param $id
+		 *
+		 * @return bool
+		 */
+		public function deleteAllOfUser( $id )
+		{
+			
 			global $pdo;
 			
-			$params = [];
-			$params[] = [':user_id', $id, 'int'];
-			$sql    =   "DELETE FROM `" . static::$db_table . "` WHERE user_id = :user_id";
+			$params   = [];
+			$params[] = [ ':user_id' , $id , 'int' ];
+			$sql      = "DELETE FROM `" . static::$db_table . "` WHERE user_id = :user_id";
 			
-			$pdo->query($sql,$params);
+			$pdo->query( $sql , $params );
 			
-			return ($pdo->rowsEffected() >= 1 ) ? true : false;
+			return ( $pdo->rowsEffected() >= 1 ) ? true : false;
 			
 		} // End of Delete Method
 		
+		/**
+		 * Counts all
+		 *
+		 * @return mixed
+		 */
 		public static function count_all()
 		{
 			
@@ -500,6 +651,13 @@
 			
 		}
 		
+		/**
+		 * Counts by condition
+		 *
+		 * @param array $conditions
+		 *
+		 * @return mixed
+		 */
 		public static function count_by_condition( $conditions = [] )
 		{
 			
@@ -529,6 +687,11 @@
 			return $result_set->fetchColumn();
 		}
 		
+		/**
+		 * Returns last inserted
+		 *
+		 * @return mixed
+		 */
 		public function get_last_insert()
 		{
 			

@@ -62,10 +62,19 @@
 	$sess = new Classes\Core\Session();
 	$user = new Classes\Core\User();
 	
-	# activate RouteDispatcher once install is complete
+	
+	
+	// Allow these once installed
 	if($IS_INSTALLED)
 	{
+		// activate RouteDispatcher once install is complete
 		 new Classes\RouteDispatcher( $router );
+		
+		// Set Timezone
+		if(sca_has_preference('showcase', 'sca_timezone')){
+			date_default_timezone_set(sca_get_preference('showcase', 'sca_timezone'));
+		}
+		
 	}else{
 		include_once 'install.php';
 	}

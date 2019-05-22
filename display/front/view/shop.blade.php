@@ -14,7 +14,8 @@
 
 @section('content')
     <!-- Navigation -->
-    @include('includes.navigation')
+    @include('includes.shop-navi')
+
     <main>
         @include('includes.feature-slider')
         @include('includes.info-1')

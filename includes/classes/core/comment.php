@@ -9,6 +9,11 @@
 	namespace Classes\Core;
 	
 	
+	/**
+	 * Class Comment
+	 *
+	 * @package Classes\Core
+	 */
 	class Comment extends PdoObject
 	{
 		
@@ -25,6 +30,9 @@
 		public $body;
 		public $created_at;
 		
+		/**
+		 * @return \Classes\Core\Comment
+		 */
 		public static function instance()
 		{
 			
@@ -36,7 +44,16 @@
 			return self::$instance;
 		}
 		
-		// Create Comment
+		
+		/**
+		 * Create Comment
+		 *
+		 * @param $show_id
+		 * @param $author
+		 * @param $body
+		 *
+		 * @return bool|\Classes\Core\Comment
+		 */
 		public static function create_comment( $show_id , $author , $body )
 		{
 			
@@ -73,15 +90,15 @@
 		public static function find_comments( $show_id )
 		{
 			
-		
-			$params = [];
-			$params[] = [':show_id', $show_id, 'int'];
+			
+			$params   = [];
+			$params[] = [ ':show_id' , $show_id , 'int' ];
 			
 			$sql = "SELECT * FROM " . self::$db_table;
 			$sql .= " WHERE show_id  = :show_id";
 			$sql .= " ORDER BY created_at DESC";
 			
-			return self::find_by_query( $sql, $params );
+			return self::find_by_query( $sql , $params );
 			
 		} // End of Find_comments Method
 		

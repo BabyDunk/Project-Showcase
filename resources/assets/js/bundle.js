@@ -31848,10 +31848,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	window.SHOWCASE = {
 		admin: {},
-		front: {}
+		front: {},
+		utility: {}
 	};
 	
 })();
+
+/* UTILITY FUNCTION */
+
+
+// Check if is a valid email
+(function (){
+	
+	'use strict';
+	
+	SHOWCASE.utility.isEmail = function(email){
+		var newRegEx = new RegExp(/^[a-zA-Z0-9!#$%&'*+\-\/=?^_`{|]{1,64}@[a-zA-Z0-9-]{1,253}\.(?:[a-zA-Z]{2,9}\.[a-zA-Z]{2,20}|[a-zA-Z]{2,20})$/m);
+		
+		return newRegEx.test(email);
+	}
+	
+})();
+
+
+
+/* UTILITY FUNCTION */
 
 
 // Upload New Pin
@@ -32549,6 +32570,694 @@ return /******/ (function(modules) { // webpackBootstrap
 })();
 
 
+// Initialize Cart
+(function () {
+	
+	'use strict';
+	
+	SHOWCASE.front.cart = {}
+	
+})();
+
+// Showcase shopping Storage
+(function () {
+	
+	'use strict';
+	// Gets stored cart or builds cart foundation
+	SHOWCASE.front.cart.getStoredData = function () {
+		var shopCart = localStorage.getItem('sca_MyShoppingCart');
+		var shopList = {};
+		if (shopCart === null || shopCart === '' || shopCart === undefined) {
+			var date = new Date();
+			var nowDate = date.getFullYear() + '-' + date.getMonth() + '-' + date.getDay() + ':';
+			var time = date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
+			
+			shopList = {
+				"sca_shopping_cart": {
+					"listStarted": nowDate + time,
+					"cart": []
+					
+				}
+			};
+			
+		} else {
+			
+			try {
+				shopList = JSON.parse(shopCart);
+			}
+			catch (err) {
+				console.log(err.name);
+			}
+			
+		}
+		
+		return shopList;
+	}
+	
+})();
+
+// Check for duplicate item in cart
+(function (){
+	
+	'use strict';
+	
+	// Check for duplicate item in cart. returns index position if true else return false
+	SHOWCASE.front.cart.duplicateItem = function(checkArr, againstId) {
+		for (var x = 0; x < checkArr.length; x++) {
+			if (checkArr[x].id === againstId) {
+				return (x + 1);
+			}
+		}
+		return false;
+	}
+	
+})();
+
+// Update cart to storage
+(function (){
+	
+	'use strict';
+	
+	// Add to or update currently stored items
+	SHOWCASE.front.cart.updateCartItem = function(addToCart) {
+		var shopCart = SHOWCASE.front.cart.getStoredData();
+		var cartAmount = shopCart.sca_shopping_cart.cart.length;
+		
+		if (cartAmount > 0) {
+			
+			var hasDup = SHOWCASE.front.cart.duplicateItem(shopCart.sca_shopping_cart.cart, addToCart.id);
+			
+			if (hasDup) {
+				shopCart.sca_shopping_cart.cart[(hasDup - 1)].quantity = addToCart.quantity;
+				shopCart.sca_shopping_cart.cart[(hasDup - 1)].total = addToCart.price * addToCart.quantity
+			} else {
+				shopCart.sca_shopping_cart.cart.push(addToCart);
+			}
+			
+		} else {
+			shopCart.sca_shopping_cart.cart.push(addToCart)
+		}
+		
+		// Set shopping cart back to storage
+		localStorage.setItem('sca_MyShoppingCart', JSON.stringify(shopCart));
+		
+		return shopCart;
+	}
+	
+})();
+
+// Build cart item
+(function (){
+	
+	'use strict';
+	// Builds each item for cart and calculations total
+	SHOWCASE.front.cart.buildCartItem = function(shopObj) {
+		var eData = shopObj.dataset;
+		var quantity = document.getElementById('addLicence-id-' + eData.shopitemid).value;
+		var total = eData.shopitemprice * quantity;
+		return {
+			"title": eData.shopitemtitle,
+			"image": eData.shopitemimage,
+			"id": Number(eData.shopitemid),
+			"quantity": Number(quantity),
+			"price": eData.shopitemprice,
+			"total": total
+		};
+	}
+	
+})();
+
+// Showcase Shop Cart
+(function () {
+	
+	'use strict';
+	
+	SHOWCASE.front.cart.buildShoppingList = function () {
+		// Listens for add to cart clicks and executes functions
+		$('#addToCart').on('click', function (evt) {
+			SHOWCASE.front.cart.updateCartItem(SHOWCASE.front.cart.buildCartItem( evt.target))
+		});
+		
+	}
+	
+})();
+
+// Build shop item list
+(function (){
+	
+	'use strict';
+	// Build a list of cart item in localstorage
+	SHOWCASE.front.cart.buildCartList = function() {
+		var cartList = SHOWCASE.front.cart.getStoredData();
+		var totalPrice = 0;
+		var totalTaxes = 0;
+		
+		if(cartList.sca_shopping_cart.cart.length > 0) {
+			var html = '';
+			for (var x = 0; x < cartList.sca_shopping_cart.cart.length; x++) {
+				var listData = cartList.sca_shopping_cart.cart[x];
+				var mTitle = listData.title.split(' ').join('_');
+				totalPrice += (listData.price*listData.quantity);
+				
+				html += '<li>';
+				html += '<figure class="cart-item" data-itemid="' + listData.id + '">';
+				html += '<div class="img-box">';
+				html += '<a href="/shop/showcase/'+listData.id+'/'+mTitle+'" ><img src="' + listData.image + '" alt="' + listData.title + '"></a>';
+				html += '</div>';
+				html += '<div class="info-box">';
+				html += '<div class="info-inner">';
+				html += '<h3>' + listData.title + '</h3>';
+				html += '<label for="itemCounter-id-' + listData.id + '">Change licence amount  </label>';
+				html += '<select id="itemCounter-id-' + listData.id + '">';
+				for (var i = 1; i <= 20; i++) {
+					
+					if(i === parseInt(listData.quantity)){
+						html += '<option value="' + i + '" selected>' + i + '</option>';
+					}else{
+						html += '<option value="' + i + '">' + i + '</option>';
+					}
+					
+				}
+				html += '</select>';
+				html += '</div>';
+				html += '<div class="item-remover">';
+				html += '<a href="#" class="itemRemove" data-itemremove="' + listData.id + '">Remove This Item</a>';
+				html += '</div>';
+				html += '</div>';
+				html += '<div class="price-box">';
+				html += '<ul>';
+				html += '<li class="pricePerItem"><span>Price per item: </span><span>£' + listData.price + '</span></li>';
+				html += '<li class="quantityPerItem"><span>Quantity: </span><span>' + listData.quantity + '</span></li>';
+				html += '<li class="priceTotal"><span>Subtotal: </span><span>£' + parseFloat(listData.total).toFixed(2) + '</span></li>';
+				html += '</ul>';
+				html += '</div>';
+				html += '</figure>';
+				html += '</li>';
+				
+			}
+			
+			// TODO: Consider taxes
+			totalTaxes += ((totalPrice/100)*20);
+			$('#cartListedItem').html(html);
+			$('#taxValue').html('£'+parseFloat(totalTaxes).toFixed(2));
+			$('#totalValue').html('£'+parseFloat(totalPrice).toFixed(2));
+			
+		}else{
+			window.location.replace('/shop')
+		}
+	}
+	
+})();
+
+// Build Shopping Cart Page
+(function () {
+	
+	'use strict';
+	
+	SHOWCASE.front.cart.buildShoppingCartPage = function () {
+		
+		
+		// Initialize Cart list building
+		SHOWCASE.front.cart.buildCartList();
+		
+		// Initialize item remove button
+		SHOWCASE.front.cart.removeItemFromCartButton();
+		
+		// Initialize Update All Items In Cart
+		SHOWCASE.front.cart.updateItemsQuantities();
+		
+		// Initialize Cancel All Items
+		SHOWCASE.front.cart.cancelAllItemsInCart();
+		
+		//  Initialize Promotion Code
+		SHOWCASE.front.cart.promotionChecker();
+		
+		// Initialize Gather Personal Info
+		SHOWCASE.front.cart.moveToGatherFinInfo();
+		
+		// Initialize Return to cart view
+		SHOWCASE.front.cart.backToCartView();
+		
+		// Initialize Gather Financial Info
+		SHOWCASE.front.cart.moveToFinancialView();
+		
+	}
+	
+})();
+
+// Remove item from cart
+(function (){
+	
+	'use strict';
+	
+	SHOWCASE.front.cart.removeItemFromCartButton = function () {
+		$('.itemRemove').on('click', function (evt) {
+			if (confirm('Are you sure you want to remove this item from cart?')) {
+				removeItemFromCart(evt.target.dataset.itemremove);
+			}
+		});
+		
+		
+		// Removes item from cart and removes cart altogether if empty
+		function removeItemFromCart(id) {
+			var cartList = SHOWCASE.front.cart.getStoredData();
+			
+			var removeThisItem = -1;
+			for (var x = 0; x < cartList.sca_shopping_cart.cart.length; x++) {
+				if (cartList.sca_shopping_cart.cart[x].id === Number(id)) {
+					removeThisItem = x;
+				}
+			}
+
+			if(removeThisItem>=0){
+				cartList.sca_shopping_cart.cart.splice(removeThisItem, 1);
+			}
+			
+			if(cartList.sca_shopping_cart.cart.length <= 0){
+				localStorage.removeItem('sca_MyShoppingCart')
+			}else{
+				localStorage.setItem('sca_MyShoppingCart', JSON.stringify(cartList));
+			}
+			
+			// Rebuild cart
+			SHOWCASE.front.cart.buildCartList();
+		}
+		
+	}
+	
+	
+	
+	
+})();
+
+// Update Every Item In Cart
+(function (){
+	
+	'use strict';
+	
+	SHOWCASE.front.cart.updateItemsQuantities = function(){
+		
+		$('#updateCart').on('click', function(){
+			var itemsInList = $('.cart-item');
+			
+			for(var x=0;x<itemsInList.length; x++){
+				var itemId = itemsInList[x].dataset.itemid;
+				var newQuantity = $('#itemCounter-id-'+itemId).val();
+				
+				loopAndUpdate(itemId, newQuantity);
+			}
+			
+			
+			SHOWCASE.front.cart.buildCartList();
+			
+			$.ajax({
+				type: 'post',
+				url: '/sc-panel/promo/ajax',
+				data: {promo_code: $('#discountedCode').val(), promo_cal: true, promo_email_link: $('#discountedLinked').val(), cart_items: localStorage.getItem('sca_MyShoppingCart')},
+				
+				success: function(data){
+					var resp = JSON.parse(data);
+					
+					if(resp.response === 'YES'){
+						// TODO: Consider taxes
+
+						var totalTaxes = ((resp.promo_price/100)*20);
+						$('#taxValue').html('£'+parseFloat(totalTaxes).toFixed(2));
+						$('#totalValue').html('£'+parseFloat(resp.promo_price).toFixed(2));
+					}
+				}
+			});
+		})
+		
+		
+	};
+	
+	
+	
+	function loopAndUpdate(id, quantity) {
+		var  cartList = SHOWCASE.front.cart.getStoredData();
+		
+		for (var x = 0; x < cartList.sca_shopping_cart.cart.length; x++) {
+			var item = cartList.sca_shopping_cart.cart[x];
+			
+			if (parseInt(item.id) === parseInt(id)) {
+				
+				if (quantity > 0) {
+					cartList.sca_shopping_cart.cart[x].quantity = quantity;
+					cartList.sca_shopping_cart.cart[x].total = item.price * quantity;
+				} else {
+					cartList.sca_shopping_cart.cart.splice(x, 1);
+					
+					if (cartList.sca_shopping_cart.cart.length <= 0) {
+						localStorage.removeItem('sca_MyShoppingCart');
+						return
+					}
+				}
+				
+				localStorage.setItem('sca_MyShoppingCart', JSON.stringify(cartList));
+			}
+		}
+	}
+	
+})();
+
+// Cancel All Items In Shopping Cart
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.cancelAllItemsInCart = function(){
+    	$('#cancelCart').on('click', function(){
+    		if(confirm('Are you sure your want to canel all items in this cart?')){
+    			if(localStorage.removeItem('sca_MyShoppingCart') === undefined){
+    				window.location.replace('/shop')
+			    }
+			    
+		    }
+	    })
+    }
+
+})();
+
+// Move to gather personal info
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.moveToGatherFinInfo = function () {
+	   
+    	$('#moveToGatherFin').on('click', function(){
+		    $('.modal').addClass('show');
+	    })
+    	
+    
+    }
+
+})();
+
+// Move to financial info
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.moveToFinancialView = function () {
+	   
+    	$('#moveToFinancialView').on('click', function(){
+    		
+    		var warningMessage = [];
+    		if($('#cartName').val() === ''){
+    		    warningMessage.push('Full Name');
+		    }
+    		
+    		if($('#cartAddress').val() === ''){
+    			
+			    warningMessage.push('Address');
+		    }
+    		
+    		
+    		if($('#cartEmail').val() === '') {
+			
+			    warningMessage.push('Email');
+			
+		    }else{
+				
+				    if(!SHOWCASE.utility.isEmail($('#cartEmail').val())){
+					    warningMessage.push('Invalid Email Address');
+				    }
+			    
+		    }
+		    
+		    if(warningMessage.length > 0) {
+			 
+		    	warningMessage = 'Please supply your ' + warningMessage.join(', ');
+			    $('.notification').html(warningMessage);
+			    
+		    }else{
+    		
+			   	
+			   /* var html = '<figure id="personal-finance">\n' +
+			    '<div id="card-surround">\n' +
+			    '  <form action="/shop/stripe_payment" method="post" id="payment-form">\n' +
+			    '    <div class="form-content">\n' +
+			    '      <label for="card-element">\n' +
+			    '        Credit or debit card\n' +
+			    '      </label>\n' +
+			    '      <div id="card-element">\n' +
+			    '        <!-- a Stripe Element will be inserted here. -->\n' +
+			    '      </div>\n' +
+			    '    </div>\n' +
+			    '    <!-- Used to display form errors -->\n' +
+			    '    <div id="card-errors" role="alert"></div>\n' +
+			    '    <div class="form-content">\n' +
+			    '        <button class="button success">Submit Payment</button>\n' +
+			    '    </div>\n' +
+			    '  </form>\n' +
+			    '</div>\n' +
+			    '</figure>';*/
+			
+			    $('#personal-info').hide();
+			    $('#personal-finance').show();
+			
+			    SHOWCASE.front.cart.buildStripeCard();
+			    
+		    }
+	    });
+    	
+    
+    }
+
+})();
+
+// Submit data to server
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.submitTransactionToServer = function(){
+    	$('#submitStripeToServer').on('click', function(evt){
+    		evt.preventDefault();
+    		
+    		var CSRFToken = $('#CSRFToken').val();
+    		var cartObject = localStorage.getItem('sca_MyShoppingCart');
+    		var cartName = $('#cartName').val();
+    		var cartAddress = $('#cartAddress').val();
+    		var cartEmail = $('#cartEmail').val();
+    		var stripeToken = $('#stripeToken').val();
+    		
+    		
+    		console.log('CSRFToken: '+CSRFToken + ', cartName:'+ cartName + ', cartAddress:'+cartAddress);
+    		console.log('cartObject: '+cartObject );
+    		console.log('cartEmail:'+ cartEmail + ', stripeToken:'+stripeToken)
+    		
+	    })
+    }
+
+})();
+
+// Build Stripe Card
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.buildStripeCard = function(){
+	
+	
+	    var stripe = Stripe(stripePubKey);
+	
+	    var elements = stripe.elements();
+	
+	    // Custom styling can be passed to options when creating an Element.
+	    // (Note that this demo uses a wider set of styles than the guide below.)
+	    var style = {
+		    base: {
+			    color: '#32325d',
+			    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+			    fontSmoothing: 'antialiased',
+			    fontSize: '16px',
+			    '::placeholder': {
+				    color: '#aab7c4'
+			    }
+		    },
+		    invalid: {
+			    color: '#fa755a',
+			    iconColor: '#fa755a'
+		    }
+	    };
+	
+	    // Create an instance of the card Element.
+	    var card = elements.create('card', {style: style});
+	
+	    // Add an instance of the card Element into the `card-element` <div>.
+	    card.mount('#card-element');
+	
+	    // Handle real-time validation errors from the card Element.
+	    card.addEventListener('change', function(event) {
+		    var displayError = document.getElementById('card-errors');
+		    if (event.error) {
+			    displayError.textContent = event.error.message;
+		    } else {
+			    displayError.textContent = '';
+		    }
+	    });
+	
+	    // Handle form submission.
+	    var submitButton = document.getElementById('submitStripeToServer');
+	    submitButton.addEventListener('click', function(event) {
+		    event.preventDefault();
+		
+		    stripe.createToken(card).then(function(result) {
+			    if (result.error) {
+				    // Inform the user if there was an error.
+				    var errorElement = document.getElementById('card-errors');
+				    errorElement.textContent = result.error.message;
+			    } else {
+				    // Send the token to your server.
+				    stripeTokenHandler(result.token);
+			    }
+		    });
+	    });
+	
+	    // Submit the form with the token ID.
+	    function stripeTokenHandler(token) {
+		    // Insert the token ID into the form so it gets submitted to the server
+		    var form = document.getElementById('payment-form');
+		    var hiddenInput = document.createElement('input');
+		    hiddenInput.setAttribute('type', 'hidden');
+		    hiddenInput.setAttribute('name', 'stripeToken');
+		    hiddenInput.setAttribute('id', 'stripeToken');
+		    hiddenInput.setAttribute('value', token.id);
+		    form.appendChild(hiddenInput);
+		
+		
+		    var CSRFToken = $('#CSRFToken').val();
+		    var cartObject = localStorage.getItem('sca_MyShoppingCart');
+		    var cartName = $('#cartName').val();
+		    var cartAddress = $('#cartAddress').val();
+		    var cartDiscoiunted = $('#discountedCode').val();
+		    var cartDiscountLink= $('#discountedLinked').val();
+		    var cartPostcode = token.card.address_zip;
+		    var cartEmail = $('#cartEmail').val();
+		    var stripeToken = $('#stripeToken').val();
+		
+		
+		    $.ajax({
+			    type: 'post',
+			    url: '/shop/stripe_payment',
+			    data: {
+			    	CSRFToken: CSRFToken,
+				    cartObject: cartObject,
+				    cartName: cartName,
+				    cartAddress: cartAddress,
+				    cartPostcode: cartPostcode,
+				    cartEmail: cartEmail,
+				    cartDiscounted: cartDiscoiunted,
+				    cartDiscountLink: cartDiscountLink,
+				    stripeToken: stripeToken
+			    },
+			    
+			    success : function(data){
+			    	var resp = JSON.parse(data);
+			    	
+			    	
+			    	if(resp.status === 'FAILED'){
+					   $('.notification').html('').show().delay(5000).slideUp(600).html('<div class="callout warning">'+resp.message+'</div>');
+				    } else if( resp.status === 'SUCCESS'){
+					    $('.notification').html('').show().delay(5000).slideUp(600).html('<div class="callout success">'+resp.message+'</div>');
+					    
+					    localStorage.removeItem('sca_MyShoppingCart');
+			    	    window.location.replace('/shop/payment_notice/'+resp.succid+'/'+resp.CSRFToken)
+				    }
+			    }
+		    })
+		  
+	    }
+    }
+
+})();
+
+// Move back to cart view
+(function (){
+
+    'use strict';
+
+    SHOWCASE.front.cart.backToCartView = function () {
+	   
+    	$('#backToCartView').on('click', function(){
+		    $('.modal').removeClass('show');
+	    })
+    	
+    
+    }
+
+})();
+
+
+// Promo Checker
+(function () {
+	
+	'use strict';
+	
+	SHOWCASE.front.cart.promotionChecker = function () {
+		
+		// Check inputted code with DB
+		$('#discountedCode').on('keyup', function (evt) {
+			promoAjax(evt, true)
+		});
+		
+		
+		// If required check inputted email with DB
+		$('#discountedLinked').on('keyup', function (evt) {
+			promoAjax(evt, false)
+		});
+		
+		function promoAjax(evt, isCode){
+			var promo_code;
+			var promo_email;
+			if(isCode){
+				promo_code = evt.target.value;
+				promo_email =  $('#discountedLinked').val()
+			}else{
+				promo_code = $('#discountedCode').val();
+				promo_email = evt.target.value;
+			}
+			
+			if(evt.target.value === ''){
+				$('.notification').html('')
+			}else {
+				$.ajax(
+					{
+						type: 'POST',
+						url: '/sc-panel/promo/ajax',
+						data: {promo_code:promo_code, promo_cal: false, promo_email_link: promo_email, cart_items: localStorage.getItem('sca_MyShoppingCart')},
+						
+						success: function (data) {
+							var resp = JSON.parse(data);
+							if (resp.response === 'YES') {
+								$('.notification').html('').show().html('<div class="callout success">This Promotion is valid</div>');
+							} else if (resp.response === 'NO') {
+								$('.notification').html('').show().html('<div class="callout warning">This Promotion Code is invalid</div>');
+							}else if (resp.response === 'DATELESSER') {
+								$('.notification').html('').show().html('<div class="callout success">This Promotion hasn\'t started yet!</div>');
+							}else if (resp.response === 'DATEGREATER') {
+								$('.notification').html('').show().html('<div class="callout warning">This Promotion has finished!</div>');
+							} else if (resp.response === 'EMAIL') {
+								$('.notification').html('').show().html('<div class="callout warning">Please enter the email address linked to this promo code</div>');
+							}
+						}
+					}
+				)
+				
+			}
+		}
+	}
+	
+})();
+
+
+
+
+
+
 // Function Callout Container
 (function () {
 	
@@ -32562,47 +33271,47 @@ return /******/ (function(modules) { // webpackBootstrap
 			// Front
 			case 'home':
 				// Insert floating elements
-				SHOWCASE.front.setFloatingIconDiv('welcome-section');
+				//SHOWCASE.front.setFloatingIconDiv('welcome-section');
 				
-				SHOWCASE.showNav = document.getElementById('showNavControl');
-				SHOWCASE.showNavId = document.querySelectorAll('.showNavMenu ul li a');
-				SHOWCASE.fullyOpen = false;
-				SHOWCASE.showNav.addEventListener('click', function (evt) {
-					let e = evt.target;
-					
-					if (e.id === 'showNavControl') {
-						let eUl = document.querySelector('.showNavMenu ul');
-						
-						if (SHOWCASE.fullyOpen) {
-							eUl.style.transform = 'scale(0,0)';
-							e.parentElement.nextElementSibling.style.height = '0';
-							e.parentElement.nextElementSibling.style.width = '0';
-							e.parentElement.nextElementSibling.style.backgroundColor = '#555555';
-							SHOWCASE.fullyOpen = false;
-						} else {
-							e.parentElement.nextElementSibling.style.height = '100vh';
-							e.parentElement.nextElementSibling.style.width = '100vw';
-							e.parentElement.nextElementSibling.style.backgroundColor = '#008de3';
-							eUl.style.transform = 'scale(1,1)';
-							SHOWCASE.fullyOpen = true;
-						}
-					}
-					
-				});
+				/*SHOWCASE.showNav = document.getElementById('showNavControl');
+				 SHOWCASE.showNavId = document.querySelectorAll('.showNavMenu ul li a');
+				 SHOWCASE.fullyOpen = false;
+				 SHOWCASE.showNav.addEventListener('click', function (evt) {
+				 let e = evt.target;
+				 
+				 if (e.id === 'showNavControl') {
+				 let eUl = document.querySelector('.showNavMenu ul');
+				 
+				 if (SHOWCASE.fullyOpen) {
+				 eUl.style.transform = 'scale(0,0)';
+				 e.parentElement.nextElementSibling.style.height = '0';
+				 e.parentElement.nextElementSibling.style.width = '0';
+				 e.parentElement.nextElementSibling.style.backgroundColor = '#555555';
+				 SHOWCASE.fullyOpen = false;
+				 } else {
+				 e.parentElement.nextElementSibling.style.height = '100vh';
+				 e.parentElement.nextElementSibling.style.width = '100vw';
+				 e.parentElement.nextElementSibling.style.backgroundColor = '#008de3';
+				 eUl.style.transform = 'scale(1,1)';
+				 SHOWCASE.fullyOpen = true;
+				 }
+				 }
+				 
+				 });
+				 
+				 for (let x = 0; x < SHOWCASE.showNavId.length; x++) {
+				 SHOWCASE.showNavId[x].addEventListener('click', function (evt) {
+				 evt.preventDefault();
+				 let e = evt.target;
+				 e.parentElement.parentElement.style.transform = 'scale(0,0)';
+				 e.parentElement.parentElement.parentElement.style.height = '0';
+				 e.parentElement.parentElement.parentElement.style.width = '0';
+				 e.parentElement.parentElement.parentElement.style.backgroundColor = '#555555';
+				 SHOWCASE.front.scrollDown(e.hash);
+				 });
+				 }*/
 				
-				for (let x = 0; x < SHOWCASE.showNavId.length; x++) {
-					SHOWCASE.showNavId[x].addEventListener('click', function (evt) {
-						evt.preventDefault();
-						let e = evt.target;
-						e.parentElement.parentElement.style.transform = 'scale(0,0)';
-						e.parentElement.parentElement.parentElement.style.height = '0';
-						e.parentElement.parentElement.parentElement.style.width = '0';
-						e.parentElement.parentElement.parentElement.style.backgroundColor = '#555555';
-						SHOWCASE.front.scrollDown(e.hash);
-					});
-				}
-				
-				
+				SHOWCASE.front.homepage();
 				SHOWCASE.front.requestInfoEmail();
 				SHOWCASE.front.submitcontact();
 				flatpickr("#date_est");
@@ -32613,7 +33322,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			case 'shop':
 				SHOWCASE.front.submitcontact();
 				flatpickr("#date_est");
-				if($('#featured-carousel') !== undefined) {
+				if ($('#featured-carousel').length) {
 					var carousel = new Carousel({
 						elem: 'featured-carousel',    // id of the carousel container
 						autoplay: true,     // starts the rotation automatically
@@ -32626,7 +33335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 						btnStopText: 'Pause' // STOP button text
 					});
 				}
-				if($('#shoptext-carousel') !== undefined) {
+				if ($('#shoptext-carousel').length) {
 					var carouselText = new Carousel({
 						elem: 'shoptext-carousel',    // id of the carousel container
 						autoplay: true,     // starts the rotation automatically
@@ -32646,8 +33355,15 @@ return /******/ (function(modules) { // webpackBootstrap
 				SHOWCASE.front.submitComment();
 				SHOWCASE.front.submitshowcasecontact();
 				SHOWCASE.admin.commentNameAvatar();
+				SHOWCASE.front.cart.buildShoppingList();
 				flatpickr("#date_est");
 				SHOWCASE.front.sticky();
+				
+				break;
+			
+			case 'cart':
+				SHOWCASE.front.cart.buildShoppingCartPage();
+				SHOWCASE.front.cart.updateItemsQuantities();
 				
 				break;
 			

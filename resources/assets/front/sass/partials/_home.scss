@@ -441,6 +441,7 @@ header {
 .form-content {
   display: grid;
   grid-template-columns: 1fr 2fr;
+  grid-column-gap: 30px;
   margin-top: 7px;
 }
 
