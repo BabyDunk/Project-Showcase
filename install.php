@@ -195,7 +195,7 @@
 				    $fileWrite = 2;
 		
 					# delete install.php
-					unlink( './install.php' );
+					//unlink( './install.php' );
 				}
 				
 				
@@ -346,7 +346,7 @@
                 <li>If you would like to add to this project your can find it <a href="https://github.com/BabyDunk/Project-Showcase" target="_blank" >Here on github</a> </li>
             </ul>
             
-            <form method="POST" action="/sc-panel/general_settings" enctype="">
+            <form method="GET" action="/sc-panel/general_settings" enctype="">
                 <input type="submit" name="submit" id="submit" value="Continue to Setup" />
             </form>
         </div>
