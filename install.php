@@ -157,6 +157,15 @@
 			
 			sca_set_preference( 'showcase' , 'sca_sitename' , $post->sitename );
 			sca_set_preference( 'showcase' , 'sca_sitetitle' , $post->sitetitle );
+			
+			if(!empty($post->siteurl)){
+				$split_str = substr($post->siteurl, (strlen($post->siteurl)-1), 1);
+				
+				if($split_str !== '/'){
+					$post->siteurl = $post->siteurl.'/';
+				}
+			}
+			
 			sca_set_preference( 'showcase' , 'sca_siteurl' , $post->siteurl );
 			
 			$user = new \Classes\Core\User();

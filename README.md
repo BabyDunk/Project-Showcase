@@ -11,14 +11,19 @@
 7. installation complete
 
 ## Roadmap
-1. complete default theme
-2. add theme installer
-3. add plugin capabilities
-4. add checkout for shop
-5. add a variety of email templates with editor.
+* complete default theme
+* add theme installer
+* add plugin capabilities
+* add Paypal payment gateway
+* add custom promotion for users that complete purchases
+* add a variety of email templates with editor.
+
+## Recently Add
+* Shopping Cart and card payment capability - 2019-05-23
+* Added promotion codes - 2019-05-23
 
 ## Requirements
-* PHP 
+* PHP >= 7.1
 * MySql
 * Nodejs for dependencies
 * Composer for dependencies

@@ -12,7 +12,6 @@
 
 /* UTILITY FUNCTION */
 
-
 // Check if is a valid email
 (function (){
 	
@@ -28,7 +27,7 @@
 
 
 
-/* UTILITY FUNCTION */
+/* END OF UTILITY FUNCTION */
 
 
 // Upload New Pin
@@ -209,7 +208,7 @@
 		const contNav = document.querySelectorAll('#conWindow .controlend a');
 		const contPan = document.querySelectorAll('.businessend .conPanel');
 		const headNav = document.querySelectorAll('a.nav-link');
-		
+
 		for (let x = 0; x < flippers.length; x++) {
 			
 			let card = flippers[x].classList;

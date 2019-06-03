@@ -2338,6 +2338,19 @@
   padding: 0;
   margin: 0;
   background: linear-gradient(180deg, #f0f8ff, #4f4f4f); }
+  #home footer {
+    width: 100%;
+    padding: 21px 0;
+    margin: 50px 0; }
+    #home footer p {
+      text-align: center;
+      color: #fff;
+      font-weight: 600; }
+      #home footer p a {
+        color: #fff;
+        text-decoration: none; }
+        #home footer p a:hover {
+          color: #f1a646; }
 
 p {
   font-family: Ubuntu, sans-serif; }
@@ -3247,11 +3260,15 @@ footer {
   margin: 50px 0; }
   footer p {
     text-align: center;
-    color: #fff;
+    color: #7a7a7a;
     font-weight: 600; }
     footer p a {
-      color: #fff;
+      color: #7a7a7a;
       text-decoration: none; }
+      footer p a:hover {
+        color: #f1a646; }
+  footer hr {
+    border: 0; }
 
 /* Defaults */
 .container {
@@ -3376,3 +3393,17 @@ a {
 .show {
   visibility: visible;
   background: rgba(255, 255, 255, 0.7); }
+
+#redirected .container {
+  margin-top: 100px; }
+  #redirected .container .redirect-stub {
+    border-left: solid 7px red;
+    padding: 7px 7px 30px 14px; }
+    #redirected .container .redirect-stub .h1 {
+      font-size: 3em;
+      margin-top: 0; }
+    #redirected .container .redirect-stub p {
+      font-size: 2em;
+      margin-bottom: 0; }
+  #redirected .container .message-wrap {
+    margin-left: 140px; }

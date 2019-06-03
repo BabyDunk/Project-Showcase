@@ -7,6 +7,31 @@
   padding: 0;
   margin: 0;
   background: linear-gradient(180deg, #f0f8ff, #4f4f4f);
+
+
+
+
+
+  footer {
+    width: 100%;
+    padding: 21px 0;
+    margin: 50px 0;
+
+    p {
+      text-align: center;
+      color: #fff;
+      font-weight: 600;
+
+      a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+          color: #f1a646;
+        }
+      }
+    }
+  }
 }
 
 p {
