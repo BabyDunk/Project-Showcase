@@ -199,21 +199,12 @@
 				
 				if ( file_put_contents( './includes/config.php' , $addedData , FILE_APPEND ) )
 				{
-<<<<<<< HEAD
 					
 					$IS_INSTALLED = true;
 					$fileWrite = 2;
 					
 					# delete install.php
 					unlink( './install.php' );
-=======
-
-				    $IS_INSTALLED = true;
-				    $fileWrite = 2;
-		
-					# delete install.php
-					//unlink( './install.php' );
->>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 				}
 				
 				
@@ -363,20 +354,12 @@
                 <li>There is some structure for a shopping cart. At present you can list your projects but hope to have a payment gateway added at some point</li>
                 <li>If you would like to add to this project your can find it <a href="https://github.com/BabyDunk/Project-Showcase" target="_blank" >Here on github</a> </li>
             </ul>
-<<<<<<< HEAD
 
-=======
-            
->>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
             <form method="GET" action="/sc-panel/general_settings" enctype="">
                 <input type="submit" name="submit" id="submit" value="Continue to Setup" />
             </form>
         </div>
-<<<<<<< HEAD
 	
-=======
-        
->>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 	<?php } else { ?>
 
         <form method="POST" action="" enctype="">
