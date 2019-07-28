@@ -2337,9 +2337,12 @@
   z-index: -1;
   opacity: 0; }
 
+<<<<<<< HEAD
 .picker_wrapper.no_cancel .picker_cancel {
   display: none; }
 
+=======
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 .layout_default.picker_wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -2374,16 +2377,27 @@
 
 .layout_default .picker_editor {
   order: 1;
+<<<<<<< HEAD
   width: 6.5rem; }
   .layout_default .picker_editor input {
     width: 100%;
     height: 100%; }
+=======
+  width: 6rem; }
+  .layout_default .picker_editor input {
+    width: calc(100% + 2px);
+    height: calc(100% + 2px); }
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 
 .layout_default .picker_sample {
   order: 1;
   flex: 1 1 auto; }
 
+<<<<<<< HEAD
 .layout_default .picker_done, .layout_default .picker_cancel {
+=======
+.layout_default .picker_done {
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
   order: 1; }
 
 .picker_wrapper {
@@ -2397,6 +2411,7 @@
   .picker_wrapper:focus {
     outline: none; }
   .picker_wrapper button, .picker_wrapper input {
+<<<<<<< HEAD
     box-sizing: border-box;
     border: none;
     box-shadow: 0 0 0 1px silver;
@@ -2412,6 +2427,9 @@
       background-image: linear-gradient(0deg, transparent, gainsboro); }
     .picker_wrapper button:hover {
       background-color: white; }
+=======
+    margin: -1px; }
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 
 .picker_selector {
   position: absolute;
@@ -2445,8 +2463,14 @@
     background: none; }
 
 .picker_editor input {
+<<<<<<< HEAD
   font-family: monospace;
   padding: .2em .4em; }
+=======
+  box-sizing: border-box;
+  font-family: monospace;
+  padding: .1em .2em; }
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 
 .picker_sample::before {
   content: '';
@@ -2456,6 +2480,14 @@
   height: 100%;
   background: currentColor; }
 
+<<<<<<< HEAD
+=======
+.picker_done button {
+  box-sizing: border-box;
+  padding: .2em .5em;
+  cursor: pointer; }
+
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 .picker_arrow {
   position: absolute;
   z-index: -1; }
@@ -7279,7 +7311,10 @@ html.is-reveal-open {
 /****/
 /******/
 /********/
+<<<<<<< HEAD
 /**********/
+=======
+>>>>>>> 4832b3923ca088f54544f47759653ef4f01ada60
 /* Style  for the Edit Showcase page */
 html, body {
   width: 100%;
