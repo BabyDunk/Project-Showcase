@@ -1,0 +1,39 @@
+
+/* Tri Info Boxes  */
+.triCard {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .card {
+    margin-top: 30px;
+    border: 1px solid #ccc;
+    padding: 21px;
+    width: 25%;
+    flex-basis: 250px;
+    box-shadow: 1px 1px 7px #bcbcbc, -1px -1px 7px #bcbcbc;
+    background-color: #fff;
+
+    .cardTitle {
+      text-align: center;
+    }
+
+    .cardImg {
+      text-align: center;
+
+      .fas.fa-5x.fa-life-ring {
+        color: #ff3e67;
+      }
+
+      .fas.fa-5x.fa-piggy-bank {
+        color: #fff283;
+      }
+
+      .fas.fa-5x.fa-chart-line {
+        color: #04d8bb;
+      }
+    }
+  }
+}

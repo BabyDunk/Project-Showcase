@@ -1,0 +1,110 @@
+
+/* Responsive Parts */
+@media (max-width: 1600px) {
+  .header-shadow video {
+    margin-top: -150px;
+  }
+  .header-shadow .attention {
+    height: 150px;
+    margin-top: -150px;
+  }
+}
+
+@media (max-width: 1299px) {
+  #business #title {
+    font-size: 2.5em;
+  }
+  .header-shadow .attention {
+    height: 110px;
+    margin-top: -110px;
+  }
+  #description {
+    font-size: 1.3em;
+  }
+
+}
+
+@media (max-width: 1100px) {
+  #nav > div {
+    font-size: 4vw;
+  }
+  #header-img {
+    width: 6vw;
+  }
+}
+
+@media (max-width: 899px) {
+  #description {
+    font-size: 1.1em;
+    padding: 7px;
+  }
+  .header-shadow .attention {
+    height: 80px;
+    margin-top: -80px;
+  }
+  .header-shadow video {
+    margin-top: -50px;
+  }
+}
+
+@media (max-width: 850px) {
+
+  #business #title {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 750px) {
+  .header-shadow video {
+    margin-top: 0;
+  }
+  #conWindow {
+    grid-template-columns: 1fr
+  }
+  .form-content {
+    grid-template-columns: 1fr;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 579px) {
+  #nav-bar {
+    display: none;
+  }
+  #business #title {
+    font-size: 1.5em;
+  }
+  .header-shadow video {
+    margin-top: 42px;
+  }
+  #infoForm input {
+    padding: 3px;
+  }
+  #infoForm label {
+    font-size: .9em;
+  }
+  .header-shadow .attention {
+    height: 60px;
+    margin-top: -60px;
+  }
+  #description {
+    font-size: .9em;
+    padding: 3px;
+    margin: 3px;
+  }
+  #cubed .cubedText {
+    font-size: 1.2em;
+  }
+  #triCard {
+    margin-top: 50px;
+  }
+}
+
+
+@media (min-width: 579px) {
+  #nav-bar-small {
+    display: none;
+  }
+}
+
+

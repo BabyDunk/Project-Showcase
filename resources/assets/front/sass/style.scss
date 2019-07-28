@@ -1,0 +1,192 @@
+@import "partials/variables";
+@import "partials/home";
+@import "partials/header";
+@import "partials/shop";
+@import "partials/tribox";
+@import "partials/contact_form";
+@import "partials/responsive";
+
+
+
+
+
+
+// Footer styles
+footer {
+  width: 100%;
+  padding: 21px 0;
+  margin: 50px 0;
+
+  p {
+    text-align: center;
+    color: #7a7a7a;
+    font-weight: 600;
+
+    a {
+      color: #7a7a7a;
+      text-decoration: none;
+
+      &:hover {
+        color: #f1a646;
+      }
+    }
+  }
+
+  hr {
+    border: 0;
+  }
+}
+
+
+
+
+/* Defaults */
+.container {
+  max-width: 1200px;
+  margin: auto;
+  clear: both;
+}
+
+a:hover {
+  color: #f1a646
+}
+
+a {
+  color: inherit;
+}
+
+.stretched {
+  width:100%!important;
+  max-width: 100%!important;
+}
+
+.success{
+  background-color: #23ff80;
+}
+
+.warning{
+  background-color: #fa886e;
+}
+
+.default{
+  background-color: #81a2ff;
+}
+
+.left{
+  float: left;
+  justify-self: left;
+}
+
+.button{
+  padding:7px;
+  box-shadow: 1px 1px 3px 3px #555;
+  border:1px solid #ccc;
+
+  &:hover{
+    background-color: $hoverColor;
+    color:#fff;
+  }
+}
+
+.right{
+  float:right;
+  justify-self: right;
+}
+.flex-tri-inner {
+  display: flex;
+  justify-items: center;
+}
+
+@for $i from 1 through 12 {
+  .split-#{$i} {
+    width: 8.3333333333% * $i;
+  }
+}
+
+.cell {
+  padding: 7px;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.thumbnail {
+  width: 100%;
+}
+
+
+.modal{
+  position: absolute;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  /*display:none;*/
+  visibility: hidden;
+  background: transparent;
+  transition:  ease-in-out 1s;
+  display:grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+  align-content: center;
+
+  section{
+    border: 1px solid springgreen;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;
+    padding: 30px;
+    background-color: ghostwhite;
+    box-shadow: 1px 1px 5px 5px #555, -1px -1px 5px 5px #555;
+
+    figure{
+
+      .form-content{
+        margin-top:30px;
+
+        button{
+          border:1px solid springgreen;
+          max-width: 100px;
+        }
+
+        input{
+          border:1px solid springgreen;
+        }
+      }
+    }
+
+  }
+}
+
+.show{
+  visibility: visible;
+  background: rgba(255,255,255,0.7);;
+}
+
+#redirected{
+  .container {
+    margin-top: 100px;
+
+
+    .redirect-stub {
+      border-left: solid 7px red;
+      padding: 7px 7px 30px 14px;
+
+
+      .h1 {
+        font-size: 3em;
+        margin-top: 0;
+      }
+
+      p {
+        font-size: 2em;
+        margin-bottom: 0;
+      }
+    }
+
+    .message-wrap {
+      margin-left: 140px;
+    }
+  }
+}
