@@ -41,15 +41,6 @@
 			if(Params::has('submit')){
 				//var_dump(sca_set_preference('showcase', 'sca_sitename', $post->sitename));exit;
 				sca_set_preference('showcase', 'sca_sitename', $post->sitename);
-				
-				if(!empty($post->siteurl)){
-					$split_str = substr($post->siteurl, (strlen($post->siteurl)-1), 1);
-					
-					if($split_str !== '/'){
-						$post->siteurl = $post->siteurl.'/';
-					}
-				}
-				
 				sca_set_preference('showcase', 'sca_siteurl', $post->siteurl);
 				sca_set_preference('showcase', 'sca_sitetitle', $post->sitetitle);
 				sca_set_preference('showcase', 'sca_sitesubtitle', $post->sitesubtitle);

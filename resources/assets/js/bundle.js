@@ -18,7 +18,7 @@ require('../../../resources/assets/js/scripts');
 
 
 },{"../../../node_modules/flatpickr/dist/flatpickr.js":2,"../../../resources/assets/js/scripts":10,"foundation-sites":3,"jquery":5,"jquery-ui":4,"motion-ui":6,"vanilla-js-carousel":7,"vanilla-picker":8,"what-input":9}],2:[function(require,module,exports){
-/* flatpickr v4.6.2, @license MIT */
+/* flatpickr v4.5.7, @license MIT */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
@@ -110,7 +110,6 @@ require('../../../resources/assets/js/scripts');
         locale: "default",
         minuteIncrement: 5,
         mode: "single",
-        monthSelectorType: "dropdown",
         nextArrow: "<svg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 17 17'><g></g><path d='M13.207 8.472l-7.854 7.854-0.707-0.707 7.146-7.146-7.146-7.148 0.707-0.707 7.854 7.854z' /></svg>",
         noCalendar: false,
         now: new Date(),
@@ -203,10 +202,7 @@ require('../../../resources/assets/js/scripts');
         scrollTitle: "Scroll to increment",
         toggleTitle: "Click to toggle",
         amPM: ["AM", "PM"],
-        yearAriaLabel: "Year",
-        hourAriaLabel: "Hour",
-        minuteAriaLabel: "Minute",
-        time_24hr: false
+        yearAriaLabel: "Year"
     };
 
     var pad = function (number) { return ("0" + number).slice(-2); };
@@ -281,10 +277,10 @@ require('../../../resources/assets/js/scripts');
         return event.target;
     }
 
-    var doNothing = function () { return undefined; };
+    var do_nothing = function () { return undefined; };
     var monthToStr = function (monthNumber, shorthand, locale) { return locale.months[shorthand ? "shorthand" : "longhand"][monthNumber]; };
     var revFormat = {
-        D: doNothing,
+        D: do_nothing,
         F: function (dateObj, monthName, locale) {
             dateObj.setMonth(locale.months.longhand.indexOf(monthName));
         },
@@ -308,11 +304,9 @@ require('../../../resources/assets/js/scripts');
             dateObj.setSeconds(parseFloat(seconds));
         },
         U: function (_, unixSeconds) { return new Date(parseFloat(unixSeconds) * 1000); },
-        W: function (dateObj, weekNum, locale) {
+        W: function (dateObj, weekNum) {
             var weekNumber = parseInt(weekNum);
-            var date = new Date(dateObj.getFullYear(), 0, 2 + (weekNumber - 1) * 7, 0, 0, 0, 0);
-            date.setDate(date.getDate() - date.getDay() + locale.firstDayOfWeek);
-            return date;
+            return new Date(dateObj.getFullYear(), 0, 2 + (weekNumber - 1) * 7, 0, 0, 0, 0);
         },
         Y: function (dateObj, year) {
             dateObj.setFullYear(parseFloat(year));
@@ -330,7 +324,7 @@ require('../../../resources/assets/js/scripts');
         j: function (dateObj, day) {
             dateObj.setDate(parseFloat(day));
         },
-        l: doNothing,
+        l: do_nothing,
         m: function (dateObj, month) {
             dateObj.setMonth(parseFloat(month) - 1);
         },
@@ -343,7 +337,7 @@ require('../../../resources/assets/js/scripts');
         u: function (_, unixMillSeconds) {
             return new Date(parseFloat(unixMillSeconds));
         },
-        w: doNothing,
+        w: do_nothing,
         y: function (dateObj, year) {
             dateObj.setFullYear(2000 + parseFloat(year));
         }
@@ -463,7 +457,7 @@ require('../../../resources/assets/js/scripts');
                 return undefined;
             var locale = customLocale || l10n;
             var parsedDate;
-            var dateOrig = date;
+            var date_orig = date;
             if (date instanceof Date)
                 parsedDate = new Date(date.getTime());
             else if (typeof date !== "string" &&
@@ -517,7 +511,7 @@ require('../../../resources/assets/js/scripts');
             }
             /* istanbul ignore next */
             if (!(parsedDate instanceof Date && !isNaN(parsedDate.getTime()))) {
-                config.errorHandler(new Error("Invalid date provided: " + dateOrig));
+                config.errorHandler(new Error("Invalid date provided: " + date_orig));
                 return undefined;
             }
             if (timeless === true)
@@ -568,13 +562,11 @@ require('../../../resources/assets/js/scripts');
     var DEBOUNCED_CHANGE_MS = 300;
     function FlatpickrInstance(element, instanceConfig) {
         var self = {
-            config: __assign({}, defaults, flatpickr.defaultConfig),
+            config: __assign({}, flatpickr.defaultConfig),
             l10n: english
         };
         self.parseDate = createDateParser({ config: self.config, l10n: self.l10n });
         self._handlers = [];
-        self.pluginElements = [];
-        self.loadedPlugins = [];
         self._bind = bind;
         self._setHoursFromDate = setHoursFromDate;
         self._positionCalendar = positionCalendar;
@@ -754,21 +746,21 @@ require('../../../resources/assets/js/scripts');
             var minutes = self.config.defaultMinute;
             var seconds = self.config.defaultSeconds;
             if (self.config.minDate !== undefined) {
-                var minHr = self.config.minDate.getHours();
-                var minMinutes = self.config.minDate.getMinutes();
-                hours = Math.max(hours, minHr);
-                if (hours === minHr)
-                    minutes = Math.max(minMinutes, minutes);
-                if (hours === minHr && minutes === minMinutes)
+                var min_hr = self.config.minDate.getHours();
+                var min_minutes = self.config.minDate.getMinutes();
+                hours = Math.max(hours, min_hr);
+                if (hours === min_hr)
+                    minutes = Math.max(min_minutes, minutes);
+                if (hours === min_hr && minutes === min_minutes)
                     seconds = self.config.minDate.getSeconds();
             }
             if (self.config.maxDate !== undefined) {
-                var maxHr = self.config.maxDate.getHours();
-                var maxMinutes = self.config.maxDate.getMinutes();
-                hours = Math.min(hours, maxHr);
-                if (hours === maxHr)
-                    minutes = Math.min(maxMinutes, minutes);
-                if (hours === maxHr && minutes === maxMinutes)
+                var max_hr = self.config.maxDate.getHours();
+                var max_minutes = self.config.maxDate.getMinutes();
+                hours = Math.min(hours, max_hr);
+                if (hours === max_hr)
+                    minutes = Math.min(max_minutes, minutes);
+                if (hours === max_hr && minutes === max_minutes)
                     seconds = self.config.maxDate.getSeconds();
             }
             setHours(hours, minutes, seconds);
@@ -865,10 +857,12 @@ require('../../../resources/assets/js/scripts');
                         onMouseOver(e.target);
                 });
             bind(window.document.body, "keydown", onKeyDown);
+            if (!self.config.static)
+                bind(self._input, "keydown", onKeyDown);
             if (!self.config.inline && !self.config.static)
                 bind(window, "resize", debouncedResize);
             if (window.ontouchstart !== undefined)
-                bind(window.document, "touchstart", documentClick);
+                bind(window.document, "click", documentClick);
             else
                 bind(window.document, "mousedown", onClick(documentClick));
             bind(window.document, "focus", documentClick, { capture: true });
@@ -904,9 +898,8 @@ require('../../../resources/assets/js/scripts');
         /**
          * Set the calendar view to a particular date.
          * @param {Date} jumpDate the date to set the view to
-         * @param {boolean} triggerChange if change events should be triggered
          */
-        function jumpToDate(jumpDate, triggerChange) {
+        function jumpToDate(jumpDate) {
             var jumpTo = jumpDate !== undefined
                 ? self.parseDate(jumpDate)
                 : self.latestSelectedDateObj ||
@@ -915,8 +908,6 @@ require('../../../resources/assets/js/scripts');
                         : self.config.maxDate && self.config.maxDate < self.now
                             ? self.config.maxDate
                             : self.now);
-            var oldYear = self.currentYear;
-            var oldMonth = self.currentMonth;
             try {
                 if (jumpTo !== undefined) {
                     self.currentYear = jumpTo.getFullYear();
@@ -927,14 +918,6 @@ require('../../../resources/assets/js/scripts');
                 /* istanbul ignore next */
                 e.message = "Invalid date supplied: " + jumpTo;
                 self.config.errorHandler(e);
-            }
-            if (triggerChange && self.currentYear !== oldYear) {
-                triggerEvent("onYearChange");
-                buildMonthSwitch();
-            }
-            if (triggerChange &&
-                (self.currentYear !== oldYear || self.currentMonth !== oldMonth)) {
-                triggerEvent("onMonthChange");
             }
             self.redraw();
         }
@@ -1046,7 +1029,7 @@ require('../../../resources/assets/js/scripts');
                 }
             }
             else {
-                dayElement.classList.add("flatpickr-disabled");
+                dayElement.classList.add("disabled");
             }
             if (self.config.mode === "range") {
                 if (isDateInRange(date) && !isDateSelected(date))
@@ -1167,54 +1150,10 @@ require('../../../resources/assets/js/scripts');
                 onMouseOver();
             }
         }
-        function buildMonthSwitch() {
-            if (self.config.showMonths > 1 ||
-                self.config.monthSelectorType !== "dropdown")
-                return;
-            var shouldBuildMonth = function (month) {
-                if (self.config.minDate !== undefined &&
-                    self.currentYear === self.config.minDate.getFullYear() &&
-                    month < self.config.minDate.getMonth()) {
-                    return false;
-                }
-                return !(self.config.maxDate !== undefined &&
-                    self.currentYear === self.config.maxDate.getFullYear() &&
-                    month > self.config.maxDate.getMonth());
-            };
-            self.monthsDropdownContainer.tabIndex = -1;
-            self.monthsDropdownContainer.innerHTML = "";
-            for (var i = 0; i < 12; i++) {
-                if (!shouldBuildMonth(i))
-                    continue;
-                var month = createElement("option", "flatpickr-monthDropdown-month");
-                month.value = new Date(self.currentYear, i).getMonth().toString();
-                month.textContent = monthToStr(i, self.config.shorthandCurrentMonth, self.l10n);
-                month.tabIndex = -1;
-                if (self.currentMonth === i) {
-                    month.selected = true;
-                }
-                self.monthsDropdownContainer.appendChild(month);
-            }
-        }
         function buildMonth() {
             var container = createElement("div", "flatpickr-month");
             var monthNavFragment = window.document.createDocumentFragment();
-            var monthElement;
-            if (self.config.showMonths > 1 ||
-                self.config.monthSelectorType === "static") {
-                monthElement = createElement("span", "cur-month");
-            }
-            else {
-                self.monthsDropdownContainer = createElement("select", "flatpickr-monthDropdown-months");
-                bind(self.monthsDropdownContainer, "change", function (e) {
-                    var target = e.target;
-                    var selectedMonth = parseInt(target.value, 10);
-                    self.changeMonth(selectedMonth - self.currentMonth);
-                    triggerEvent("onMonthChange");
-                });
-                buildMonthSwitch();
-                monthElement = self.monthsDropdownContainer;
-            }
+            var monthElement = createElement("span", "cur-month");
             var yearInput = createNumberInput("cur-year", { tabindex: "-1" });
             var yearElement = yearInput.getElementsByTagName("input")[0];
             yearElement.setAttribute("aria-label", self.l10n.yearAriaLabel);
@@ -1266,7 +1205,7 @@ require('../../../resources/assets/js/scripts');
                 get: function () { return self.__hidePrevMonthArrow; },
                 set: function (bool) {
                     if (self.__hidePrevMonthArrow !== bool) {
-                        toggleClass(self.prevMonthNav, "flatpickr-disabled", bool);
+                        toggleClass(self.prevMonthNav, "disabled", bool);
                         self.__hidePrevMonthArrow = bool;
                     }
                 }
@@ -1275,7 +1214,7 @@ require('../../../resources/assets/js/scripts');
                 get: function () { return self.__hideNextMonthArrow; },
                 set: function (bool) {
                     if (self.__hideNextMonthArrow !== bool) {
-                        toggleClass(self.nextMonthNav, "flatpickr-disabled", bool);
+                        toggleClass(self.nextMonthNav, "disabled", bool);
                         self.__hideNextMonthArrow = bool;
                     }
                 }
@@ -1291,13 +1230,9 @@ require('../../../resources/assets/js/scripts');
             self.timeContainer = createElement("div", "flatpickr-time");
             self.timeContainer.tabIndex = -1;
             var separator = createElement("span", "flatpickr-time-separator", ":");
-            var hourInput = createNumberInput("flatpickr-hour", {
-                "aria-label": self.l10n.hourAriaLabel
-            });
+            var hourInput = createNumberInput("flatpickr-hour");
             self.hourElement = hourInput.getElementsByTagName("input")[0];
-            var minuteInput = createNumberInput("flatpickr-minute", {
-                "aria-label": self.l10n.minuteAriaLabel
-            });
+            var minuteInput = createNumberInput("flatpickr-minute");
             self.minuteElement = minuteInput.getElementsByTagName("input")[0];
             self.hourElement.tabIndex = self.minuteElement.tabIndex = -1;
             self.hourElement.value = pad(self.latestSelectedDateObj
@@ -1377,9 +1312,9 @@ require('../../../resources/assets/js/scripts');
                 weekNumbers: weekNumbers
             };
         }
-        function changeMonth(value, isOffset) {
-            if (isOffset === void 0) { isOffset = true; }
-            var delta = isOffset ? value : value - self.currentMonth;
+        function changeMonth(value, is_offset) {
+            if (is_offset === void 0) { is_offset = true; }
+            var delta = is_offset ? value : value - self.currentMonth;
             if ((delta < 0 && self._hidePrevMonthArrow === true) ||
                 (delta > 0 && self._hideNextMonthArrow === true))
                 return;
@@ -1388,7 +1323,6 @@ require('../../../resources/assets/js/scripts');
                 self.currentYear += self.currentMonth > 11 ? 1 : -1;
                 self.currentMonth = (self.currentMonth + 12) % 12;
                 triggerEvent("onYearChange");
-                buildMonthSwitch();
             }
             buildDays();
             triggerEvent("onMonthChange");
@@ -1491,7 +1425,6 @@ require('../../../resources/assets/js/scripts');
                 "weekdayContainer",
                 "prevMonthNav",
                 "nextMonthNav",
-                "monthsDropdownContainer",
                 "currentMonthElement",
                 "currentYearElement",
                 "navigationCurrentMonth",
@@ -1559,7 +1492,6 @@ require('../../../resources/assets/js/scripts');
             if (isNewYear) {
                 self.redraw();
                 triggerEvent("onYearChange");
-                buildMonthSwitch();
             }
         }
         function isEnabled(date, timeless) {
@@ -1635,9 +1567,8 @@ require('../../../resources/assets/js/scripts');
                         : self.config.dateFormat);
                     return e.target.blur();
                 }
-                else {
+                else
                     self.open();
-                }
             }
             else if (isCalendarElem(e.target) ||
                 allowKeydown ||
@@ -1647,7 +1578,6 @@ require('../../../resources/assets/js/scripts');
                 switch (e.keyCode) {
                     case 13:
                         if (isTimeObj) {
-                            e.preventDefault();
                             updateTime();
                             focusAndClose();
                         }
@@ -1667,7 +1597,7 @@ require('../../../resources/assets/js/scripts');
                         break;
                     case 37:
                     case 39:
-                        if (!isTimeObj && !isInput) {
+                        if (!isTimeObj) {
                             e.preventDefault();
                             if (self.daysContainer !== undefined &&
                                 (allowInput === false ||
@@ -1699,9 +1629,6 @@ require('../../../resources/assets/js/scripts');
                             else if (!isTimeObj)
                                 focusOnDay(undefined, delta * 7);
                         }
-                        else if (e.target === self.currentYearElement) {
-                            changeYear(self.currentYear - delta);
-                        }
                         else if (self.config.enableTime) {
                             if (!isTimeObj && self.hourElement)
                                 self.hourElement.focus();
@@ -1716,22 +1643,19 @@ require('../../../resources/assets/js/scripts');
                                 self.minuteElement,
                                 self.secondElement,
                                 self.amPM,
-                            ]
-                                .concat(self.pluginElements)
-                                .filter(function (x) { return x; });
+                            ].filter(function (x) { return x; });
                             var i = elems.indexOf(e.target);
                             if (i !== -1) {
                                 var target = elems[i + (e.shiftKey ? -1 : 1)];
-                                e.preventDefault();
-                                (target || self._input).focus();
+                                if (target !== undefined) {
+                                    e.preventDefault();
+                                    target.focus();
+                                }
+                                else if (e.shiftKey) {
+                                    e.preventDefault();
+                                    self._input.focus();
+                                }
                             }
-                        }
-                        else if (!self.config.noCalendar &&
-                            self.daysContainer &&
-                            self.daysContainer.contains(e.target) &&
-                            e.shiftKey) {
-                            e.preventDefault();
-                            self._input.focus();
                         }
                         break;
                     default:
@@ -1754,22 +1678,21 @@ require('../../../resources/assets/js/scripts');
                         break;
                 }
             }
-            if (isInput || isCalendarElem(e.target)) {
-                triggerEvent("onKeyDown", e);
-            }
+            triggerEvent("onKeyDown", e);
         }
         function onMouseOver(elem) {
             if (self.selectedDates.length !== 1 ||
                 (elem &&
                     (!elem.classList.contains("flatpickr-day") ||
-                        elem.classList.contains("flatpickr-disabled"))))
+                        elem.classList.contains("disabled"))))
                 return;
             var hoverDate = elem
                 ? elem.dateObj.getTime()
-                : self.days.firstElementChild.dateObj.getTime(), initialDate = self.parseDate(self.selectedDates[0], undefined, true).getTime(), rangeStartDate = Math.min(hoverDate, self.selectedDates[0].getTime()), rangeEndDate = Math.max(hoverDate, self.selectedDates[0].getTime());
+                : self.days.firstElementChild.dateObj.getTime(), initialDate = self.parseDate(self.selectedDates[0], undefined, true).getTime(), rangeStartDate = Math.min(hoverDate, self.selectedDates[0].getTime()), rangeEndDate = Math.max(hoverDate, self.selectedDates[0].getTime()), lastDate = self.daysContainer.lastChild
+                .lastChild.dateObj.getTime();
             var containsDisabled = false;
             var minRange = 0, maxRange = 0;
-            for (var t = rangeStartDate; t < rangeEndDate; t += duration.DAY) {
+            for (var t = rangeStartDate; t < lastDate; t += duration.DAY) {
                 if (!isEnabled(new Date(t), true)) {
                     containsDisabled =
                         containsDisabled || (t > rangeStartDate && t < rangeEndDate);
@@ -1781,6 +1704,7 @@ require('../../../resources/assets/js/scripts');
             }
             for (var m = 0; m < self.config.showMonths; m++) {
                 var month = self.daysContainer.children[m];
+                var prevMonth = self.daysContainer.children[m - 1];
                 var _loop_1 = function (i, l) {
                     var dayElem = month.children[i], date = dayElem.dateObj;
                     var timestamp = date.getTime();
@@ -1799,17 +1723,22 @@ require('../../../resources/assets/js/scripts');
                         dayElem.classList.remove(c);
                     });
                     if (elem !== undefined) {
-                        elem.classList.add(hoverDate <= self.selectedDates[0].getTime()
+                        elem.classList.add(hoverDate < self.selectedDates[0].getTime()
                             ? "startRange"
                             : "endRange");
-                        if (initialDate < hoverDate && timestamp === initialDate)
-                            dayElem.classList.add("startRange");
-                        else if (initialDate > hoverDate && timestamp === initialDate)
-                            dayElem.classList.add("endRange");
-                        if (timestamp >= minRange &&
-                            (maxRange === 0 || timestamp <= maxRange) &&
-                            isBetween(timestamp, initialDate, hoverDate))
-                            dayElem.classList.add("inRange");
+                        if (month.contains(elem) ||
+                            !(m > 0 &&
+                                prevMonth &&
+                                prevMonth.lastChild.dateObj.getTime() >= timestamp)) {
+                            if (initialDate < hoverDate && timestamp === initialDate)
+                                dayElem.classList.add("startRange");
+                            else if (initialDate > hoverDate && timestamp === initialDate)
+                                dayElem.classList.add("endRange");
+                            if (timestamp >= minRange &&
+                                (maxRange === 0 || timestamp <= maxRange) &&
+                                isBetween(timestamp, initialDate, hoverDate))
+                                dayElem.classList.add("inRange");
+                        }
                     }
                 };
                 for (var i = 0, l = month.children.length; i < l; i++) {
@@ -1824,7 +1753,7 @@ require('../../../resources/assets/js/scripts');
         function setDefaultTime() {
             self.setDate(self.config.minDate !== undefined
                 ? new Date(self.config.minDate.getTime())
-                : new Date(), true);
+                : new Date(), false);
             setDefaultHours();
             updateValue();
         }
@@ -1926,24 +1855,21 @@ require('../../../resources/assets/js/scripts');
             });
             var timeMode = userConfig.mode === "time";
             if (!userConfig.dateFormat && (userConfig.enableTime || timeMode)) {
-                var defaultDateFormat = flatpickr.defaultConfig.dateFormat || defaults.dateFormat;
                 formats.dateFormat =
                     userConfig.noCalendar || timeMode
                         ? "H:i" + (userConfig.enableSeconds ? ":S" : "")
-                        : defaultDateFormat + " H:i" + (userConfig.enableSeconds ? ":S" : "");
+                        : flatpickr.defaultConfig.dateFormat +
+                            " H:i" +
+                            (userConfig.enableSeconds ? ":S" : "");
             }
             if (userConfig.altInput &&
                 (userConfig.enableTime || timeMode) &&
                 !userConfig.altFormat) {
-                var defaultAltFormat = flatpickr.defaultConfig.altFormat || defaults.altFormat;
                 formats.altFormat =
                     userConfig.noCalendar || timeMode
                         ? "h:i" + (userConfig.enableSeconds ? ":S K" : " K")
-                        : defaultAltFormat + (" h:i" + (userConfig.enableSeconds ? ":S" : "") + " K");
-            }
-            if (!userConfig.altInputClass) {
-                self.config.altInputClass =
-                    self.input.className + " " + self.config.altInputClass;
+                        : flatpickr.defaultConfig.altFormat +
+                            (" h:i" + (userConfig.enableSeconds ? ":S" : "") + " K");
             }
             Object.defineProperty(self.config, "minDate", {
                 get: function () { return self.config._minDate; },
@@ -2008,11 +1934,6 @@ require('../../../resources/assets/js/scripts');
                     ? flatpickr.l10ns[self.config.locale]
                     : undefined));
             tokenRegex.K = "(" + self.l10n.amPM[0] + "|" + self.l10n.amPM[1] + "|" + self.l10n.amPM[0].toLowerCase() + "|" + self.l10n.amPM[1].toLowerCase() + ")";
-            var userConfig = __assign({}, instanceConfig, JSON.parse(JSON.stringify(element.dataset || {})));
-            if (userConfig.time_24hr === undefined &&
-                flatpickr.defaultConfig.time_24hr === undefined) {
-                self.config.time_24hr = self.l10n.time_24hr;
-            }
             self.formatDate = createDateFormatter(self);
             self.parseDate = createDateParser({ config: self.config, l10n: self.l10n });
         }
@@ -2093,7 +2014,7 @@ require('../../../resources/assets/js/scripts');
             var isSelectable = function (day) {
                 return day.classList &&
                     day.classList.contains("flatpickr-day") &&
-                    !day.classList.contains("flatpickr-disabled") &&
+                    !day.classList.contains("disabled") &&
                     !day.classList.contains("notAllowed");
             };
             var t = findParent(e.target, isSelectable);
@@ -2130,10 +2051,8 @@ require('../../../resources/assets/js/scripts');
                 var isNewYear = self.currentYear !== selectedDate.getFullYear();
                 self.currentYear = selectedDate.getFullYear();
                 self.currentMonth = selectedDate.getMonth();
-                if (isNewYear) {
+                if (isNewYear)
                     triggerEvent("onYearChange");
-                    buildMonthSwitch();
-                }
                 triggerEvent("onMonthChange");
             }
             updateNavigationCurrentMonth();
@@ -2165,18 +2084,11 @@ require('../../../resources/assets/js/scripts');
         }
         var CALLBACKS = {
             locale: [setupLocale, updateWeekdays],
-            showMonths: [buildMonths, setCalendarWidth, buildWeekdays],
-            minDate: [jumpToDate],
-            maxDate: [jumpToDate]
+            showMonths: [buildMonths, setCalendarWidth, buildWeekdays]
         };
         function set(option, value) {
-            if (option !== null && typeof option === "object") {
+            if (option !== null && typeof option === "object")
                 Object.assign(self.config, option);
-                for (var key in option) {
-                    if (CALLBACKS[key] !== undefined)
-                        CALLBACKS[key].forEach(function (x) { return x(); });
-                }
-            }
             else {
                 self.config[option] = value;
                 if (CALLBACKS[option] !== undefined)
@@ -2226,14 +2138,10 @@ require('../../../resources/assets/js/scripts');
                 return self.clear(triggerChange);
             setSelectedDate(date, format);
             self.showTimeInput = self.selectedDates.length > 0;
-            self.latestSelectedDateObj =
-                self.selectedDates[self.selectedDates.length - 1];
+            self.latestSelectedDateObj = self.selectedDates[0];
             self.redraw();
             jumpToDate();
             setHoursFromDate();
-            if (self.selectedDates.length === 0) {
-                self.clear(false);
-            }
             updateValue(triggerChange);
             if (triggerChange)
                 triggerEvent("onChange");
@@ -2326,7 +2234,7 @@ require('../../../resources/assets/js/scripts');
             self._input = self.input;
             if (self.config.altInput) {
                 // replicate self.element
-                self.altInput = createElement(self.input.nodeName, self.config.altInputClass);
+                self.altInput = createElement(self.input.nodeName, self.input.className + " " + self.config.altInputClass);
                 self._input = self.altInput;
                 self.altInput.placeholder = self.input.placeholder;
                 self.altInput.disabled = self.input.disabled;
@@ -2425,14 +2333,9 @@ require('../../../resources/assets/js/scripts');
             self.yearElements.forEach(function (yearElement, i) {
                 var d = new Date(self.currentYear, self.currentMonth, 1);
                 d.setMonth(self.currentMonth + i);
-                if (self.config.showMonths > 1 ||
-                    self.config.monthSelectorType === "static") {
-                    self.monthElements[i].textContent =
-                        monthToStr(d.getMonth(), self.config.shorthandCurrentMonth, self.l10n) + " ";
-                }
-                else {
-                    self.monthsDropdownContainer.value = d.getMonth().toString();
-                }
+                self.monthElements[i].textContent =
+                    monthToStr(d.getMonth(), self.config.shorthandCurrentMonth, self.l10n) +
+                        " ";
                 yearElement.value = d.getFullYear().toString();
             });
             self._hidePrevMonthArrow =
@@ -2463,6 +2366,8 @@ require('../../../resources/assets/js/scripts');
          */
         function updateValue(triggerChange) {
             if (triggerChange === void 0) { triggerChange = true; }
+            if (self.selectedDates.length === 0)
+                return self.clear(triggerChange);
             if (self.mobileInput !== undefined && self.mobileFormatStr) {
                 self.mobileInput.value =
                     self.latestSelectedDateObj !== undefined
@@ -2477,6 +2382,7 @@ require('../../../resources/assets/js/scripts');
                 triggerEvent("onValueUpdate");
         }
         function onMonthNavClick(e) {
+            e.preventDefault();
             var isPrevMonth = self.prevMonthNav.contains(e.target);
             var isNextMonth = self.nextMonthNav.contains(e.target);
             if (isPrevMonth || isNextMonth) {
@@ -2559,9 +2465,7 @@ require('../../../resources/assets/js/scripts');
         return instances.length === 1 ? instances[0] : instances;
     }
     /* istanbul ignore next */
-    if (typeof HTMLElement !== "undefined" &&
-        typeof HTMLCollection !== "undefined" &&
-        typeof NodeList !== "undefined") {
+    if (typeof HTMLElement !== "undefined") {
         // browser env
         HTMLCollection.prototype.flatpickr = NodeList.prototype.flatpickr = function (config) {
             return _flatpickr(this, config);
@@ -2583,7 +2487,7 @@ require('../../../resources/assets/js/scripts');
         }
     };
     /* istanbul ignore next */
-    flatpickr.defaultConfig = {};
+    flatpickr.defaultConfig = defaults;
     flatpickr.l10ns = {
         en: __assign({}, english),
         "default": __assign({}, english)
@@ -2598,12 +2502,11 @@ require('../../../resources/assets/js/scripts');
     flatpickr.formatDate = createDateFormatter({});
     flatpickr.compareDates = compareDates;
     /* istanbul ignore next */
-    if (typeof jQuery !== "undefined" && typeof jQuery.fn !== "undefined") {
+    if (typeof jQuery !== "undefined") {
         jQuery.fn.flatpickr = function (config) {
             return _flatpickr(this, config);
         };
     }
-    // eslint-disable-next-line @typescript-eslint/camelcase
     Date.prototype.fp_incr = function (days) {
         return new Date(this.getFullYear(), this.getMonth(), this.getDate() + (typeof days === "string" ? parseInt(days, 10) : days));
     };
@@ -19586,7 +19489,7 @@ return $.widget;
 
 },{}],5:[function(require,module,exports){
 /*!
- * jQuery JavaScript Library v3.4.1
+ * jQuery JavaScript Library v3.4.0
  * https://jquery.com/
  *
  * Includes Sizzle.js
@@ -19596,7 +19499,7 @@ return $.widget;
  * Released under the MIT license
  * https://jquery.org/license
  *
- * Date: 2019-05-01T21:04Z
+ * Date: 2019-04-10T19:48Z
  */
 ( function( global, factory ) {
 
@@ -19729,7 +19632,7 @@ function toType( obj ) {
 
 
 var
-	version = "3.4.1",
+	version = "3.4.0",
 
 	// Define a local copy of jQuery
 	jQuery = function( selector, context ) {
@@ -24085,12 +23988,8 @@ var documentElement = document.documentElement;
 		},
 		composed = { composed: true };
 
-	// Support: IE 9 - 11+, Edge 12 - 18+, iOS 10.0 - 10.2 only
 	// Check attachment across shadow DOM boundaries when possible (gh-3504)
-	// Support: iOS 10.0-10.2 only
-	// Early iOS 10 versions support `attachShadow` but not `getRootNode`,
-	// leading to errors. We need to check for `getRootNode`.
-	if ( documentElement.getRootNode ) {
+	if ( documentElement.attachShadow ) {
 		isAttached = function( elem ) {
 			return jQuery.contains( elem.ownerDocument, elem ) ||
 				elem.getRootNode( composed ) === elem.ownerDocument;
@@ -24950,7 +24849,8 @@ jQuery.event = {
 
 				// Claim the first handler
 				if ( rcheckableType.test( el.type ) &&
-					el.click && nodeName( el, "input" ) ) {
+					el.click && nodeName( el, "input" ) &&
+					dataPriv.get( el, "click" ) === undefined ) {
 
 					// dataPriv.set( el, "click", ... )
 					leverageNative( el, "click", returnTrue );
@@ -24967,7 +24867,8 @@ jQuery.event = {
 
 				// Force setup before triggering a click
 				if ( rcheckableType.test( el.type ) &&
-					el.click && nodeName( el, "input" ) ) {
+					el.click && nodeName( el, "input" ) &&
+					dataPriv.get( el, "click" ) === undefined ) {
 
 					leverageNative( el, "click" );
 				}
@@ -25008,9 +24909,7 @@ function leverageNative( el, type, expectSync ) {
 
 	// Missing expectSync indicates a trigger call, which must force setup through jQuery.event.add
 	if ( !expectSync ) {
-		if ( dataPriv.get( el, type ) === undefined ) {
-			jQuery.event.add( el, type, returnTrue );
-		}
+		jQuery.event.add( el, type, returnTrue );
 		return;
 	}
 
@@ -25025,13 +24924,9 @@ function leverageNative( el, type, expectSync ) {
 			if ( ( event.isTrigger & 1 ) && this[ type ] ) {
 
 				// Interrupt processing of the outer synthetic .trigger()ed event
-				// Saved data should be false in such cases, but might be a leftover capture object
-				// from an async native handler (gh-4350)
-				if ( !saved.length ) {
+				if ( !saved ) {
 
 					// Store arguments for use when handling the inner native event
-					// There will always be at least one argument (an event object), so this array
-					// will not be confused with a leftover capture object.
 					saved = slice.call( arguments );
 					dataPriv.set( this, type, saved );
 
@@ -25044,14 +24939,14 @@ function leverageNative( el, type, expectSync ) {
 					if ( saved !== result || notAsync ) {
 						dataPriv.set( this, type, false );
 					} else {
-						result = {};
+						result = undefined;
 					}
 					if ( saved !== result ) {
 
 						// Cancel the outer synthetic event
 						event.stopImmediatePropagation();
 						event.preventDefault();
-						return result.value;
+						return result;
 					}
 
 				// If this is an inner synthetic event for an event with a bubbling surrogate
@@ -25066,19 +24961,17 @@ function leverageNative( el, type, expectSync ) {
 
 			// If this is a native event triggered above, everything is now in order
 			// Fire an inner synthetic event with the original arguments
-			} else if ( saved.length ) {
+			} else if ( saved ) {
 
 				// ...and capture the result
-				dataPriv.set( this, type, {
-					value: jQuery.event.trigger(
+				dataPriv.set( this, type, jQuery.event.trigger(
 
-						// Support: IE <=9 - 11+
-						// Extend with the prototype to reset the above stopImmediatePropagation()
-						jQuery.extend( saved[ 0 ], jQuery.Event.prototype ),
-						saved.slice( 1 ),
-						this
-					)
-				} );
+					// Support: IE <=9 - 11+
+					// Extend with the prototype to reset the above stopImmediatePropagation()
+					jQuery.extend( saved.shift(), jQuery.Event.prototype ),
+					saved,
+					this
+				) );
 
 				// Abort handling of the native event
 				event.stopImmediatePropagation();
@@ -30307,7 +30200,7 @@ return MotionUI;
 module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > ul li")[t];i.style.marginLeft=e,C.querySelector("."+T+" > ul").removeChild(i),C.querySelector("."+T+" > ul").insertAdjacentHTML(n,i.outerHTML)}function n(){var t=document.createElement("ul");t.classList.add(w),t.addEventListener("click",r.bind(this));for(var e=0;e<P;e++){var n=document.createElement("li");n.setAttribute("data-position",e),t.appendChild(n)}C.appendChild(t),i()}function i(){[].forEach.call(C.querySelectorAll("."+w+" li"),function(t){t.classList.remove("is-active")}),C.querySelectorAll("."+w+" li")[I].classList.add("is-active")}function r(t){"LI"===t.target.tagName&&(c(t.target.getAttribute("data-position")),h())}function l(){var t=document.createElement("button");t.innerHTML=A,t.classList.add(j);var e=document.createElement("button");e.innerHTML=x,e.classList.add(k),t.addEventListener("click",d),e.addEventListener("click",p),C.appendChild(t),C.appendChild(e)}function a(){var t=document.createElement("button");t.innerHTML=q,t.classList.add(M),t.addEventListener("click",b);var e=document.createElement("button");e.innerHTML=g,e.classList.add(H),e.addEventListener("click",E),C.appendChild(t),C.appendChild(e)}function o(t){t.style.marginLeft=""}function u(t){t.style.marginLeft=-C.offsetWidth+"px"}function c(t){var e=I-t;e<0?s(-e,p):s(e,d)}function s(t,e){for(var n=0;n<t;n++)e()}function d(){t.infinite?f():v(),h()}function f(){o(C.querySelectorAll("."+T+" > ul li")[0]),e(P-1,-C.offsetWidth+"px","afterBegin"),y(-1)}function v(){E(),0!==I&&(o(C.querySelectorAll("."+T+" > ul li")[I-1]),y(-1))}function p(){t.infinite?m():L(),h()}function m(){u(C.querySelectorAll("."+T+" > ul li")[1]),e(0,"","beforeEnd"),y(1)}function L(){I!==P-1?(u(C.querySelectorAll("."+T+" > ul li")[I]),y(1)):E()}function y(e){switch(I+=e){case-1:I=P-1;break;case P:I=0;break;default:I=I}t.dots&&i()}function h(){B&&(E(),b())}function b(){B||(B=setInterval(p.bind(this),S))}function E(){clearInterval(B),B=null}var C=document.getElementById(t.elem||"carousel"),S=t.interval||3e3,q=t.btnPlayText||"Play",g=t.btnStopText||"Stop",x=t.arrNextText||"&rsaquo;",A=t.arrPrevText||"&lsaquo;",T="js-Carousel",j="js-Carousel-arrowPrev",k="js-Carousel-arrowNext",w="js-Carousel-dots",H="js-Carousel-btnStop",M="js-Carousel-btnPlay",P=C.querySelectorAll("li").length,I=0,B=null;return P>1&&function(){var i={dots:function(){return n()},arrows:function(){return l()},buttons:function(){return a()},autoplay:function(){return b()},infinite:function(){return e(P-1,-C.offsetWidth+"px","afterBegin")},initial:function(){return c(t.initial>=P?P:t.initial)}};for(var r in i)t.hasOwnProperty(r)&&t[r]&&i[r]()}(),{live:function(){return I},show:c,prev:d,next:p,play:b,stop:E}};
 },{}],8:[function(require,module,exports){
 /*!
- * vanilla-picker v2.9.2
+ * vanilla-picker v2.8.0
  * https://vanilla-picker.js.org
  *
  * Copyright 2017-2019 Andreas Borgen (https://github.com/Sphinxxxx), Adam Brooks (https://github.com/dissimulate)
@@ -30382,372 +30275,539 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
   }();
 
   String.prototype.startsWith = String.prototype.startsWith || function (needle) {
-      return this.indexOf(needle) === 0;
+  	return this.indexOf(needle) === 0;
   };
   String.prototype.padStart = String.prototype.padStart || function (len, pad) {
-      var str = this;while (str.length < len) {
-          str = pad + str;
-      }return str;
+  	var str = this;while (str.length < len) {
+  		str = pad + str;
+  	}return str;
   };
 
   var colorNames = { aliceblue: '#f0f8ff', antiquewhite: '#faebd7', aqua: '#00ffff', aquamarine: '#7fffd4', azure: '#f0ffff', beige: '#f5f5dc', bisque: '#ffe4c4', black: '#000000', blanchedalmond: '#ffebcd', blue: '#0000ff', blueviolet: '#8a2be2', brown: '#a52a2a', burlywood: '#deb887', cadetblue: '#5f9ea0', chartreuse: '#7fff00', chocolate: '#d2691e', coral: '#ff7f50', cornflowerblue: '#6495ed', cornsilk: '#fff8dc', crimson: '#dc143c', cyan: '#00ffff', darkblue: '#00008b', darkcyan: '#008b8b', darkgoldenrod: '#b8860b', darkgray: '#a9a9a9', darkgreen: '#006400', darkgrey: '#a9a9a9', darkkhaki: '#bdb76b', darkmagenta: '#8b008b', darkolivegreen: '#556b2f', darkorange: '#ff8c00', darkorchid: '#9932cc', darkred: '#8b0000', darksalmon: '#e9967a', darkseagreen: '#8fbc8f', darkslateblue: '#483d8b', darkslategray: '#2f4f4f', darkslategrey: '#2f4f4f', darkturquoise: '#00ced1', darkviolet: '#9400d3', deeppink: '#ff1493', deepskyblue: '#00bfff', dimgray: '#696969', dimgrey: '#696969', dodgerblue: '#1e90ff', firebrick: '#b22222', floralwhite: '#fffaf0', forestgreen: '#228b22', fuchsia: '#ff00ff', gainsboro: '#dcdcdc', ghostwhite: '#f8f8ff', gold: '#ffd700', goldenrod: '#daa520', gray: '#808080', green: '#008000', greenyellow: '#adff2f', grey: '#808080', honeydew: '#f0fff0', hotpink: '#ff69b4', indianred: '#cd5c5c', indigo: '#4b0082', ivory: '#fffff0', khaki: '#f0e68c', lavender: '#e6e6fa', lavenderblush: '#fff0f5', lawngreen: '#7cfc00', lemonchiffon: '#fffacd', lightblue: '#add8e6', lightcoral: '#f08080', lightcyan: '#e0ffff', lightgoldenrodyellow: '#fafad2', lightgray: '#d3d3d3', lightgreen: '#90ee90', lightgrey: '#d3d3d3', lightpink: '#ffb6c1', lightsalmon: '#ffa07a', lightseagreen: '#20b2aa', lightskyblue: '#87cefa', lightslategray: '#778899', lightslategrey: '#778899', lightsteelblue: '#b0c4de', lightyellow: '#ffffe0', lime: '#00ff00', limegreen: '#32cd32', linen: '#faf0e6', magenta: '#ff00ff', maroon: '#800000', mediumaquamarine: '#66cdaa', mediumblue: '#0000cd', mediumorchid: '#ba55d3', mediumpurple: '#9370db', mediumseagreen: '#3cb371', mediumslateblue: '#7b68ee', mediumspringgreen: '#00fa9a', mediumturquoise: '#48d1cc', mediumvioletred: '#c71585', midnightblue: '#191970', mintcream: '#f5fffa', mistyrose: '#ffe4e1', moccasin: '#ffe4b5', navajowhite: '#ffdead', navy: '#000080', oldlace: '#fdf5e6', olive: '#808000', olivedrab: '#6b8e23', orange: '#ffa500', orangered: '#ff4500', orchid: '#da70d6', palegoldenrod: '#eee8aa', palegreen: '#98fb98', paleturquoise: '#afeeee', palevioletred: '#db7093', papayawhip: '#ffefd5', peachpuff: '#ffdab9', peru: '#cd853f', pink: '#ffc0cb', plum: '#dda0dd', powderblue: '#b0e0e6', purple: '#800080', rebeccapurple: '#663399', red: '#ff0000', rosybrown: '#bc8f8f', royalblue: '#4169e1', saddlebrown: '#8b4513', salmon: '#fa8072', sandybrown: '#f4a460', seagreen: '#2e8b57', seashell: '#fff5ee', sienna: '#a0522d', silver: '#c0c0c0', skyblue: '#87ceeb', slateblue: '#6a5acd', slategray: '#708090', slategrey: '#708090', snow: '#fffafa', springgreen: '#00ff7f', steelblue: '#4682b4', tan: '#d2b48c', teal: '#008080', thistle: '#d8bfd8', tomato: '#ff6347', turquoise: '#40e0d0', violet: '#ee82ee', wheat: '#f5deb3', white: '#ffffff', whitesmoke: '#f5f5f5', yellow: '#ffff00', yellowgreen: '#9acd32' };
 
   function printNum(num) {
-      var decs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+  	var decs = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
 
-      var str = decs > 0 ? num.toFixed(decs).replace(/0+$/, '').replace(/\.$/, '') : num.toString();
-      return str || '0';
+  	var str = decs > 0 ? num.toFixed(decs).replace(/0+$/, '').replace(/\.$/, '') : num.toString();
+  	return str || '0';
   }
 
   var Color = function () {
-      function Color(r, g, b, a) {
-          classCallCheck(this, Color);
+  	function Color(r, g, b, a) {
+  		classCallCheck(this, Color);
 
 
-          var that = this;
-          function parseString(input) {
+  		var that = this;
+  		function parseString(input) {
 
-              if (input.startsWith('hsl')) {
-                  var _input$match$map = input.match(/([\-\d\.e]+)/g).map(Number),
-                      _input$match$map2 = slicedToArray(_input$match$map, 4),
-                      h = _input$match$map2[0],
-                      s = _input$match$map2[1],
-                      l = _input$match$map2[2],
-                      _a = _input$match$map2[3];
+  			if (input.startsWith('hsl')) {
+  				var _input$match$map = input.match(/([\-\d\.e]+)/g).map(Number),
+  				    _input$match$map2 = slicedToArray(_input$match$map, 4),
+  				    h = _input$match$map2[0],
+  				    s = _input$match$map2[1],
+  				    l = _input$match$map2[2],
+  				    _a = _input$match$map2[3];
 
-                  if (_a === undefined) {
-                      _a = 1;
-                  }
+  				if (_a === undefined) {
+  					_a = 1;
+  				}
 
-                  h /= 360;
-                  s /= 100;
-                  l /= 100;
-                  that.hsla = [h, s, l, _a];
-              } else if (input.startsWith('rgb')) {
-                  var _input$match$map3 = input.match(/([\-\d\.e]+)/g).map(Number),
-                      _input$match$map4 = slicedToArray(_input$match$map3, 4),
-                      _r = _input$match$map4[0],
-                      _g = _input$match$map4[1],
-                      _b = _input$match$map4[2],
-                      _a2 = _input$match$map4[3];
+  				h /= 360;
+  				s /= 100;
+  				l /= 100;
+  				that.hsla = [h, s, l, _a];
+  			}
 
-                  if (_a2 === undefined) {
-                      _a2 = 1;
-                  }
+  			else if (input.startsWith('rgb')) {
+  					var _input$match$map3 = input.match(/([\-\d\.e]+)/g).map(Number),
+  					    _input$match$map4 = slicedToArray(_input$match$map3, 4),
+  					    _r = _input$match$map4[0],
+  					    _g = _input$match$map4[1],
+  					    _b = _input$match$map4[2],
+  					    _a2 = _input$match$map4[3];
 
-                  that.rgba = [_r, _g, _b, _a2];
-              } else {
-                  if (input.startsWith('#')) {
-                      that.rgba = Color.hexToRgb(input);
-                  } else {
-                      that.rgba = Color.nameToRgb(input) || Color.hexToRgb(input);
+  					if (_a2 === undefined) {
+  						_a2 = 1;
+  					}
+
+  					that.rgba = [_r, _g, _b, _a2];
+  				}
+
+  				else {
+  						if (input.startsWith('#')) {
+  							that.rgba = Color.hexToRgb(input);
+  						} else {
+  							that.rgba = Color.nameToRgb(input) || Color.hexToRgb(input);
+  						}
+  					}
+  		}
+
+  		if (r === undefined) ;
+
+
+  		else if (Array.isArray(r)) {
+  				this.rgba = r;
+  			}
+
+  			else if (b === undefined) {
+  					var color = r && '' + r;
+  					if (color) {
+  						parseString(color.toLowerCase());
+  					}
+  				} else {
+  					this.rgba = [r, g, b, a === undefined ? 1 : a];
+  				}
+  	}
+
+
+  	createClass(Color, [{
+  		key: 'printRGB',
+  		value: function printRGB(alpha) {
+  			var rgb = alpha ? this.rgba : this.rgba.slice(0, 3),
+  			    vals = rgb.map(function (x, i) {
+  				return printNum(x, i === 3 ? 3 : 0);
+  			});
+
+  			return alpha ? 'rgba(' + vals + ')' : 'rgb(' + vals + ')';
+  		}
+  	}, {
+  		key: 'printHSL',
+  		value: function printHSL(alpha) {
+  			var mults = [360, 100, 100, 1],
+  			    suff = ['', '%', '%', ''];
+
+  			var hsl = alpha ? this.hsla : this.hsla.slice(0, 3),
+
+  			vals = hsl.map(function (x, i) {
+  				return printNum(x * mults[i], i === 3 ? 3 : 1) + suff[i];
+  			});
+
+  			return alpha ? 'hsla(' + vals + ')' : 'hsl(' + vals + ')';
+  		}
+  	}, {
+  		key: 'printHex',
+  		value: function printHex(alpha) {
+  			var hex = this.hex;
+  			return alpha ? hex : hex.substring(0, 7);
+  		}
+
+
+
+  	}, {
+  		key: 'rgba',
+  		get: function get$$1() {
+  			if (this._rgba) {
+  				return this._rgba;
+  			}
+  			if (!this._hsla) {
+  				throw new Error('No color is set');
+  			}
+
+  			return this._rgba = Color.hslToRgb(this._hsla);
+  		},
+  		set: function set$$1(rgb) {
+  			if (rgb.length === 3) {
+  				rgb[3] = 1;
+  			}
+
+  			this._rgba = rgb;
+  			this._hsla = null;
+  		}
+  	}, {
+  		key: 'rgbString',
+  		get: function get$$1() {
+  			return this.printRGB();
+  		}
+  	}, {
+  		key: 'rgbaString',
+  		get: function get$$1() {
+  			return this.printRGB(true);
+  		}
+
+
+  	}, {
+  		key: 'hsla',
+  		get: function get$$1() {
+  			if (this._hsla) {
+  				return this._hsla;
+  			}
+  			if (!this._rgba) {
+  				throw new Error('No color is set');
+  			}
+
+  			return this._hsla = Color.rgbToHsl(this._rgba);
+  		},
+  		set: function set$$1(hsl) {
+  			if (hsl.length === 3) {
+  				hsl[3] = 1;
+  			}
+
+  			this._hsla = hsl;
+  			this._rgba = null;
+  		}
+  	}, {
+  		key: 'hslString',
+  		get: function get$$1() {
+  			return this.printHSL();
+  		}
+  	}, {
+  		key: 'hslaString',
+  		get: function get$$1() {
+  			return this.printHSL(true);
+  		}
+
+
+  	}, {
+  		key: 'hex',
+  		get: function get$$1() {
+  			var rgb = this.rgba,
+  			    hex = rgb.map(function (x, i) {
+  				return i < 3 ? x.toString(16) : Math.round(x * 255).toString(16);
+  			});
+
+  			return '#' + hex.map(function (x) {
+  				return x.padStart(2, '0');
+  			}).join('');
+  		},
+  		set: function set$$1(hex) {
+  			this.rgba = Color.hexToRgb(hex);
+  		}
+  	}], [{
+  		key: 'hexToRgb',
+  		value: function hexToRgb(input) {
+  			var hex = (input.startsWith('#') ? input.slice(1) : input).replace(/^(\w{3})$/, '$1F') 
+  			.replace(/^(\w)(\w)(\w)(\w)$/, '$1$1$2$2$3$3$4$4') 
+  			.replace(/^(\w{6})$/, '$1FF'); 
+
+  			if (!hex.match(/^([0-9a-fA-F]{8})$/)) {
+  				throw new Error('Unknown hex color; ' + input);
+  			}
+
+  			var rgba = hex.match(/^(\w\w)(\w\w)(\w\w)(\w\w)$/).slice(1) 
+  			.map(function (x) {
+  				return parseInt(x, 16);
+  			}); 
+
+  			rgba[3] = rgba[3] / 255;
+  			return rgba;
+  		}
+
+
+  	}, {
+  		key: 'nameToRgb',
+  		value: function nameToRgb(input) {
+  			var hex = colorNames[input];
+  			if (hex) {
+  				return Color.hexToRgb(hex);
+  			}
+  		}
+
+
+  	}, {
+  		key: 'rgbToHsl',
+  		value: function rgbToHsl(_ref) {
+  			var _ref2 = slicedToArray(_ref, 4),
+  			    r = _ref2[0],
+  			    g = _ref2[1],
+  			    b = _ref2[2],
+  			    a = _ref2[3];
+
+  			r /= 255;
+  			g /= 255;
+  			b /= 255;
+
+  			var max = Math.max(r, g, b),
+  			    min = Math.min(r, g, b);
+  			var h = void 0,
+  			    s = void 0,
+  			    l = (max + min) / 2;
+
+  			if (max === min) {
+  				h = s = 0; 
+  			} else {
+  				var d = max - min;
+  				s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  				switch (max) {
+  					case r:
+  						h = (g - b) / d + (g < b ? 6 : 0);break;
+  					case g:
+  						h = (b - r) / d + 2;break;
+  					case b:
+  						h = (r - g) / d + 4;break;
+  				}
+
+  				h /= 6;
+  			}
+
+  			return [h, s, l, a];
+  		}
+
+
+  	}, {
+  		key: 'hslToRgb',
+  		value: function hslToRgb(_ref3) {
+  			var _ref4 = slicedToArray(_ref3, 4),
+  			    h = _ref4[0],
+  			    s = _ref4[1],
+  			    l = _ref4[2],
+  			    a = _ref4[3];
+
+  			var r = void 0,
+  			    g = void 0,
+  			    b = void 0;
+
+  			if (s === 0) {
+  				r = g = b = l; 
+  			} else {
+  				var hue2rgb = function hue2rgb(p, q, t) {
+  					if (t < 0) t += 1;
+  					if (t > 1) t -= 1;
+  					if (t < 1 / 6) return p + (q - p) * 6 * t;
+  					if (t < 1 / 2) return q;
+  					if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+  					return p;
+  				};
+
+  				var q = l < 0.5 ? l * (1 + s) : l + s - l * s,
+  				    p = 2 * l - q;
+
+  				r = hue2rgb(p, q, h + 1 / 3);
+  				g = hue2rgb(p, q, h);
+  				b = hue2rgb(p, q, h - 1 / 3);
+  			}
+
+  			var rgba = [r * 255, g * 255, b * 255].map(Math.round);
+  			rgba[3] = a;
+
+  			return rgba;
+  		}
+  	}]);
+  	return Color;
+  }();
+
+  var root = window;
+
+  function dragTracker(options) {
+
+
+      var ep = Element.prototype;
+      if (!ep.matches) ep.matches = ep.msMatchesSelector || ep.webkitMatchesSelector;
+      if (!ep.closest) ep.closest = function (s) {
+          var node = this;
+          do {
+              if (node.matches(s)) return node;
+              node = node.tagName === 'svg' ? node.parentNode : node.parentElement;
+          } while (node);
+
+          return null;
+      };
+
+      options = options || {};
+      var container = options.container || document.documentElement,
+          selector = options.selector,
+          callback = options.callback || console.log,
+          callbackStart = options.callbackDragStart,
+          callbackEnd = options.callbackDragEnd,
+
+      callbackClick = options.callbackClick,
+          propagate = options.propagateEvents,
+          roundCoords = options.roundCoords !== false,
+          dragOutside = options.dragOutside !== false,
+
+      handleOffset = options.handleOffset || options.handleOffset !== false;
+      var offsetToCenter = null;
+      switch (handleOffset) {
+          case 'center':
+              offsetToCenter = true;break;
+          case 'topleft':
+          case 'top-left':
+              offsetToCenter = false;break;
+      }
+
+      var dragState = void 0;
+
+      function getMousePos(e, elm, offset, stayWithin) {
+          var x = e.clientX,
+              y = e.clientY;
+
+          function respectBounds(value, min, max) {
+              return Math.max(min, Math.min(value, max));
+          }
+
+          if (elm) {
+              var bounds = elm.getBoundingClientRect();
+              x -= bounds.left;
+              y -= bounds.top;
+
+              if (offset) {
+                  x -= offset[0];
+                  y -= offset[1];
+              }
+              if (stayWithin) {
+                  x = respectBounds(x, 0, bounds.width);
+                  y = respectBounds(y, 0, bounds.height);
+              }
+
+              if (elm !== container) {
+                  var center = offsetToCenter !== null ? offsetToCenter
+                  : elm.nodeName === 'circle' || elm.nodeName === 'ellipse';
+
+                  if (center) {
+                      x -= bounds.width / 2;
+                      y -= bounds.height / 2;
                   }
               }
           }
+          return roundCoords ? [Math.round(x), Math.round(y)] : [x, y];
+      }
 
-          if (r === undefined) ; else if (Array.isArray(r)) {
-              this.rgba = r;
-          } else if (b === undefined) {
-              var color = r && '' + r;
-              if (color) {
-                  parseString(color.toLowerCase());
-              }
-          } else {
-              this.rgba = [r, g, b, a === undefined ? 1 : a];
+      function stopEvent(e) {
+          e.preventDefault();
+          if (!propagate) {
+              e.stopPropagation();
           }
       }
 
-      createClass(Color, [{
-          key: 'printRGB',
-          value: function printRGB(alpha) {
-              var rgb = alpha ? this.rgba : this.rgba.slice(0, 3),
-                  vals = rgb.map(function (x, i) {
-                  return printNum(x, i === 3 ? 3 : 0);
-              });
-
-              return alpha ? 'rgba(' + vals + ')' : 'rgb(' + vals + ')';
+      function onDown(e) {
+          var target = void 0;
+          if (selector) {
+              target = selector instanceof Element ? selector.contains(e.target) ? selector : null : e.target.closest(selector);
+          } else {
+              target = {};
           }
-      }, {
-          key: 'printHSL',
-          value: function printHSL(alpha) {
-              var mults = [360, 100, 100, 1],
-                  suff = ['', '%', '%', ''];
 
-              var hsl = alpha ? this.hsla : this.hsla.slice(0, 3),
-                  vals = hsl.map(function (x, i) {
-                  return printNum(x * mults[i], i === 3 ? 3 : 1) + suff[i];
-              });
+          if (target) {
+              stopEvent(e);
 
-              return alpha ? 'hsla(' + vals + ')' : 'hsl(' + vals + ')';
-          }
-      }, {
-          key: 'printHex',
-          value: function printHex(alpha) {
-              var hex = this.hex;
-              return alpha ? hex : hex.substring(0, 7);
-          }
-      }, {
-          key: 'rgba',
-          get: function get$$1() {
-              if (this._rgba) {
-                  return this._rgba;
-              }
-              if (!this._hsla) {
-                  throw new Error('No color is set');
-              }
+              var mouseOffset = selector && handleOffset ? getMousePos(e, target) : [0, 0],
+                  startPos = getMousePos(e, container, mouseOffset);
+              dragState = {
+                  target: target,
+                  mouseOffset: mouseOffset,
+                  startPos: startPos,
+                  actuallyDragged: false
+              };
 
-              return this._rgba = Color.hslToRgb(this._hsla);
-          },
-          set: function set$$1(rgb) {
-              if (rgb.length === 3) {
-                  rgb[3] = 1;
-              }
-
-              this._rgba = rgb;
-              this._hsla = null;
-          }
-      }, {
-          key: 'rgbString',
-          get: function get$$1() {
-              return this.printRGB();
-          }
-      }, {
-          key: 'rgbaString',
-          get: function get$$1() {
-              return this.printRGB(true);
-          }
-      }, {
-          key: 'hsla',
-          get: function get$$1() {
-              if (this._hsla) {
-                  return this._hsla;
-              }
-              if (!this._rgba) {
-                  throw new Error('No color is set');
-              }
-
-              return this._hsla = Color.rgbToHsl(this._rgba);
-          },
-          set: function set$$1(hsl) {
-              if (hsl.length === 3) {
-                  hsl[3] = 1;
-              }
-
-              this._hsla = hsl;
-              this._rgba = null;
-          }
-      }, {
-          key: 'hslString',
-          get: function get$$1() {
-              return this.printHSL();
-          }
-      }, {
-          key: 'hslaString',
-          get: function get$$1() {
-              return this.printHSL(true);
-          }
-      }, {
-          key: 'hex',
-          get: function get$$1() {
-              var rgb = this.rgba,
-                  hex = rgb.map(function (x, i) {
-                  return i < 3 ? x.toString(16) : Math.round(x * 255).toString(16);
-              });
-
-              return '#' + hex.map(function (x) {
-                  return x.padStart(2, '0');
-              }).join('');
-          },
-          set: function set$$1(hex) {
-              this.rgba = Color.hexToRgb(hex);
-          }
-      }], [{
-          key: 'hexToRgb',
-          value: function hexToRgb(input) {
-
-              var hex = (input.startsWith('#') ? input.slice(1) : input).replace(/^(\w{3})$/, '$1F').replace(/^(\w)(\w)(\w)(\w)$/, '$1$1$2$2$3$3$4$4').replace(/^(\w{6})$/, '$1FF');
-
-              if (!hex.match(/^([0-9a-fA-F]{8})$/)) {
-                  throw new Error('Unknown hex color; ' + input);
-              }
-
-              var rgba = hex.match(/^(\w\w)(\w\w)(\w\w)(\w\w)$/).slice(1).map(function (x) {
-                  return parseInt(x, 16);
-              });
-
-              rgba[3] = rgba[3] / 255;
-              return rgba;
-          }
-      }, {
-          key: 'nameToRgb',
-          value: function nameToRgb(input) {
-
-              var hex = colorNames[input];
-              if (hex) {
-                  return Color.hexToRgb(hex);
+              if (callbackStart) {
+                  callbackStart(target, startPos);
               }
           }
-      }, {
-          key: 'rgbToHsl',
-          value: function rgbToHsl(_ref) {
-              var _ref2 = slicedToArray(_ref, 4),
-                  r = _ref2[0],
-                  g = _ref2[1],
-                  b = _ref2[2],
-                  a = _ref2[3];
+      }
 
-              r /= 255;
-              g /= 255;
-              b /= 255;
-
-              var max = Math.max(r, g, b),
-                  min = Math.min(r, g, b);
-              var h = void 0,
-                  s = void 0,
-                  l = (max + min) / 2;
-
-              if (max === min) {
-                  h = s = 0;
-              } else {
-                  var d = max - min;
-                  s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-                  switch (max) {
-                      case r:
-                          h = (g - b) / d + (g < b ? 6 : 0);break;
-                      case g:
-                          h = (b - r) / d + 2;break;
-                      case b:
-                          h = (r - g) / d + 4;break;
-                  }
-
-                  h /= 6;
-              }
-
-              return [h, s, l, a];
+      function onMove(e) {
+          if (!dragState) {
+              return;
           }
-      }, {
-          key: 'hslToRgb',
-          value: function hslToRgb(_ref3) {
-              var _ref4 = slicedToArray(_ref3, 4),
-                  h = _ref4[0],
-                  s = _ref4[1],
-                  l = _ref4[2],
-                  a = _ref4[3];
+          stopEvent(e);
 
-              var r = void 0,
-                  g = void 0,
-                  b = void 0;
+          var start = dragState.startPos,
+              pos = getMousePos(e, container, dragState.mouseOffset, !dragOutside);
 
-              if (s === 0) {
-                  r = g = b = l;
-              } else {
-                  var hue2rgb = function hue2rgb(p, q, t) {
-                      if (t < 0) t += 1;
-                      if (t > 1) t -= 1;
-                      if (t < 1 / 6) return p + (q - p) * 6 * t;
-                      if (t < 1 / 2) return q;
-                      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
-                      return p;
-                  };
+          dragState.actuallyDragged = dragState.actuallyDragged || start[0] !== pos[0] || start[1] !== pos[1];
 
-                  var q = l < 0.5 ? l * (1 + s) : l + s - l * s,
-                      p = 2 * l - q;
+          callback(dragState.target, pos, start);
+      }
 
-                  r = hue2rgb(p, q, h + 1 / 3);
-                  g = hue2rgb(p, q, h);
-                  b = hue2rgb(p, q, h - 1 / 3);
-              }
-
-              var rgba = [r * 255, g * 255, b * 255].map(Math.round);
-              rgba[3] = a;
-
-              return rgba;
+      function onEnd(e, cancelled) {
+          if (!dragState) {
+              return;
           }
-      }]);
-      return Color;
-  }();
+
+          if (callbackEnd || callbackClick) {
+              var isClick = !dragState.actuallyDragged,
+                  pos = isClick ? dragState.startPos : getMousePos(e, container, dragState.mouseOffset, !dragOutside);
+
+              if (callbackClick && isClick && !cancelled) {
+                  callbackClick(dragState.target, pos);
+              }
+              if (callbackEnd) {
+                  callbackEnd(dragState.target, pos, dragState.startPos, cancelled || isClick && callbackClick);
+              }
+          }
+          dragState = null;
+      }
+
+
+      addEvent(container, 'mousedown', function (e) {
+          if (isLeftButton(e)) {
+              onDown(e);
+          } else {
+              onEnd(e, true);
+          }
+      });
+      addEvent(container, 'touchstart', function (e) {
+          return relayTouch(e, onDown);
+      });
+
+      addEvent(root, 'mousemove', function (e) {
+          if (!dragState) {
+              return;
+          }
+
+          if (isLeftButton(e)) {
+              onMove(e);
+          }
+          else {
+                  onEnd(e);
+              }
+      });
+      addEvent(root, 'touchmove', function (e) {
+          return relayTouch(e, onMove);
+      });
+
+      addEvent(container, 'mouseup', function (e) {
+          if (dragState && !isLeftButton(e)) {
+              onEnd(e);
+          }
+      });
+      function onTouchEnd(e, cancelled) {
+          onEnd(tweakTouch(e), cancelled);
+      }
+      addEvent(container, 'touchend', function (e) {
+          return onTouchEnd(e);
+      });
+      addEvent(container, 'touchcancel', function (e) {
+          return onTouchEnd(e, true);
+      });
+
+      function addEvent(target, type, handler) {
+          target.addEventListener(type, handler);
+      }
+      function isLeftButton(e) {
+          return e.buttons !== undefined ? e.buttons === 1 :
+          e.which === 1;
+      }
+      function relayTouch(e, handler) {
+          if (e.touches.length !== 1) {
+              onEnd(e, true);return;
+          }
+
+          handler(tweakTouch(e));
+      }
+      function tweakTouch(e) {
+          var touch = e.targetTouches[0];
+          if (!touch) {
+              touch = e.changedTouches[0];
+          }
+
+          touch.preventDefault = e.preventDefault.bind(e);
+          touch.stopPropagation = e.stopPropagation.bind(e);
+          return touch;
+      }
+  }
+
+
+  var BG_TRANSP = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'2\' height=\'2\'%3E%3Cpath d=\'M1,0H0V1H2V2H1\' fill=\'lightgrey\'/%3E%3C/svg%3E")';
+  var HUES = 360;
+  var EVENT_KEY = 'keydown',
+  EVENT_CLICK_OUTSIDE = 'mousedown',
+      EVENT_TAB_MOVE = 'focusin';
 
   function parseHTML(htmlString) {
-
       var div = document.createElement('div');
       div.innerHTML = htmlString;
       return div.firstElementChild;
   }
-
-  function dragTrack(area, callback) {
-      var dragging = false;
-
-      function addEvent(target, type, handler) {
-          target.addEventListener(type, handler, false);
-      }
-      function clamp(val, min, max) {
-          return Math.max(min, Math.min(val, max));
-      }
-
-      function onMove(e, info, starting) {
-          if (starting) {
-              dragging = true;
-          }
-          if (!dragging) {
-              return;
-          }
-
-          e.preventDefault();
-
-          var bounds = area.getBoundingClientRect(),
-              w = bounds.width,
-              h = bounds.height,
-              x = info.clientX,
-              y = info.clientY;
-
-          var relX = clamp(x - bounds.left, 0, w),
-              relY = clamp(y - bounds.top, 0, h);
-
-          callback(relX / w, relY / h);
-      }
-
-      function onMouse(e, starting) {
-          var button = e.buttons === undefined ? e.which : e.buttons;
-          if (button === 1) {
-              onMove(e, e, starting);
-          } else {
-              dragging = false;
-          }
-      }
-
-      function onTouch(e, starting) {
-          if (e.touches.length === 1) {
-              onMove(e, e.touches[0], starting);
-          } else {
-              dragging = false;
-          }
-      }
-
-      addEvent(area, 'mousedown', function (e) {
-          onMouse(e, true);
-      });
-      addEvent(area, 'touchstart', function (e) {
-          onTouch(e, true);
-      });
-      addEvent(window, 'mousemove', onMouse);
-      addEvent(area, 'touchmove', onTouch);
-      addEvent(window, 'mouseup', function (e) {
-          dragging = false;
-      });
-      addEvent(area, 'touchend', function (e) {
-          dragging = false;
-      });
-      addEvent(area, 'touchcancel', function (e) {
-          dragging = false;
-      });
-  }
-
-  var BG_TRANSP = 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'2\' height=\'2\'%3E%3Cpath d=\'M1,0H0V1H2V2H1\' fill=\'lightgrey\'/%3E%3C/svg%3E")';
-  var HUES = 360;
-
-  var EVENT_KEY = 'keydown',
-      EVENT_CLICK_OUTSIDE = 'mousedown',
-      EVENT_TAB_MOVE = 'focusin';
 
   function $(selector, context) {
       return (context || document).querySelector(selector);
@@ -30757,7 +30817,6 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
       target.addEventListener(type, handler, false);
   }
   function stopEvent(e) {
-
       e.preventDefault();
       e.stopPropagation();
   }
@@ -30773,10 +30832,13 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
   }
 
   var _style = document.createElement('style');
-  _style.textContent = '.picker_wrapper.no_alpha .picker_alpha{display:none}.picker_wrapper.no_editor .picker_editor{position:absolute;z-index:-1;opacity:0}.picker_wrapper.no_cancel .picker_cancel{display:none}.layout_default.picker_wrapper{display:-webkit-box;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;flex-flow:row wrap;-webkit-box-pack:justify;justify-content:space-between;-webkit-box-align:stretch;align-items:stretch;font-size:10px;width:25em;padding:.5em}.layout_default.picker_wrapper input,.layout_default.picker_wrapper button{font-size:1rem}.layout_default.picker_wrapper>*{margin:.5em}.layout_default.picker_wrapper::before{content:\'\';display:block;width:100%;height:0;-webkit-box-ordinal-group:2;order:1}.layout_default .picker_slider,.layout_default .picker_selector{padding:1em}.layout_default .picker_hue{width:100%}.layout_default .picker_sl{-webkit-box-flex:1;flex:1 1 auto}.layout_default .picker_sl::before{content:\'\';display:block;padding-bottom:100%}.layout_default .picker_editor{-webkit-box-ordinal-group:2;order:1;width:6.5rem}.layout_default .picker_editor input{width:100%;height:100%}.layout_default .picker_sample{-webkit-box-ordinal-group:2;order:1;-webkit-box-flex:1;flex:1 1 auto}.layout_default .picker_done,.layout_default .picker_cancel{-webkit-box-ordinal-group:2;order:1}.picker_wrapper{box-sizing:border-box;background:#f2f2f2;box-shadow:0 0 0 1px silver;cursor:default;font-family:sans-serif;color:#444;pointer-events:auto}.picker_wrapper:focus{outline:none}.picker_wrapper button,.picker_wrapper input{box-sizing:border-box;border:none;box-shadow:0 0 0 1px silver;outline:none}.picker_wrapper button:focus,.picker_wrapper button:active,.picker_wrapper input:focus,.picker_wrapper input:active{box-shadow:0 0 2px 1px dodgerblue}.picker_wrapper button{padding:.4em .6em;cursor:pointer;background-color:whitesmoke;background-image:-webkit-gradient(linear, left bottom, left top, from(gainsboro), to(transparent));background-image:-webkit-linear-gradient(bottom, gainsboro, transparent);background-image:linear-gradient(0deg, gainsboro, transparent)}.picker_wrapper button:active{background-image:-webkit-gradient(linear, left bottom, left top, from(transparent), to(gainsboro));background-image:-webkit-linear-gradient(bottom, transparent, gainsboro);background-image:linear-gradient(0deg, transparent, gainsboro)}.picker_wrapper button:hover{background-color:white}.picker_selector{position:absolute;z-index:1;display:block;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);border:2px solid white;border-radius:100%;box-shadow:0 0 3px 1px #67b9ff;background:currentColor;cursor:pointer}.picker_slider .picker_selector{border-radius:2px}.picker_hue{position:relative;background-image:-webkit-gradient(linear, left top, right top, from(red), color-stop(yellow), color-stop(lime), color-stop(cyan), color-stop(blue), color-stop(magenta), to(red));background-image:-webkit-linear-gradient(left, red, yellow, lime, cyan, blue, magenta, red);background-image:linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);box-shadow:0 0 0 1px silver}.picker_sl{position:relative;box-shadow:0 0 0 1px silver;background-image:-webkit-gradient(linear, left top, left bottom, from(white), color-stop(50%, rgba(255,255,255,0))),-webkit-gradient(linear, left bottom, left top, from(black), color-stop(50%, rgba(0,0,0,0))),-webkit-gradient(linear, left top, right top, from(gray), to(rgba(128,128,128,0)));background-image:-webkit-linear-gradient(top, white, rgba(255,255,255,0) 50%),-webkit-linear-gradient(bottom, black, rgba(0,0,0,0) 50%),-webkit-linear-gradient(left, gray, rgba(128,128,128,0));background-image:linear-gradient(180deg, white, rgba(255,255,255,0) 50%),linear-gradient(0deg, black, rgba(0,0,0,0) 50%),linear-gradient(90deg, gray, rgba(128,128,128,0))}.picker_alpha,.picker_sample{position:relative;background:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'2\' height=\'2\'%3E%3Cpath d=\'M1,0H0V1H2V2H1\' fill=\'lightgrey\'/%3E%3C/svg%3E") left top/contain white;box-shadow:0 0 0 1px silver}.picker_alpha .picker_selector,.picker_sample .picker_selector{background:none}.picker_editor input{font-family:monospace;padding:.2em .4em}.picker_sample::before{content:\'\';position:absolute;display:block;width:100%;height:100%;background:currentColor}.picker_arrow{position:absolute;z-index:-1}.picker_wrapper.popup{position:absolute;z-index:2;margin:1.5em}.picker_wrapper.popup,.picker_wrapper.popup .picker_arrow::before,.picker_wrapper.popup .picker_arrow::after{background:#f2f2f2;box-shadow:0 0 10px 1px rgba(0,0,0,0.4)}.picker_wrapper.popup .picker_arrow{width:3em;height:3em;margin:0}.picker_wrapper.popup .picker_arrow::before,.picker_wrapper.popup .picker_arrow::after{content:"";display:block;position:absolute;top:0;left:0;z-index:-99}.picker_wrapper.popup .picker_arrow::before{width:100%;height:100%;-webkit-transform:skew(45deg);transform:skew(45deg);-webkit-transform-origin:0 100%;transform-origin:0 100%}.picker_wrapper.popup .picker_arrow::after{width:150%;height:150%;box-shadow:none}.popup.popup_top{bottom:100%;left:0}.popup.popup_top .picker_arrow{bottom:0;left:0;-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}.popup.popup_bottom{top:100%;left:0}.popup.popup_bottom .picker_arrow{top:0;left:0;-webkit-transform:rotate(90deg) scale(1, -1);transform:rotate(90deg) scale(1, -1)}.popup.popup_left{top:0;right:100%}.popup.popup_left .picker_arrow{top:0;right:0;-webkit-transform:scale(-1, 1);transform:scale(-1, 1)}.popup.popup_right{top:0;left:100%}.popup.popup_right .picker_arrow{top:0;left:0}';
-  document.documentElement.firstElementChild.appendChild(_style);
+  _style.textContent = '.picker_wrapper.no_alpha .picker_alpha{display:none}.picker_wrapper.no_editor .picker_editor{position:absolute;z-index:-1;opacity:0}.layout_default.picker_wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-flow:row wrap;flex-flow:row wrap;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:stretch;-ms-flex-align:stretch;align-items:stretch;font-size:10px;width:25em;padding:.5em}.layout_default.picker_wrapper input,.layout_default.picker_wrapper button{font-size:1rem}.layout_default.picker_wrapper>*{margin:.5em}.layout_default.picker_wrapper::before{content:\'\';display:block;width:100%;height:0;-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.layout_default .picker_slider,.layout_default .picker_selector{padding:1em}.layout_default .picker_hue{width:100%}.layout_default .picker_sl{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto}.layout_default .picker_sl::before{content:\'\';display:block;padding-bottom:100%}.layout_default .picker_editor{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;width:6rem}.layout_default .picker_editor input{width:calc(100% + 2px);height:calc(100% + 2px)}.layout_default .picker_sample{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto}.layout_default .picker_done{-webkit-box-ordinal-group:2;-ms-flex-order:1;order:1}.picker_wrapper{-webkit-box-sizing:border-box;box-sizing:border-box;background:#f2f2f2;-webkit-box-shadow:0 0 0 1px silver;box-shadow:0 0 0 1px silver;cursor:default;font-family:sans-serif;color:#444;pointer-events:auto}.picker_wrapper:focus{outline:none}.picker_wrapper button,.picker_wrapper input{margin:-1px}.picker_selector{position:absolute;z-index:1;display:block;-webkit-transform:translate(-50%, -50%);transform:translate(-50%, -50%);border:2px solid white;border-radius:100%;-webkit-box-shadow:0 0 3px 1px #67b9ff;box-shadow:0 0 3px 1px #67b9ff;background:currentColor;cursor:pointer}.picker_slider .picker_selector{border-radius:2px}.picker_hue{position:relative;background-image:-webkit-gradient(linear, left top, right top, from(red), color-stop(yellow), color-stop(lime), color-stop(cyan), color-stop(blue), color-stop(magenta), to(red));background-image:linear-gradient(90deg, red, yellow, lime, cyan, blue, magenta, red);-webkit-box-shadow:0 0 0 1px silver;box-shadow:0 0 0 1px silver}.picker_sl{position:relative;-webkit-box-shadow:0 0 0 1px silver;box-shadow:0 0 0 1px silver;background-image:-webkit-gradient(linear, left top, left bottom, from(white), color-stop(50%, rgba(255,255,255,0))),-webkit-gradient(linear, left bottom, left top, from(black), color-stop(50%, rgba(0,0,0,0))),-webkit-gradient(linear, left top, right top, from(gray), to(rgba(128,128,128,0)));background-image:linear-gradient(180deg, white, rgba(255,255,255,0) 50%),linear-gradient(0deg, black, rgba(0,0,0,0) 50%),linear-gradient(90deg, gray, rgba(128,128,128,0))}.picker_alpha,.picker_sample{position:relative;background:url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'2\' height=\'2\'%3E%3Cpath d=\'M1,0H0V1H2V2H1\' fill=\'lightgrey\'/%3E%3C/svg%3E") left top/contain white;-webkit-box-shadow:0 0 0 1px silver;box-shadow:0 0 0 1px silver}.picker_alpha .picker_selector,.picker_sample .picker_selector{background:none}.picker_editor input{-webkit-box-sizing:border-box;box-sizing:border-box;font-family:monospace;padding:.1em .2em}.picker_sample::before{content:\'\';position:absolute;display:block;width:100%;height:100%;background:currentColor}.picker_done button{-webkit-box-sizing:border-box;box-sizing:border-box;padding:.2em .5em;cursor:pointer}.picker_arrow{position:absolute;z-index:-1}.picker_wrapper.popup{position:absolute;z-index:2;margin:1.5em}.picker_wrapper.popup,.picker_wrapper.popup .picker_arrow::before,.picker_wrapper.popup .picker_arrow::after{background:#f2f2f2;-webkit-box-shadow:0 0 10px 1px rgba(0,0,0,0.4);box-shadow:0 0 10px 1px rgba(0,0,0,0.4)}.picker_wrapper.popup .picker_arrow{width:3em;height:3em;margin:0}.picker_wrapper.popup .picker_arrow::before,.picker_wrapper.popup .picker_arrow::after{content:"";display:block;position:absolute;top:0;left:0;z-index:-99}.picker_wrapper.popup .picker_arrow::before{width:100%;height:100%;-webkit-transform:skew(45deg);transform:skew(45deg);-webkit-transform-origin:0 100%;transform-origin:0 100%}.picker_wrapper.popup .picker_arrow::after{width:150%;height:150%;-webkit-box-shadow:none;box-shadow:none}.popup.popup_top{bottom:100%;left:0}.popup.popup_top .picker_arrow{bottom:0;left:0;-webkit-transform:rotate(-90deg);transform:rotate(-90deg)}.popup.popup_bottom{top:100%;left:0}.popup.popup_bottom .picker_arrow{top:0;left:0;-webkit-transform:rotate(90deg) scale(1, -1);transform:rotate(90deg) scale(1, -1)}.popup.popup_left{top:0;right:100%}.popup.popup_left .picker_arrow{top:0;right:0;-webkit-transform:scale(-1, 1);transform:scale(-1, 1)}.popup.popup_right{top:0;left:100%}.popup.popup_right .picker_arrow{top:0;left:0}';
+  document.documentElement.firstElementChild 
+  .appendChild(_style);
 
   var Picker = function () {
+
+
       function Picker(options) {
           var _this = this;
 
@@ -30784,13 +30846,11 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
 
 
           this.settings = {
-
               popup: 'right',
               layout: 'default',
               alpha: true,
               editor: true,
-              editorFormat: 'hex',
-              cancelButton: false
+              editorFormat: 'hex'
           };
 
           this._openProxy = function (e) {
@@ -30798,15 +30858,14 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
           };
 
           this.onChange = null;
-
           this.onDone = null;
-
           this.onOpen = null;
-
           this.onClose = null;
 
           this.setOptions(options);
       }
+
+
 
       createClass(Picker, [{
           key: 'setOptions',
@@ -30830,12 +30889,13 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   settings.parent = options;
               } else {
 
+
                   if (settings.parent && options.parent && settings.parent !== options.parent) {
                       settings.parent.removeEventListener('click', this._openProxy, false);
                       this._popupInited = false;
                   }
 
-                  transfer(options, settings);
+                  transfer(options, settings );
 
                   if (options.onChange) {
                       this.onChange = options.onChange;
@@ -30861,18 +30921,20 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
 
                   addEvent(parent, 'click', this._openProxy);
 
-                  onKey(parent, [' ', 'Spacebar', 'Enter'], this._openProxy);
+                  onKey(parent, [' ', 'Spacebar', 'Enter'], this._openProxy );
+
 
                   this._popupInited = true;
               } else if (options.parent && !settings.popup) {
                   this.show();
               }
           }
+
+
       }, {
           key: 'openHandler',
           value: function openHandler(e) {
               if (this.show()) {
-
                   e && e.preventDefault();
 
                   this.settings.parent.style.pointerEvents = 'none';
@@ -30887,6 +30949,8 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   }
               }
           }
+
+
       }, {
           key: 'closeHandler',
           value: function closeHandler(e) {
@@ -30895,18 +30959,14 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
 
               if (!e) {
                   doHide = true;
-              } else if (event === EVENT_CLICK_OUTSIDE || event === EVENT_TAB_MOVE) {
+              }
+              else {
+                      if (event === 'click' || event === EVENT_KEY) {
+                          stopEvent(e);
+                      }
 
-                  var knownTime = (this.__containedEvent || 0) + 100;
-                  if (e.timeStamp > knownTime) {
                       doHide = true;
                   }
-              } else {
-
-                  stopEvent(e);
-
-                  doHide = true;
-              }
 
               if (doHide && this.hide()) {
                   this.settings.parent.style.pointerEvents = '';
@@ -30920,10 +30980,11 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   }
               }
           }
+
+
       }, {
           key: 'movePopup',
           value: function movePopup(options, open) {
-
               this.closeHandler();
 
               this.setOptions(options);
@@ -30931,6 +30992,8 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   this.openHandler();
               }
           }
+
+
       }, {
           key: 'setColor',
           value: function setColor(color, silent) {
@@ -30949,7 +31012,6 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
               flags = flags || {};
               var c = void 0;
               try {
-
                   c = new Color(color);
               } catch (ex) {
                   if (flags.failSilently) {
@@ -30966,11 +31028,14 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
               this.colour = this.color = c;
               this._setHSLA(null, null, null, null, flags);
           }
+
       }, {
           key: 'setColour',
           value: function setColour(colour, silent) {
               this.setColor(colour, silent);
           }
+
+
       }, {
           key: 'show',
           value: function show() {
@@ -30987,7 +31052,7 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   return toggled;
               }
 
-              var html = this.settings.template || '<div class="picker_wrapper" tabindex="-1"><div class="picker_arrow"></div><div class="picker_hue picker_slider"><div class="picker_selector"></div></div><div class="picker_sl"><div class="picker_selector"></div></div><div class="picker_alpha picker_slider"><div class="picker_selector"></div></div><div class="picker_editor"><input aria-label="Type a color name or hex value"/></div><div class="picker_sample"></div><div class="picker_done"><button>Ok</button></div><div class="picker_cancel"><button>Cancel</button></div></div>';
+              var html = this.settings.template || '<div class="picker_wrapper" tabindex="-1"><div class="picker_arrow"></div><div class="picker_hue picker_slider"><div class="picker_selector"></div></div><div class="picker_sl"><div class="picker_selector"></div></div><div class="picker_alpha picker_slider"><div class="picker_selector"></div></div><div class="picker_editor"><input aria-label="Type a color name or hex value"/></div><div class="picker_sample"></div><div class="picker_done"><button>Ok</button></div></div>';
               var wrapper = parseHTML(html);
 
               this.domElement = wrapper;
@@ -30997,7 +31062,6 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
               this._domEdit = $('.picker_editor input', wrapper);
               this._domSample = $('.picker_sample', wrapper);
               this._domOkay = $('.picker_done button', wrapper);
-              this._domCancel = $('.picker_cancel button', wrapper);
 
               wrapper.classList.add('layout_' + this.settings.layout);
               if (!this.settings.alpha) {
@@ -31005,9 +31069,6 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
               }
               if (!this.settings.editor) {
                   wrapper.classList.add('no_editor');
-              }
-              if (!this.settings.cancelButton) {
-                  wrapper.classList.add('no_cancel');
               }
               this._ifPopup(function () {
                   return wrapper.classList.add('popup');
@@ -31024,11 +31085,15 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
 
               return true;
           }
+
+
       }, {
           key: 'hide',
           value: function hide() {
               return this._toggleDOM(false);
           }
+
+
       }, {
           key: '_bindEvents',
           value: function _bindEvents() {
@@ -31041,54 +31106,53 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   return e.preventDefault();
               });
 
-              dragTrack(this._domH, function (x, y) {
-                  return that._setHSLA(x);
-              });
 
-              dragTrack(this._domSL, function (x, y) {
-                  return that._setHSLA(null, x, 1 - y);
-              });
+              function createDragConfig(container, callbackRelative) {
 
-              if (this.settings.alpha) {
-                  dragTrack(this._domA, function (x, y) {
-                      return that._setHSLA(null, null, null, 1 - y);
-                  });
+                  function relayDrag(_, pos) {
+                      var relX = pos[0] / container.clientWidth,
+                          relY = pos[1] / container.clientHeight;
+                      callbackRelative(relX, relY);
+                  }
+
+                  var config = {
+                      container: container,
+                      dragOutside: false,
+                      callback: relayDrag,
+                      callbackDragStart: relayDrag,
+                      propagateEvents: true
+                  };
+                  return config;
               }
 
+              dragTracker(createDragConfig(this._domH, function (x, y) {
+                  return that._setHSLA(x);
+              }));
+
+              dragTracker(createDragConfig(this._domSL, function (x, y) {
+                  return that._setHSLA(null, x, 1 - y);
+              }));
+
+              if (this.settings.alpha) {
+                  dragTracker(createDragConfig(this._domA, function (x, y) {
+                      return that._setHSLA(null, null, null, 1 - y);
+                  }));
+              }
+
+
               var editInput = this._domEdit;
-              {
+{
                   addEvent(editInput, 'input', function (e) {
                       that._setColor(this.value, { fromEditor: true, failSilently: true });
                   });
-
                   addEvent(editInput, 'focus', function (e) {
                       var input = this;
-
                       if (input.selectionStart === input.selectionEnd) {
                           input.select();
                       }
                   });
               }
 
-              this._ifPopup(function () {
-
-                  var popupCloseProxy = function popupCloseProxy(e) {
-                      return _this2.closeHandler(e);
-                  };
-
-                  addEvent(window, EVENT_CLICK_OUTSIDE, popupCloseProxy);
-                  addEvent(window, EVENT_TAB_MOVE, popupCloseProxy);
-                  onKey(dom, ['Esc', 'Escape'], popupCloseProxy);
-
-                  var timeKeeper = function timeKeeper(e) {
-                      _this2.__containedEvent = e.timeStamp;
-                  };
-                  addEvent(dom, EVENT_CLICK_OUTSIDE, timeKeeper);
-
-                  addEvent(dom, EVENT_TAB_MOVE, timeKeeper);
-
-                  addEvent(_this2._domCancel, 'click', popupCloseProxy);
-              });
 
               var onDoneProxy = function onDoneProxy(e) {
                   _this2._ifPopup(function () {
@@ -31098,9 +31162,29 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                       _this2.onDone(_this2.colour);
                   }
               };
+
+              this._ifPopup(function () {
+                  var popupCloseProxy = function popupCloseProxy(e) {
+                      return _this2.closeHandler(e);
+                  };
+
+                  addEvent(window, EVENT_CLICK_OUTSIDE, popupCloseProxy);
+                  addEvent(window, EVENT_TAB_MOVE, popupCloseProxy);
+                  onKey(dom, ['Esc', 'Escape'], popupCloseProxy);
+
+                  addEvent(dom, EVENT_CLICK_OUTSIDE, stopEvent);
+                  addEvent(dom, EVENT_TAB_MOVE, stopEvent);
+
+                  addEvent(_this2._domEdit, EVENT_CLICK_OUTSIDE, function (e) {
+                      return _this2._domEdit.focus();
+                  });
+              });
+
               addEvent(this._domOkay, 'click', onDoneProxy);
               onKey(dom, ['Enter'], onDoneProxy);
           }
+
+
       }, {
           key: '_setPosition',
           value: function _setPosition() {
@@ -31120,7 +31204,6 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   var cssClass = popup === true ? 'popup_right' : 'popup_' + popup;
 
                   ['popup_top', 'popup_bottom', 'popup_left', 'popup_right'].forEach(function (c) {
-
                       if (c === cssClass) {
                           elm.classList.add(c);
                       } else {
@@ -31131,6 +31214,8 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   elm.classList.add(cssClass);
               });
           }
+
+
       }, {
           key: '_setHSLA',
           value: function _setHSLA(h, s, l, a, flags) {
@@ -31174,20 +31259,23 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   thumbA = $('.picker_selector', uiA);
 
               function posX(parent, child, relX) {
-                  child.style.left = relX * 100 + '%';
+                  child.style.left = relX * 100 + '%'; 
               }
               function posY(parent, child, relY) {
-                  child.style.top = relY * 100 + '%';
+                  child.style.top = relY * 100 + '%'; 
               }
+
 
               posX(uiH, thumbH, hsl[0]);
 
               this._domSL.style.backgroundColor = this._domH.style.color = cssHue;
 
+
               posX(uiSL, thumbSL, hsl[1]);
               posY(uiSL, thumbSL, 1 - hsl[2]);
 
               uiSL.style.color = cssHSL;
+
 
               posY(uiA, thumbA, 1 - hsl[3]);
 
@@ -31196,6 +31284,7 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   bg = 'linear-gradient(' + [opaque, transp] + ')';
 
               this._domA.style.backgroundImage = bg + ', ' + BG_TRANSP;
+
 
               if (!flags.fromEditor) {
                   var format = this.settings.editorFormat,
@@ -31212,6 +31301,7 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
                   }
                   this._domEdit.value = value;
               }
+
 
               this._domSample.style.color = cssHSLA;
           }
@@ -31240,6 +31330,9 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
               }
               return toggle;
           }
+
+
+
       }], [{
           key: 'StyleElement',
           get: function get$$1() {
@@ -31256,7 +31349,7 @@ module.exports=function(t){function e(t,e,n){var i=C.querySelectorAll("."+T+" > 
 },{}],9:[function(require,module,exports){
 /**
  * what-input - A global utility for tracking the current input method (mouse, keyboard or touch).
- * @version v5.2.3
+ * @version v5.2.1
  * @link https://github.com/ten1seven/what-input
  * @license MIT
  */
@@ -31526,7 +31619,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (shouldUpdate && currentIntent !== value) {
 	      // preserve intent for keyboard interaction with form fields
 	      var activeElem = document.activeElement;
-	      var notFormInput = activeElem && activeElem.nodeName && (formInputs.indexOf(activeElem.nodeName.toLowerCase()) === -1 || activeElem.nodeName.toLowerCase() === 'button' && !checkClosest(activeElem, 'form'));
+	      var notFormInput = activeElem && activeElem.nodeName && formInputs.indexOf(activeElem.nodeName.toLowerCase()) === -1 || activeElem.nodeName.toLowerCase() === 'button' && !checkClosest(activeElem, 'form');
 
 	      if (notFormInput) {
 	        currentIntent = value;
@@ -31559,7 +31652,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    detectScrolling(event);
 
 	    // only execute if scrolling isn't happening
-	    if ((!isScrolling && !validateTouch(value) || isScrolling && event.type === 'wheel' || event.type === 'mousewheel' || event.type === 'DOMMouseScroll') && currentIntent !== value) {
+	    if (!isScrolling && !validateTouch(value) && currentIntent !== value) {
 	      currentIntent = value;
 
 	      try {
@@ -31618,9 +31711,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 
 	  // detect version of mouse wheel event to use
-	  // via https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event
+	  // via https://developer.mozilla.org/en-US/docs/Web/Events/wheel
 	  var detectWheel = function detectWheel() {
-	    var wheelType = null;
+	    var wheelType = void 0;
 
 	    // Modern browsers support "wheel"
 	    if ('onwheel' in document.createElement('div')) {
@@ -31763,6 +31856,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /* UTILITY FUNCTION */
 
+
 // Check if is a valid email
 (function (){
 	
@@ -31778,7 +31872,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 
-/* END OF UTILITY FUNCTION */
+/* UTILITY FUNCTION */
 
 
 // Upload New Pin
@@ -31959,7 +32053,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		const contNav = document.querySelectorAll('#conWindow .controlend a');
 		const contPan = document.querySelectorAll('.businessend .conPanel');
 		const headNav = document.querySelectorAll('a.nav-link');
-
+		
 		for (let x = 0; x < flippers.length; x++) {
 			
 			let card = flippers[x].classList;
@@ -33177,9 +33271,9 @@ return /******/ (function(modules) { // webpackBootstrap
 			// Front
 			case 'home':
 				// Insert floating elements
-				/*SHOWCASE.front.setFloatingIconDiv('welcome-section');
+				//SHOWCASE.front.setFloatingIconDiv('welcome-section');
 				
-				SHOWCASE.showNav = document.getElementById('showNavControl');
+				/*SHOWCASE.showNav = document.getElementById('showNavControl');
 				 SHOWCASE.showNavId = document.querySelectorAll('.showNavMenu ul li a');
 				 SHOWCASE.fullyOpen = false;
 				 SHOWCASE.showNav.addEventListener('click', function (evt) {

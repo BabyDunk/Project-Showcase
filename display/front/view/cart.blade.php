@@ -16,8 +16,6 @@
 @section('page-id', 'cart')
 
 @section('content')
-    <!-- Navigation -->
-    @include('includes.shop-navi')
     <main>
         <div class="modal">
             <section id="personal-data">

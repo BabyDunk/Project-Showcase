@@ -203,11 +203,11 @@
 								break;
 							case 2:
 								
-								$discountedPrice += ( ( $item->price * $item->quantity ) - (($promoData->value/100)*$item->quantity ));
+								$discountedPrice += ( ( $item->price * $item->quantity ) - ($promoData->value*$item->quantity ));
 								break;
 							case 3:
 								
-								$percentToSubtract = ( ( $item->price * $item->quantity ) / 100 ) * ($promoData->value/100);
+								$percentToSubtract = ( ( $item->price * $item->quantity ) / 100 ) * $promoData->value;
 								
 								$discountedPrice += ( $item->price * $item->quantity ) - $percentToSubtract;
 								break;
@@ -228,11 +228,11 @@
 							break;
 						case 2:
 							
-							$discountedPrice += ( ( $item->price * $item->quantity ) - (($promoData->value/100)*$item->quantity ));
+							$discountedPrice += ( ( $item->price * $item->quantity ) - ($promoData->value*$item->quantity ));
 							break;
 						case 3:
 							
-							$percentToSubtract = ( ( $item->price * $item->quantity ) / 100 ) * ($promoData->value/100);
+							$percentToSubtract = ( ( $item->price * $item->quantity ) / 100 ) * $promoData->value;
 							
 							$discountedPrice += ( $item->price * $item->quantity ) - $percentToSubtract;
 							break;

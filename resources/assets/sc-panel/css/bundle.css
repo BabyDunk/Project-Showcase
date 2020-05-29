@@ -2337,9 +2337,6 @@
   z-index: -1;
   opacity: 0; }
 
-.picker_wrapper.no_cancel .picker_cancel {
-  display: none; }
-
 .layout_default.picker_wrapper {
   display: flex;
   flex-flow: row wrap;
@@ -2374,16 +2371,16 @@
 
 .layout_default .picker_editor {
   order: 1;
-  width: 6.5rem; }
+  width: 6rem; }
   .layout_default .picker_editor input {
-    width: 100%;
-    height: 100%; }
+    width: calc(100% + 2px);
+    height: calc(100% + 2px); }
 
 .layout_default .picker_sample {
   order: 1;
   flex: 1 1 auto; }
 
-.layout_default .picker_done, .layout_default .picker_cancel {
+.layout_default .picker_done {
   order: 1; }
 
 .picker_wrapper {
@@ -2397,21 +2394,7 @@
   .picker_wrapper:focus {
     outline: none; }
   .picker_wrapper button, .picker_wrapper input {
-    box-sizing: border-box;
-    border: none;
-    box-shadow: 0 0 0 1px silver;
-    outline: none; }
-    .picker_wrapper button:focus, .picker_wrapper button:active, .picker_wrapper input:focus, .picker_wrapper input:active {
-      box-shadow: 0 0 2px 1px dodgerblue; }
-  .picker_wrapper button {
-    padding: .4em .6em;
-    cursor: pointer;
-    background-color: whitesmoke;
-    background-image: linear-gradient(0deg, gainsboro, transparent); }
-    .picker_wrapper button:active {
-      background-image: linear-gradient(0deg, transparent, gainsboro); }
-    .picker_wrapper button:hover {
-      background-color: white; }
+    margin: -1px; }
 
 .picker_selector {
   position: absolute;
@@ -2445,8 +2428,9 @@
     background: none; }
 
 .picker_editor input {
+  box-sizing: border-box;
   font-family: monospace;
-  padding: .2em .4em; }
+  padding: .1em .2em; }
 
 .picker_sample::before {
   content: '';
@@ -2455,6 +2439,11 @@
   width: 100%;
   height: 100%;
   background: currentColor; }
+
+.picker_done button {
+  box-sizing: border-box;
+  padding: .2em .5em;
+  cursor: pointer; }
 
 .picker_arrow {
   position: absolute;

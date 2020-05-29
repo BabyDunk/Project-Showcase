@@ -38,14 +38,18 @@
 		public function showCart()
 		{
 			
-			if ( CSRFToken::_CheckToken(Params::get('get')->CSRFToken) )
+			
+			view( 'cart' );
+			
+			/*if ( CSRFToken::_CheckToken(Params::get('get')->CSRFToken) )
 			{
 				view( 'cart' );
 			}
 			else
 			{
 				redirect( '/shop' );
-			}
+			}*/
+			
 			
 		}
 		

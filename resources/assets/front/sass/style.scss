@@ -19,22 +19,16 @@ footer {
 
   p {
     text-align: center;
-    color: #7a7a7a;
+    color: #fff;
     font-weight: 600;
 
     a {
-      color: #7a7a7a;
+      color: #fff;
       text-decoration: none;
-
-      &:hover {
-        color: #f1a646;
-      }
     }
   }
 
-  hr {
-    border: 0;
-  }
+
 }
 
 
@@ -162,31 +156,4 @@ a {
 .show{
   visibility: visible;
   background: rgba(255,255,255,0.7);;
-}
-
-#redirected{
-  .container {
-    margin-top: 100px;
-
-
-    .redirect-stub {
-      border-left: solid 7px red;
-      padding: 7px 7px 30px 14px;
-
-
-      .h1 {
-        font-size: 3em;
-        margin-top: 0;
-      }
-
-      p {
-        font-size: 2em;
-        margin-bottom: 0;
-      }
-    }
-
-    .message-wrap {
-      margin-left: 140px;
-    }
-  }
 }

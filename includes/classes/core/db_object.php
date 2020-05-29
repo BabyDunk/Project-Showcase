@@ -192,7 +192,7 @@
 		 *
 		 * @return bool|mixed
 		 */
-		public static function find_by_like( $arrayOfColAndString = [] , $limit = 1 )
+		public static function find_by_lifindke( $arrayOfColAndString = [] , $limit = 1 )
 		{
 			
 			global $db;

@@ -84,7 +84,7 @@
 				
 				$html .= '<div class="shop-window">';
 				$html .= '<label for="priceperitem">Price Per Item</label>';
-				$html .= '<span id="priceperitem">'.sca_show_price($item->price, true).'</span>';
+				$html .= '<span id="priceperitem">&pound;'.sca_show_price($item->price).'</span>';
 				$html .= '<label for="addLicence-id-' . $item->id . '">Select how many licences<br>you would like to purchase  </label>';
 				$html .= '<select id="addLicence-id-' . $item->id . '">';
 				for ( $x = 1; $x <= 20; $x ++ )

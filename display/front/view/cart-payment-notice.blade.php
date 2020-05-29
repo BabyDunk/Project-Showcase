@@ -104,7 +104,7 @@
                                 <td></td>
                                 <td></td>
                                 <td>Total:</td>
-                                <td>{{sca_show_price($total,true)}}</td>
+                                <td>{{$total}}</td>
                             </tr>
                             </tfoot>
                         </table>

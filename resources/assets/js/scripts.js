@@ -12,6 +12,7 @@
 
 /* UTILITY FUNCTION */
 
+
 // Check if is a valid email
 (function (){
 	
@@ -27,7 +28,7 @@
 
 
 
-/* END OF UTILITY FUNCTION */
+/* UTILITY FUNCTION */
 
 
 // Upload New Pin
@@ -208,7 +209,7 @@
 		const contNav = document.querySelectorAll('#conWindow .controlend a');
 		const contPan = document.querySelectorAll('.businessend .conPanel');
 		const headNav = document.querySelectorAll('a.nav-link');
-
+		
 		for (let x = 0; x < flippers.length; x++) {
 			
 			let card = flippers[x].classList;
@@ -1426,9 +1427,9 @@
 			// Front
 			case 'home':
 				// Insert floating elements
-				/*SHOWCASE.front.setFloatingIconDiv('welcome-section');
+				//SHOWCASE.front.setFloatingIconDiv('welcome-section');
 				
-				SHOWCASE.showNav = document.getElementById('showNavControl');
+				/*SHOWCASE.showNav = document.getElementById('showNavControl');
 				 SHOWCASE.showNavId = document.querySelectorAll('.showNavMenu ul li a');
 				 SHOWCASE.fullyOpen = false;
 				 SHOWCASE.showNav.addEventListener('click', function (evt) {
