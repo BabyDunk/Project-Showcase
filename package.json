@@ -43,7 +43,7 @@
     "jquery-ui": "^1.12.1",
     "motion-ui": "^2.0.3",
     "simple-ajax-uploader": "^2.6.7",
-    "tinymce": "^5.3.1",
+    "tinymce": "^5.7.1",
     "vanilla-js-carousel": "^3.1.2",
     "vanilla-picker": "^2.10.1",
     "what-input": "^5.2.9"
